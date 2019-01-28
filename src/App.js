@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import { HashRouter } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {getPlants} from './ducks/reducer';
 // import routes from './routes';
 import './App.css';
 
 class App extends Component {
+  componentDidMount(){
+    this.props.getPlants()
+  }
   render() {
     return (
       <HashRouter>
@@ -15,4 +20,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(null,{getPlants})(App) ;
