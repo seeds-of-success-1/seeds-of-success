@@ -8,11 +8,26 @@ const initialState = {
 }
 
 //ACTION TYPES
-//FETCH PLANT DATA
+
+const UPDATE_PROJECTS = 'UPDATE_PROJECTS'
+
+
 const GET_PLANTS = 'GET_PLANTS';
 const GET_PLANTS_PENDING = 'GET_PLANTS_PENDING';
-const GET_PLANTS_FULFILLED = 'GET_PLANTS_FULFILLED'
+const GET_PLANTS_FULFILLED = 'GET_PLANTS_FULFILLED';
 
+// FETCH AND UPDATE USER DATA
+
+
+export const updateProjects = (projects) =>{
+    return{
+        type:UPDATE_PROJECTS,
+        payload:projects
+    }
+}
+
+
+//FETCH PLANT DATA
 export const getPlants = () => {
     return {
         type: GET_PLANTS,
