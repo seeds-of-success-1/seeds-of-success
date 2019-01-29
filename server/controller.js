@@ -26,11 +26,11 @@ module.exports = {
                 loggedIn: false, message: 'Username not found'
             })
         } 
-        let result = bcrypt.compareSync(password, user[0].hash_value)
+        let result = bcrypt.compareSync(password, user[0].hash)
         if (result) {
-            req.session.user = { username: user[0].username, id: user[0].id }
+            req.session.user = { username: user[0].user_name, id: user[0].id }
             return res.status(200).send({
-                loggedIn: true, message: 'Login successful', username: user[0].username, id: user[0].id
+                loggedIn: true, message: 'Login successful', username: user[0].user_name, id: user[0].id
             })
         } else {
             return res.status(200).send({
