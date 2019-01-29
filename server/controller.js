@@ -25,7 +25,7 @@ module.exports = {
             return res.status(200).send({
                 loggedIn: false, message: 'Username not found'
             })
-        } 
+        }
         let result = bcrypt.compareSync(password, user[0].hash)
         if (result) {
             req.session.user = { username: user[0].user_name, id: user[0].id }
@@ -37,5 +37,9 @@ module.exports = {
                 loggedIn: false, message: 'Incorrect password'
             })
         }
+    },
+    logout: async (req,res) =>{
+        req.session.destroy();
+        return res.status(200).send({ loggedIn: false, message: 'Logout successful'});
     }
 }

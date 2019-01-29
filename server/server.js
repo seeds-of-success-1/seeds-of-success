@@ -16,6 +16,7 @@ app.use(session({
 
 app.post('/auth/register', controller.register);
 app.post('/auth/login', controller.login);
+app.get('/auth/logout', controller.logout)
 
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db);
