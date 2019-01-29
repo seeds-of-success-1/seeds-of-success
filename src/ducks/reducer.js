@@ -9,17 +9,19 @@ const initialState = {
     id: ''
 }
 
-//ACTION TYPES
-const UPDATE_USERNAME = 'UPDATE_USERNAME'
-const UPDATE_ID = 'UPDATE_ID'
-const UPDATE_PROJECTS = 'UPDATE_PROJECTS'
 
+
+
+//ACTION TYPES
+const UPDATE_USERNAME = 'UPDATE_USERNAME';
+const UPDATE_ID = 'UPDATE_ID'
+const UPDATE_PROJECTS = 'UPDATE_PROJECTS';
 
 const GET_PLANTS = 'GET_PLANTS';
 const GET_PLANTS_PENDING = 'GET_PLANTS_PENDING';
 const GET_PLANTS_FULFILLED = 'GET_PLANTS_FULFILLED';
 
-// FETCH AND UPDATE USER DATA
+//UPDATE USER INFO
 export function updateUsername (username) {
     return {
         type: UPDATE_USERNAME,
@@ -33,16 +35,12 @@ export function updateId (id) {
         payload: id
     }
 }
-
-
 export const updateProjects = (projects) =>{
-    return{
+    return {
         type:UPDATE_PROJECTS,
         payload:projects
     }
 }
-
-
 //FETCH PLANT DATA
 export const getPlants = () => {
     return {
