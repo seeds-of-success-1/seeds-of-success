@@ -41,6 +41,7 @@ export const updateProjects = (projects) =>{
         payload:projects
     }
 }
+
 //FETCH PLANT DATA
 export const getPlants = () => {
     return {
