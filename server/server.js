@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const massive = require('massive');
+const controller = require('./controller')
 
 const app = express();
 const { PORT, CONNECTION_STRING, SECRET } = process.env
@@ -12,6 +13,9 @@ app.use(session({
     resave: true,
     saveUninitialized: false
 }));
+
+app.post('/auth/register', controller.register);
+app.post('/auth/login', controller.login);
 
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db);

@@ -4,7 +4,26 @@ const initialState = {
     plants: [],
     plantsLoading:false,
     projects: [],
-    user: {}
+    user: {},
+    username: '',
+    id: ''
+}
+
+const UPDATE_USERNAME = 'UPDATE_USERNAME'
+const UPDATE_ID = 'UPDATE_ID'
+
+export function updateUsername (username) {
+    return {
+        type: UPDATE_USERNAME,
+        payload: username
+    }
+}
+
+export function updateId (id) {
+    return {
+        type: UPDATE_ID,
+        payload: id
+    }
 }
 
 //ACTION TYPES
@@ -47,6 +66,12 @@ export default function reducer(state = initialState, action) {
         case GET_PLANTS_FULFILLED:
         return {...state, plantsLoading:false, plants:action.payload}
 
+        case UPDATE_USERNAME:
+            return {...state, username: action.payload}
+
+        case UPDATE_ID:
+            return {...state, id: action.payload} 
+        
         default:
             return state;
     }
