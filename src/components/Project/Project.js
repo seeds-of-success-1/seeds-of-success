@@ -1,38 +1,73 @@
 import React, { Component } from 'react';
-import './Project.css';
+import styled from 'styled-components';
+
+const ProjectWrap = styled.div`
+margin-top: 130px;
+cursor: url(${props => props.cursor}), auto;
+`
+
+const GridContainer = styled.div`
+display:grid;
+grid-gap: 15px 15px;
+margin-top: 130px;
+grid-template-columns:100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px;
+padding:2px;
+scroll-behavior: smooth;
+`
+const GridItem = styled.div`
+display:inline-grid;
+border:1px solid black;
+text-align:center;
+height: 100px;
+width: 100px;
+`
 
 class Project extends Component {
+
+    state = {
+        cursor: '',
+        images: []
+    }
+
+    imageUpdater = (id) => {
+        let squares = [...this.state.images]
+        squares[id] = this.state.cursor
+        this.setState({
+            images: squares
+        })
+    }
+
     render() {
         return (
-            <div>
+            <ProjectWrap cursor={this.state.cursor}>
                 <h1>HELLO</h1>
-                <div className='grid-container'>
-                    <div className='grid-item'>1</div>
-                    <div className='grid-item'>2</div>
-                    <div className='grid-item'>3</div>
-                    <div className='grid-item'>4</div>
-                    <div className='grid-item'>5</div>
-                    <div className='grid-item'>6</div>
-                    <div className='grid-item'>7</div>
-                    <div className='grid-item'>8</div>
-                    <div className='grid-item'>9</div>
-                    <div className='grid-item'>10</div>
-                    <div className='grid-item'>11</div>
-                    <div className='grid-item'>12</div>
-                    <div className='grid-item'>13</div>
-                    <div className='grid-item'>14</div>
-                    <div className='grid-item'>15</div>
-                    <div className='grid-item'>16</div>
-                    <div className='grid-item'>17</div>
-                    <div className='grid-item'>18</div>
-                    <div className='grid-item'>19</div>
-                    <div className='grid-item'>20</div>
-                    <div className='grid-item'>21</div>
-                    <div className='grid-item'>22</div>
-                    <div className='grid-item'>23</div>
-                    <div className='grid-item'>24</div>
-                </div>
-            </div>
+                <GridContainer> 
+                    <GridItem>1 <img src={this.state.images[0]} alt=''></img> </GridItem>
+                    <GridItem>2 <img src={this.state.images[1]} alt=''></img> </GridItem>
+                    <GridItem>3 <img src={this.state.images[2]} alt=''></img> </GridItem>
+                    <GridItem>4 <img src={this.state.images[3]} alt=''></img> </GridItem>
+                    <GridItem>5 <img src={this.state.images[4]} alt=''></img> </GridItem>
+                    <GridItem>6 <img src={this.state.images[5]} alt=''></img> </GridItem>
+                    <GridItem>7 <img src={this.state.images[6]} alt=''></img> </GridItem>
+                    <GridItem>8 <img src={this.state.images[7]} alt=''></img> </GridItem>
+                    <GridItem>9 <img src={this.state.images[8]} alt=''></img> </GridItem>
+                    <GridItem>10 <img src={this.state.images[9]} alt=''></img> </GridItem>
+                    <GridItem>11 <img src={this.state.images[10]} alt=''></img> </GridItem>
+                    <GridItem>12 <img src={this.state.images[11]} alt=''></img> </GridItem>
+                    <GridItem>13 <img src={this.state.images[12]} alt=''></img> </GridItem>
+                    <GridItem>14 <img src={this.state.images[13]} alt=''></img> </GridItem>
+                    <GridItem>15 <img src={this.state.images[14]} alt=''></img> </GridItem>
+                    <GridItem>16 <img src={this.state.images[15]} alt=''></img> </GridItem>
+                    <GridItem>17 <img src={this.state.images[16]} alt=''></img> </GridItem>
+                    <GridItem>18 <img src={this.state.images[17]} alt=''></img> </GridItem>
+                    <GridItem>19 <img src={this.state.images[18]} alt=''></img> </GridItem>
+                    <GridItem>20 <img src={this.state.images[19]} alt=''></img> </GridItem>
+                    <GridItem>21 <img src={this.state.images[20]} alt=''></img> </GridItem>
+                    <GridItem>22 <img src={this.state.images[21]} alt=''></img> </GridItem>
+                    <GridItem>23 <img src={this.state.images[22]} alt=''></img> </GridItem>
+                    <GridItem>24 <img src={this.state.images[23]} alt=''></img> </GridItem>
+                </GridContainer>
+            </ProjectWrap>
         );
     }
 }
