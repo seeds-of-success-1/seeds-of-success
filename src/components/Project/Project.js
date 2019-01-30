@@ -21,6 +21,9 @@ margin: 0;
 text-align:center;
 height: 80px;
 width: 80px;
+display: flex;
+align-items: center;
+justify-content: center;
 :hover {
     background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${props => props.image ? 'https://lh5.googleusercontent.com/-UukByzakIIk/UcmmET4WP2I/AAAAAAAAA_o/PnYv99yZ_ZQ/s256/Enlarged%20Dirt.gif' : 'https://i.cubeupload.com/KB2ChT.png'});
 }
