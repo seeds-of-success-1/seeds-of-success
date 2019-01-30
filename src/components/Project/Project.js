@@ -3,16 +3,20 @@ import styled from 'styled-components';
 import grass from './grass.png';
 import dirt from './dirt.png';
 import trowel from './trowel.png';
-import asparagus from './Pics/40x40/asparagus60x40.png';
+import Toolbar from '../Toolbar/Toolbar';
+
+const ProjectAndToolbar = styled.div`
+display: flex;
+`
 
 const ProjectWrap = styled.div`
 margin: 130px 0 0 270px;
+width: 100%;
 cursor: url(${props => props.cursor}), auto;
 `
 
 const GridContainer = styled.div`
 display:grid;
-/* grid-gap: 1px 3px; */
 grid-template-columns:80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px;
 padding:2px;
 scroll-behavior: smooth;
@@ -55,18 +59,18 @@ class Project extends Component {
         } else if (this.state.edit === 2) {
             let cursor = squares[id];
             squares[id] = true
-            this.setState({cursor, images: squares, edit: 3})
+            this.setState({ cursor, images: squares, edit: 3 })
         } else if (this.state.edit === 3) {
             squares[id] = this.state.cursor
-            this.setState({cursor: trowel, images: squares, edit: 2})
+            this.setState({ cursor: trowel, images: squares, edit: 2 })
         }
     }
 
     toggleEdit = () => {
         if (this.state.edit === 1) {
-            this.setState({edit: 2, cursor: trowel})
+            this.setState({ edit: 2, cursor: trowel })
         } else {
-            this.setState({edit: 1, cursor: ''})
+            this.setState({ edit: 1, cursor: '' })
         }
     }
 
@@ -74,7 +78,7 @@ class Project extends Component {
         const boxes = this.state.images.map((box, i) => {
             return (
                 <GridItem key={i} image={this.state.images[i]} onClick={() => this.imageUpdater(i)}>
-                    
+
                     <Image src={this.state.images[i]} alt='' />
                 </GridItem>
             )
@@ -82,20 +86,27 @@ class Project extends Component {
         return boxes
     }
 
-    render() { 
+    cursorProp = (cursor) => {
+        this.setState({
+            cursor: cursor
+        })
+    }
+
+    updateCursor = (id) => {
+        this.setState({cursor: `./assets/40x40/${id}.png`})
+    }
+
+    render() {
         return (
-            <ProjectWrap cursor={this.state.cursor}>
-                <button onClick={() => this.setState({cursor: 'https://image.flaticon.com/icons/png/128/271/271439.png'})}>carrot</button>
-                <button onClick={() => this.setState({cursor: 'https://image.flaticon.com/icons/png/128/1135/1135528.png'})}>leek</button>
-                <button onClick={() => this.setState({cursor: asparagus})}>Asparagus</button>
-                <button onClick={() => this.setState({cursor: ''})}>Grass</button>
-                <button onClick={() => this.setState({cursor: true})}>Dirt</button>
-                <button onClick={() => this.toggleEdit()}>Toggle Edit</button>
-                <h1>HELLO</h1>
-                <GridContainer>
-                    {this.getBoxes()}
-                </GridContainer>
-            </ProjectWrap>
+            <ProjectAndToolbar>
+                <Toolbar edit={this.toggleEdit} cursorProp={(cursor) => this.cursorProp(cursor)} cursor={id => this.updateCursor(id)} />
+                <ProjectWrap cursor={this.state.cursor}>
+                    <h1>HELLO</h1>
+                    <GridContainer>
+                        {this.getBoxes()}
+                    </GridContainer>
+                </ProjectWrap>
+            </ProjectAndToolbar>
         );
     }
 }
