@@ -19,7 +19,6 @@ class Dashboard extends Component {
         return (
             <>
                 <DashboardContainer>
-                    <img style={{width:300}} src="https://res-4.cloudinary.com/do6bw42am/image/upload/c_scale,f_auto,h_300/v1/harvest_helper_production/02_basil" alt=""/>
                     Lettuce begin
                     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
                     [current project]

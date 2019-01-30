@@ -63,7 +63,7 @@ margin: 6px 0;
 `
 class Nav extends Component {
     state = {
-        projects: [{name:'Project 1'}, {name:'Project 2'}, {name:'Project 3'}],
+        projects: [{name:'Project 1',id:1}, {name:'Project 2',id:2}, {name:'Project 3',id:3}],
         projectsOpen: false
     }
 
@@ -79,7 +79,10 @@ class Nav extends Component {
         const mapped = this.state.projects.map(project => {
             return (
             <>
-                <DropdownItem>{project.name}</DropdownItem>
+                <Link key={project.id} to={`/project${project.id}`}>
+                    <DropdownItem>{project.name}</DropdownItem>
+                </Link>
+
             </>
             )
         })
