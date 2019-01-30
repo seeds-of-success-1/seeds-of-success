@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import tomato from './Tomato2.png';
+import tomato from './tomato.png';
+import smallTomato from './smallTomato.png';
 import styled from 'styled-components';
 import grass from './grass.png';
 import dirt from './dirt.png';
@@ -31,6 +32,10 @@ justify-content: center;
     background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${props => props.image ? dirt : grass});
 }
 `
+const Image = styled.img`
+border: none;
+border-image: none;
+`
 
 class Project extends Component {
 
@@ -52,7 +57,7 @@ class Project extends Component {
             return (
                 <GridItem key={i} image={this.state.images[i]} onClick={() => this.imageUpdater(i)}>
                     
-                    <img src={this.state.images[i]} alt='' />
+                    <Image src={this.state.images[i]} alt='' />
                 </GridItem>
             )
         })
@@ -64,9 +69,9 @@ class Project extends Component {
             <ProjectWrap cursor={this.state.cursor}>
                 <button onClick={() => this.setState({cursor: 'https://image.flaticon.com/icons/png/128/271/271439.png'})}>carrot</button>
                 <button onClick={() => this.setState({cursor: 'https://image.flaticon.com/icons/png/128/1135/1135528.png'})}>leek</button>
-                <button onClick={() => this.setState({cursor: tomato})}>Tomato</button>
+                <button onClick={() => this.setState({cursor: smallTomato})}>Tomato</button>
                 <button onClick={() => this.setState({cursor: ''})}>Grass</button>
-                <button onClick={() => this.setState({cursor: ' '})}>Dirt</button>
+                <button onClick={() => this.setState({cursor: true})}>Dirt</button>
                 <h1>HELLO</h1>
                 <GridContainer>
                     {this.getBoxes()}
