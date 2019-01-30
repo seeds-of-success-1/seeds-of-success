@@ -42,7 +42,6 @@ cursor: pointer;
     left:60px;
 }
 &:hover{
-
     background-color: #ddd;
 }
 `
@@ -79,7 +78,8 @@ float:left;
 const Hamburger = styled.div`
  width: 30px;
  position: absolute;
- transition:all .5s;
+ transition:all .3s;
+ transition-duration:.2s;
  height:30px;
  margin:16px;
 cursor: pointer;
@@ -87,7 +87,7 @@ display:flex;
 flex-direction:column;
 justify-content:space-between;
 &.closed {
-    transition:all .5s;
+    transition:all .3s;
     height:0;
     width:0;
     margin:0;

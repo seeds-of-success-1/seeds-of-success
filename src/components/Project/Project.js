@@ -4,18 +4,21 @@ import smallTomato from './smallTomato.png';
 import styled from 'styled-components';
 import grass from './grass.png';
 import dirt from './dirt.png';
+import Toolbar from '../Toolbar/Toolbar'
 
 const ProjectWrap = styled.div`
-margin: 130px 0 0 270px;
+margin: 130px 0 0 0px;
 cursor: url(${props => props.cursor}), auto;
 `
 
 const GridContainer = styled.div`
 display:grid;
 /* grid-gap: 1px 3px; */
-grid-template-columns:80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px;
+grid-template-columns:minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%);
 padding:2px;
 scroll-behavior: smooth;
+min-width:80vw;
+
 `
 const GridItem = styled.div`
 background-image: url(${props => props.image ? dirt : grass});
@@ -24,7 +27,9 @@ display:inline-grid;
 margin: 0;
 text-align:center;
 height: 80px;
-width: 80px;
+min-height:80px;
+width: 100%;
+min-width:80px;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -56,7 +61,7 @@ class Project extends Component {
         const boxes = this.state.images.map((box, i) => {
             return (
                 <GridItem key={i} image={this.state.images[i]} onClick={() => this.imageUpdater(i)}>
-                    
+
                     <Image src={this.state.images[i]} alt='' />
                 </GridItem>
             )
@@ -64,8 +69,9 @@ class Project extends Component {
         return boxes
     }
 
-    render() { 
+    render() {
         return (
+
             <ProjectWrap cursor={this.state.cursor}>
                 <button onClick={() => this.setState({cursor: 'https://image.flaticon.com/icons/png/128/271/271439.png'})}>carrot</button>
                 <button onClick={() => this.setState({cursor: 'https://image.flaticon.com/icons/png/128/1135/1135528.png'})}>leek</button>
