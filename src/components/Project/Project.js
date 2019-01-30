@@ -8,19 +8,19 @@ cursor: url(${props => props.cursor}), auto;
 
 const GridContainer = styled.div`
 display:grid;
-grid-gap: 1px 3px;
-grid-template-columns:100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px;
+/* grid-gap: 1px 3px; */
+grid-template-columns:80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px;
 padding:2px;
 scroll-behavior: smooth;
 `
 const GridItem = styled.div`
 background-image: url(${props => props.image ? 'https://lh5.googleusercontent.com/-UukByzakIIk/UcmmET4WP2I/AAAAAAAAA_o/PnYv99yZ_ZQ/s256/Enlarged%20Dirt.gif' : 'https://i.cubeupload.com/KB2ChT.png'});
 display:inline-grid;
-border:1px solid black;
+border:1px solid rgba(0,0,0,.2);
 margin: 0;
 text-align:center;
-height: 100px;
-width: 100px;
+height: 80px;
+width: 80px;
 :hover {
     background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${props => props.image ? 'https://lh5.googleusercontent.com/-UukByzakIIk/UcmmET4WP2I/AAAAAAAAA_o/PnYv99yZ_ZQ/s256/Enlarged%20Dirt.gif' : 'https://i.cubeupload.com/KB2ChT.png'});
 }
@@ -45,7 +45,7 @@ class Project extends Component {
         const boxes = this.state.images.map((box, i) => {
             return (
                 <GridItem key={i} image={this.state.images[i]} onClick={() => this.imageUpdater(i)}>
-                    {i}
+                    
                     <img src={this.state.images[i]} alt='' />
                 </GridItem>
             )
