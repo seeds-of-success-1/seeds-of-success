@@ -27,7 +27,7 @@ font-size:1.5rem;
     cursor: pointer;
 }
 `
-const NavList = styled.ul`
+ const NavList = styled.ul`
 padding:0;
 margin:0;
 position:relative;
@@ -41,9 +41,7 @@ z-index: 1;
 `
 const NavListItem = styled.li`
 margin:0 5px;
-
 list-style-type:none;
-
 `
 const DropDownMenu = styled.div`
 background-color: #fff;
@@ -78,12 +76,9 @@ class Nav extends Component {
     getProjects() {
         const mapped = this.state.projects.map(project => {
             return (
-            <>
                 <Link key={project.id} to={`/project${project.id}`}>
                     <DropdownItem>{project.name}</DropdownItem>
                 </Link>
-
-            </>
             )
         })
         return mapped
