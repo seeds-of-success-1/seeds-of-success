@@ -41,15 +41,26 @@ class Project extends Component {
 
     state = {
         cursor: '',
-        images: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+        images: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+        edit: 1
     }
 
     imageUpdater = (id) => {
         let squares = [...this.state.images]
-        squares[id] = this.state.cursor
-        this.setState({
-            images: squares
-        })
+        if (this.state.edit === 1) {
+            squares[id] = this.state.cursor
+            this.setState({
+                images: squares
+            })
+        } else if (this.state.edit === 2) {
+            let cursor = squares[id];
+            squares[id] = true
+            this.setState({cursor, images: squares, edit: 3})
+        } else if (this.state.edit === 3) {
+            let cursor = ''
+            squares[id] = this.state.cursor
+            this.setState({cursor, images: squares, edit: 2})
+        }
     }
 
     getBoxes = () => {
@@ -72,6 +83,7 @@ class Project extends Component {
                 <button onClick={() => this.setState({cursor: smallTomato})}>Tomato</button>
                 <button onClick={() => this.setState({cursor: ''})}>Grass</button>
                 <button onClick={() => this.setState({cursor: true})}>Dirt</button>
+                <button onClick={() => this.setState({edit: 2, cursor: 'pointer'})}>Toggle Edit</button>
                 <h1>HELLO</h1>
                 <GridContainer>
                     {this.getBoxes()}
