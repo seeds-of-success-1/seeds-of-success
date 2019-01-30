@@ -16,9 +16,7 @@ justify-content:center;
 width:100%;
 
 `
-const OptionsBtn = styled.btn`
 
-`
 class Dashboard extends Component {
     render() {
         return (
