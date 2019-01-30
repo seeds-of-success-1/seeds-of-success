@@ -58,7 +58,8 @@ class Project extends Component {
             <ProjectWrap cursor={this.state.cursor}>
                 <button onClick={() => this.setState({cursor: 'https://image.flaticon.com/icons/png/128/271/271439.png'})}>carrot</button>
                 <button onClick={() => this.setState({cursor: 'https://image.flaticon.com/icons/png/128/1135/1135528.png'})}>leek</button>
-                <button onClick={() => this.setState({cursor: ''})}>None</button>
+                <button onClick={() => this.setState({cursor: ''})}>Grass</button>
+                <button onClick={() => this.setState({cursor: ' '})}>Dirt</button>
                 <h1>HELLO</h1>
                 <GridContainer>
                     {this.getBoxes()}
