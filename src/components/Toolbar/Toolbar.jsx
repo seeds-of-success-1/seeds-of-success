@@ -157,8 +157,8 @@ class Toolbar extends Component {
             onClick={this.toggleNav}
             src={close} alt=""/>
                 <NavToolbox id='toolbox'>
-                    <ToolboxItem>Grass</ToolboxItem>
-                    <ToolboxItem>Dirt</ToolboxItem>
+                    <ToolboxItem onClick={() => this.props.cursorProp('')}>Grass</ToolboxItem>
+                    <ToolboxItem onClick={() => this.props.cursorProp(true)}>Dirt</ToolboxItem>
                 </NavToolbox>
                 <NavList>
                     {this.props.state.plants.map(plant =>(

@@ -86,6 +86,12 @@ class Project extends Component {
         return boxes
     }
 
+    cursorProp = (cursor) => {
+        this.setState({
+            cursor: cursor
+        })
+    }
+
     updateCursor = (id) => {
         this.setState({cursor: `./assets/40x40/${id}.png`})
     }
@@ -93,7 +99,7 @@ class Project extends Component {
     render() {
         return (
             <ProjectAndToolbar>
-                <Toolbar cursor={id => this.updateCursor(id)} />
+                <Toolbar cursorProp={(cursor) => this.cursorProp(cursor)} cursor={id => this.updateCursor(id)} />
                 <ProjectWrap cursor={this.state.cursor}>
                     <button onClick={() => this.setState({ cursor: 'https://image.flaticon.com/icons/png/128/271/271439.png' })}>carrot</button>
                     <button onClick={() => this.setState({ cursor: 'https://image.flaticon.com/icons/png/128/1135/1135528.png' })}>leek</button>
