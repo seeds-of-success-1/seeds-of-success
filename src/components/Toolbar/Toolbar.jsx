@@ -156,6 +156,7 @@ class Toolbar extends Component {
             <CloseBtn
             onClick={this.toggleNav}
             src={close} alt=""/>
+                    <button onClick={this.props.edit}>Edit</button>
                 <NavToolbox id='toolbox'>
                     <ToolboxItem onClick={() => this.props.cursorProp('')}>Grass</ToolboxItem>
                     <ToolboxItem onClick={() => this.props.cursorProp(true)}>Dirt</ToolboxItem>

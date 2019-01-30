@@ -99,14 +99,8 @@ class Project extends Component {
     render() {
         return (
             <ProjectAndToolbar>
-                <Toolbar cursorProp={(cursor) => this.cursorProp(cursor)} cursor={id => this.updateCursor(id)} />
+                <Toolbar edit={this.toggleEdit} cursorProp={(cursor) => this.cursorProp(cursor)} cursor={id => this.updateCursor(id)} />
                 <ProjectWrap cursor={this.state.cursor}>
-                    <button onClick={() => this.setState({ cursor: 'https://image.flaticon.com/icons/png/128/271/271439.png' })}>carrot</button>
-                    <button onClick={() => this.setState({ cursor: 'https://image.flaticon.com/icons/png/128/1135/1135528.png' })}>leek</button>
-                    <button onClick={() => this.setState({ cursor: './assets/40x40/5.png' })}>Asparagus</button>
-                    <button onClick={() => this.setState({ cursor: '' })}>Grass</button>
-                    <button onClick={() => this.setState({ cursor: true })}>Dirt</button>
-                    <button onClick={() => this.toggleEdit()}>Toggle Edit</button>
                     <h1>HELLO</h1>
                     <GridContainer>
                         {this.getBoxes()}
