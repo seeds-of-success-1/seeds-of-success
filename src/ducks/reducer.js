@@ -9,9 +9,19 @@ const initialState = {
     id: ''
 }
 
-const UPDATE_USERNAME = 'UPDATE_USERNAME'
-const UPDATE_ID = 'UPDATE_ID'
 
+
+
+//ACTION TYPES
+const UPDATE_USERNAME = 'UPDATE_USERNAME';
+const UPDATE_ID = 'UPDATE_ID'
+const UPDATE_PROJECTS = 'UPDATE_PROJECTS';
+
+const GET_PLANTS = 'GET_PLANTS';
+const GET_PLANTS_PENDING = 'GET_PLANTS_PENDING';
+const GET_PLANTS_FULFILLED = 'GET_PLANTS_FULFILLED';
+
+//UPDATE USER INFO
 export function updateUsername (username) {
     return {
         type: UPDATE_USERNAME,
@@ -25,13 +35,14 @@ export function updateId (id) {
         payload: id
     }
 }
+export const updateProjects = (projects) =>{
+    return {
+        type:UPDATE_PROJECTS,
+        payload:projects
+    }
+}
 
-//ACTION TYPES
 //FETCH PLANT DATA
-const GET_PLANTS = 'GET_PLANTS';
-const GET_PLANTS_PENDING = 'GET_PLANTS_PENDING';
-const GET_PLANTS_FULFILLED = 'GET_PLANTS_FULFILLED'
-
 export const getPlants = () => {
     return {
         type: GET_PLANTS,
@@ -55,8 +66,8 @@ export default function reducer(state = initialState, action) {
             return {...state, username: action.payload}
 
         case UPDATE_ID:
-            return {...state, id: action.payload} 
-        
+            return {...state, id: action.payload}
+
         default:
             return state;
     }

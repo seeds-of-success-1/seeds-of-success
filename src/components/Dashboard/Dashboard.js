@@ -5,8 +5,9 @@ const DashboardContainer = styled.div`
 background:lightgrey;
 display:flex;
 flex-direction:column;
-height:80vh;
-margin-top:10vh;
+height:75.5vh;
+margin-top:130px;
+
 `
 const Footer = styled.div`
 height:10vh;
@@ -16,16 +17,16 @@ justify-content:center;
 class Dashboard extends Component {
     render() {
         return (
-            <div>
+            <>
                 <DashboardContainer>
                     Lettuce begin
                     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
                     [current project]
                 </DashboardContainer>
                 <Footer>Currently displayed project title</Footer>
-            </div>
+            </>
         );
     }
 }
 
-export default Dashboard; 
+export default Dashboard;
