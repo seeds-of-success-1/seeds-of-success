@@ -54,11 +54,27 @@ const NavListItem = styled.li`
 padding:5px;
 margin:0;
 list-style-type:none;
-font-size:1.5em;
+width:100%;
+display:inline-block;
 :hover {
     cursor: pointer;
     background-color: #ddd;
-}
+};
+
+`
+const ListItemTitle = styled.p`
+    font-size:1.6em;
+    margin:5px 0 0 30px;
+    padding:0;
+    position:relative;
+    bottom:0px;
+
+`
+const ListItemImg = styled.img`
+width:35px;
+height:35px;
+margin:5px 20px 0 5px;
+float:left;
 `
 const Hamburger = styled.div`
  width: 30px;
@@ -140,14 +156,17 @@ class Toolbar extends Component {
             onClick={this.toggleNav}
             src={close} alt=""/>
                 <NavToolbox id='toolbox'>
-
                     <ToolboxItem>Grass</ToolboxItem>
                     <ToolboxItem>Dirt</ToolboxItem>
-
                 </NavToolbox>
                 <NavList>
                     {this.props.state.plants.map(plant =>(
-                        <NavListItem key={plant.id} >{plant.name}</NavListItem>
+                        <NavListItem key={plant.id} >
+                            <ListItemImg src={`https://res-4.cloudinary.com/do6bw42am/image/upload/c_scale,f_auto,h_300/v1/${plant.image_url}`} alt=""/>
+                            <ListItemTitle>
+                                {plant.name}
+                            </ListItemTitle>
+                        </NavListItem>
                     ))}
                 </NavList>
             </SideNav>
