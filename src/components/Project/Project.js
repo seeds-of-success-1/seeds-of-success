@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import tomato from './Tomato2.png';
 import styled from 'styled-components';
+import grass from './grass.png';
+import dirt from './dirt.png';
 
 const ProjectWrap = styled.div`
 margin: 130px 0 0 270px;
@@ -14,9 +17,9 @@ padding:2px;
 scroll-behavior: smooth;
 `
 const GridItem = styled.div`
-background-image: url(${props => props.image ? 'https://lh5.googleusercontent.com/-UukByzakIIk/UcmmET4WP2I/AAAAAAAAA_o/PnYv99yZ_ZQ/s256/Enlarged%20Dirt.gif' : 'https://i.cubeupload.com/KB2ChT.png'});
+background-image: url(${props => props.image ? dirt : grass});
 display:inline-grid;
-border:1px solid rgba(0,0,0,.2);
+/* border:1px solid rgba(0,0,0,.2); */
 margin: 0;
 text-align:center;
 height: 80px;
@@ -25,7 +28,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 :hover {
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${props => props.image ? 'https://lh5.googleusercontent.com/-UukByzakIIk/UcmmET4WP2I/AAAAAAAAA_o/PnYv99yZ_ZQ/s256/Enlarged%20Dirt.gif' : 'https://i.cubeupload.com/KB2ChT.png'});
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${props => props.image ? dirt : grass});
 }
 `
 
@@ -61,6 +64,7 @@ class Project extends Component {
             <ProjectWrap cursor={this.state.cursor}>
                 <button onClick={() => this.setState({cursor: 'https://image.flaticon.com/icons/png/128/271/271439.png'})}>carrot</button>
                 <button onClick={() => this.setState({cursor: 'https://image.flaticon.com/icons/png/128/1135/1135528.png'})}>leek</button>
+                <button onClick={() => this.setState({cursor: tomato})}>Tomato</button>
                 <button onClick={() => this.setState({cursor: ''})}>Grass</button>
                 <button onClick={() => this.setState({cursor: ' '})}>Dirt</button>
                 <h1>HELLO</h1>
