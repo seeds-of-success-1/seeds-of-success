@@ -1,38 +1,82 @@
 import React, { Component } from 'react';
-import './Project.css';
+import tomato from './tomato.png';
+import smallTomato from './smallTomato.png';
+import styled from 'styled-components';
+import grass from './grass.png';
+import dirt from './dirt.png';
+
+const ProjectWrap = styled.div`
+margin: 130px 0 0 270px;
+cursor: url(${props => props.cursor}), auto;
+`
+
+const GridContainer = styled.div`
+display:grid;
+/* grid-gap: 1px 3px; */
+grid-template-columns:80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px;
+padding:2px;
+scroll-behavior: smooth;
+`
+const GridItem = styled.div`
+background-image: url(${props => props.image ? dirt : grass});
+display:inline-grid;
+/* border:1px solid rgba(0,0,0,.2); */
+margin: 0;
+text-align:center;
+height: 80px;
+width: 80px;
+display: flex;
+align-items: center;
+justify-content: center;
+:hover {
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${props => props.image ? dirt : grass});
+}
+`
+const Image = styled.img`
+border: none;
+border-image: none;
+`
 
 class Project extends Component {
-    render() {
+
+    state = {
+        cursor: '',
+        images: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+    }
+
+    imageUpdater = (id) => {
+        let squares = [...this.state.images]
+        squares[id] = this.state.cursor
+        this.setState({
+            images: squares
+        })
+    }
+
+    getBoxes = () => {
+        const boxes = this.state.images.map((box, i) => {
+            return (
+                <GridItem key={i} image={this.state.images[i]} onClick={() => this.imageUpdater(i)}>
+                    
+                    <Image src={this.state.images[i]} alt='' />
+                </GridItem>
+            )
+        })
+        return boxes
+    }
+
+    render() { 
         return (
-            <div>
+            <ProjectWrap cursor={this.state.cursor}>
+                <button onClick={() => this.setState({cursor: 'https://image.flaticon.com/icons/png/128/271/271439.png'})}>carrot</button>
+                <button onClick={() => this.setState({cursor: 'https://image.flaticon.com/icons/png/128/1135/1135528.png'})}>leek</button>
+                <button onClick={() => this.setState({cursor: smallTomato})}>Tomato</button>
+                <button onClick={() => this.setState({cursor: ''})}>Grass</button>
+                <button onClick={() => this.setState({cursor: true})}>Dirt</button>
                 <h1>HELLO</h1>
-                <div className='grid-container'>
-                    <div className='grid-item'>1</div>
-                    <div className='grid-item'>2</div>
-                    <div className='grid-item'>3</div>
-                    <div className='grid-item'>4</div>
-                    <div className='grid-item'>5</div>
-                    <div className='grid-item'>6</div>
-                    <div className='grid-item'>7</div>
-                    <div className='grid-item'>8</div>
-                    <div className='grid-item'>9</div>
-                    <div className='grid-item'>10</div>
-                    <div className='grid-item'>11</div>
-                    <div className='grid-item'>12</div>
-                    <div className='grid-item'>13</div>
-                    <div className='grid-item'>14</div>
-                    <div className='grid-item'>15</div>
-                    <div className='grid-item'>16</div>
-                    <div className='grid-item'>17</div>
-                    <div className='grid-item'>18</div>
-                    <div className='grid-item'>19</div>
-                    <div className='grid-item'>20</div>
-                    <div className='grid-item'>21</div>
-                    <div className='grid-item'>22</div>
-                    <div className='grid-item'>23</div>
-                    <div className='grid-item'>24</div>
-                </div>
-            </div>
+                <GridContainer>
+                    {this.getBoxes()}
+                </GridContainer>
+            </ProjectWrap>
         );
     }
 }
