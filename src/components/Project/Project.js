@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import tomato from './tomato.png';
-import smallTomato from './smallTomato.png';
 import styled from 'styled-components';
 import grass from './grass.png';
 import dirt from './dirt.png';
+import trowel from './trowel.png';
+import asparagus from './Pics/40x40/asparagus60x40.png';
 
 const ProjectWrap = styled.div`
 margin: 130px 0 0 270px;
@@ -57,9 +57,16 @@ class Project extends Component {
             squares[id] = true
             this.setState({cursor, images: squares, edit: 3})
         } else if (this.state.edit === 3) {
-            let cursor = ''
             squares[id] = this.state.cursor
-            this.setState({cursor, images: squares, edit: 2})
+            this.setState({cursor: trowel, images: squares, edit: 2})
+        }
+    }
+
+    toggleEdit = () => {
+        if (this.state.edit === 1) {
+            this.setState({edit: 2, cursor: trowel})
+        } else {
+            this.setState({edit: 1, cursor: ''})
         }
     }
 
@@ -80,10 +87,10 @@ class Project extends Component {
             <ProjectWrap cursor={this.state.cursor}>
                 <button onClick={() => this.setState({cursor: 'https://image.flaticon.com/icons/png/128/271/271439.png'})}>carrot</button>
                 <button onClick={() => this.setState({cursor: 'https://image.flaticon.com/icons/png/128/1135/1135528.png'})}>leek</button>
-                <button onClick={() => this.setState({cursor: smallTomato})}>Tomato</button>
+                <button onClick={() => this.setState({cursor: asparagus})}>Asparagus</button>
                 <button onClick={() => this.setState({cursor: ''})}>Grass</button>
                 <button onClick={() => this.setState({cursor: true})}>Dirt</button>
-                <button onClick={() => this.setState({edit: 2, cursor: 'pointer'})}>Toggle Edit</button>
+                <button onClick={() => this.toggleEdit()}>Toggle Edit</button>
                 <h1>HELLO</h1>
                 <GridContainer>
                     {this.getBoxes()}
