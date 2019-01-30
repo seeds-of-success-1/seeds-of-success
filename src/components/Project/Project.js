@@ -5,6 +5,7 @@ class Project extends Component {
     render() {
         return (
             <div>
+                <h1>HELLO</h1>
                 <div className='grid-container'>
                     <div className='grid-item'>1</div>
                     <div className='grid-item'>2</div>
