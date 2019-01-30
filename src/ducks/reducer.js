@@ -60,7 +60,13 @@ export default function reducer(state = initialState, action) {
         return {...state, plantsLoading:true};
 
         case GET_PLANTS_FULFILLED:
-        return {...state, plantsLoading:false, plants:action.payload.filter(plant => plant.id !== 42)}
+        return {...state, plantsLoading:false, plants:action.payload.filter(plant => plant.id !== 42).sort((a,b) => {
+            if(a.name > b.name) {
+                return 1
+            } else if (a.name < b.name) {
+                return -1
+            } else return 0
+        })}
 
         case UPDATE_USERNAME:
             return {...state, username: action.payload}
