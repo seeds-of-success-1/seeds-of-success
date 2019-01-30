@@ -60,7 +60,7 @@ export default function reducer(state = initialState, action) {
         return {...state, plantsLoading:true};
 
         case GET_PLANTS_FULFILLED:
-        return {...state, plantsLoading:false, plants:action.payload}
+        return {...state, plantsLoading:false, plants:action.payload.filter(plant => plant.id !== 42)}
 
         case UPDATE_USERNAME:
             return {...state, username: action.payload}

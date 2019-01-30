@@ -79,6 +79,7 @@ float:left;
 const Hamburger = styled.div`
  width: 30px;
  position: absolute;
+ top: 130px;
  transition:all .5s;
  height:30px;
  margin:16px;
@@ -161,7 +162,7 @@ class Toolbar extends Component {
                 </NavToolbox>
                 <NavList>
                     {this.props.state.plants.map(plant =>(
-                        <NavListItem key={plant.id} >
+                        <NavListItem onClick={() => this.props.cursor(plant.id)} key={plant.id} >
                             <ListItemImg src={`https://res-4.cloudinary.com/do6bw42am/image/upload/c_scale,f_auto,h_300/v1/${plant.image_url}`} alt=""/>
                             <ListItemTitle>
                                 {plant.name}
