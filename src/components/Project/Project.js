@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import grass from './grass.png';
 import dirt from './dirt.png';
 import Toolbar from '../Toolbar/Toolbar'
+import {debounce} from 'lodash';
 
 
 const ProjectAndToolbar = styled.div`
@@ -44,6 +45,7 @@ min-width:80px;
 display: flex;
 align-items: center;
 justify-content: center;
+position: relative;
 :hover {
     background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${props => props.image ? dirt : grass});
 }
@@ -53,13 +55,27 @@ border: none;
 border-image: none;
 `
 
+const Popup = styled.div`
+    position: absolute;
+    top: 0;
+    // right: -50px;
+    background-color: white;
+    z-index: 2;
+    padding: 4px;
+    border-radius: 15px;
+`
+
 class Project extends Component {
 
     state = {
         cursor: '',
         toggleGridWidth:false,
         plants: [{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},],
-        edit: 1
+        edit: 1,
+        details: debounce((box) => {
+            this.setState({hoverPlantId: box.id})
+        }, 1000, {trailing: true, leading: false}),
+        hoverPlantId: -1
     }
 
     imageUpdater = (id) => {
@@ -87,6 +103,11 @@ class Project extends Component {
         }
     }
 
+    cancelHover = () => {
+        this.state.details.cancel()
+        this.setState({hoverPlantId: -1})
+    }
+
     getBoxes = () => {
         const boxes = this.state.plants.map((box, i) => {
             if (!box.id || box.id === true) {
@@ -94,11 +115,20 @@ class Project extends Component {
                     <GridItem key={i} image={this.state.plants[i].id} onClick={() => this.imageUpdater(i)}>
                     </GridItem>
                 )
+            } else if (box.id === this.state.hoverPlantId) {
+                return (
+                <GridItem key={i} image={this.state.plants[i].id} onClick={() => this.imageUpdater(i)} onMouseLeave={() => {this.cancelHover()}} onMouseEnter={() => {this.state.details(box)}}>
+    
+                        <Image src={`./assets/40x40/${box.id}.png`} alt=''  />
+
+                        <Popup>{box.name}</Popup>
+                    </GridItem>
+                )
             } else {
                 return (
-                    <GridItem key={i} image={this.state.plants[i].id} onClick={() => this.imageUpdater(i)}>
+                    <GridItem key={i} image={this.state.plants[i].id} onClick={() => this.imageUpdater(i)} onMouseLeave={() => {this.cancelHover()}} onMouseEnter={() => {this.state.details(box)}}>
     
-                        <Image src={`./assets/40x40/${box.id}.png`} alt='' />
+                        <Image src={`./assets/40x40/${box.id}.png`} alt='' onMouseEnter={() => {this.state.details(box)}}/>
                     </GridItem>
                 )
             }
