@@ -137,7 +137,6 @@ class Toolbar extends Component {
 
 
     render() {
-        console.log(this.props)
         return (
             <Container>
 
@@ -155,14 +154,15 @@ class Toolbar extends Component {
             <CloseBtn
             onClick={this.toggleNav}
             src={close} alt=""/>
-                    <ToolboxItem style={{zIndex:4}} onClick={this.props.edit}>Edit</ToolboxItem>
-                    <ToolboxItem onClick={() => this.props.cursorProp('')}>Grass</ToolboxItem>
-                    <ToolboxItem onClick={() => this.props.cursorProp(true)}>Dirt</ToolboxItem>
+                    {this.props.editState === 1 ? <ToolboxItem style={{zIndex:4}} onClick={this.props.edit}>Edit: off</ToolboxItem> :
+                    <ToolboxItem style={{zIndex:4}} onClick={this.props.edit}>Edit: on</ToolboxItem> }
+                    <ToolboxItem onClick={() => this.props.cursorProp({})}>Grass</ToolboxItem>
+                    <ToolboxItem onClick={() => this.props.cursorProp({id: true})}>Dirt</ToolboxItem>
                 </NavToolbox>
                 <div id="nav-ul" style={{overflow:"scroll",height:'100%',zIndex:-1}}>
                 <NavList>
                     {this.props.state.plants.map(plant =>(
-                        <NavListItem onClick={() => this.props.cursor(plant.id)} key={plant.id} >
+                        <NavListItem onClick={() => this.props.cursor({id: plant.id, name: plant.name})} key={plant.id} >
                             <ListItemImg src={`https://res-4.cloudinary.com/do6bw42am/image/upload/c_scale,f_auto,h_300/v1/${plant.image_url}`} alt=""/>
                             <ListItemTitle>
                                 {plant.name}

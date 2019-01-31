@@ -87,7 +87,6 @@ class Nav extends Component {
     }
 
     render() {
-        console.log(this.props)
         let nav = this.props.location.pathname === "/"?
         null
       : <NavWrap>
