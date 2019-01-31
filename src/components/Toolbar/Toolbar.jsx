@@ -9,45 +9,48 @@ import close from './close-btn.svg';
 const Container = styled.div`
 position:relative;
 float:left;
+z-index:4;
 `
 const SideNav = styled.div`
   transition:all .3s;
   height: ${props => props.open ? '100%' : '0px'};
-  width: ${props => props.open ? '250px' : '0px'};
+  width: ${props => props.open ? '280px' : '0px'};
   position: fixed;
   margin-top:130px;
-  z-index: 0;
+  z-index: 3;
   top: 0;
   left: 0;
   background-color: #fff;
-  overflow-x: hidden;
-  padding-top: 20px;
+  overflow-y: hidden;
 `
 const NavToolbox = styled.div`
-height:10%;
+height:100px;
+width:280px;
 border-bottom: solid 1px black;
 display:flex;
 justify-content:flex-start;
 align-items:flex-end;
-
+position:sticky;
+z-index:2;
+background-color:#ddd;
 `
 const ToolboxItem = styled.h6`
 padding:0;
-margin:0 10px;
+margin:0 15px;
 font-size:1.5em;
 font-weight:400;
 cursor: pointer;
-:nth-child(2){
-    position:relative;
-    left:60px;
-}
 &:hover{
-    background-color: #ddd;
+    background-color: #BBB;
 }
 `
 const NavList = styled.ul`
 padding:0;
 margin:0;
+position:relative;
+top:10px;
+z-index:0;
+overflow:scroll;
 `
 const NavListItem = styled.li`
 padding:5px;
@@ -67,7 +70,7 @@ const ListItemTitle = styled.p`
     padding:0;
     position:relative;
     bottom:0px;
-
+    width:100%;
 `
 const ListItemImg = styled.img`
 width:35px;
@@ -77,17 +80,20 @@ float:left;
 `
 const Hamburger = styled.div`
  width: 30px;
- position: absolute;
+ position: fixed;
  top: 130px;
  transition:all .5s;
  height:30px;
  margin:16px;
+ background:#BBB;
+ border-radius:5px;
+ padding:5px;
 cursor: pointer;
 display:flex;
 flex-direction:column;
 justify-content:space-between;
 &.closed {
-    transition:all .3s;
+    transition:all .2s;
     height:0;
     width:0;
     margin:0;
@@ -95,7 +101,6 @@ justify-content:space-between;
 `
 const Bar = styled.span`
  display: block;
-  /* position: absolute; */
   height: 5px;
   width: 100%;
   background: #333;
@@ -116,26 +121,20 @@ const CloseBtn = styled.img`
 height:30px;
 width: 30px;
 position:relative;
-left:210px;
-bottom:13px ;
+left:85%;
+bottom:65px ;
+z-index:3;
 `
 class Toolbar extends Component {
     state ={
         navOpen:true,
-        burgerOpen:false
     }
 
-    openNavAfterBurgerClose = () => {
-        this.setState({burgerOpen:false})
-        setTimeout(this.toggleNav,500);
-    }
     toggleNav = () =>{
-    this.setState({navOpen:!this.state.navOpen,burgerOpen:true})
-       if(!this.state.navOpen){
-           this.setState({burgerOpen:true})
-       }
-       this.props.toggleGrid()
+        this.setState({navOpen:!this.state.navOpen,burgerOpen:true})
+        this.props.toggleGrid()
     }
+
 
     render() {
         console.log(this.props)
@@ -143,8 +142,8 @@ class Toolbar extends Component {
             <Container>
 
                 <Hamburger
-                onClick={this.openNavAfterBurgerClose}
-                className={!this.state.burgerOpen ? 'closed' : null}
+                onClick={this.toggleNav}
+                className={this.state.navOpen ? 'closed' : null}
                 >
                     <Bar/>
                     <Bar/>
@@ -152,14 +151,15 @@ class Toolbar extends Component {
                 </Hamburger>
 
             <SideNav open={this.state.navOpen}>
+                <NavToolbox id='toolbox'>
             <CloseBtn
             onClick={this.toggleNav}
             src={close} alt=""/>
-                    <button onClick={this.props.edit}>Edit</button>
-                <NavToolbox id='toolbox'>
+                    <ToolboxItem style={{zIndex:4}} onClick={this.props.edit}>Edit</ToolboxItem>
                     <ToolboxItem onClick={() => this.props.cursorProp('')}>Grass</ToolboxItem>
                     <ToolboxItem onClick={() => this.props.cursorProp(true)}>Dirt</ToolboxItem>
                 </NavToolbox>
+                <div id="nav-ul" style={{overflow:"scroll",height:'100%',zIndex:-1}}>
                 <NavList>
                     {this.props.state.plants.map(plant =>(
                         <NavListItem onClick={() => this.props.cursor(plant.id)} key={plant.id} >
@@ -170,6 +170,8 @@ class Toolbar extends Component {
                         </NavListItem>
                     ))}
                 </NavList>
+
+                </div>
             </SideNav>
             </Container>
         );

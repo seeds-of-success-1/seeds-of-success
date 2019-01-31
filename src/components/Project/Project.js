@@ -12,12 +12,14 @@ transition:all .5s;
 `
 
 const ProjectWrap = styled.div`
-margin:${props => props.gridExpand ?'130px 0 0 0px':'130px 0 0 270px'};
+margin:${props => props.gridExpand ?'130px 0 0 0px':'130px 0 0 280px'};
 transition:all .5s;
 /* margin: 130px 0 0 270px; */
 width: 100%;
 cursor: url(${props => props.cursor}), auto;
 float:right;
+background:green;
+overflow-x:hidden
 `
 
 const GridContainer = styled.div`
