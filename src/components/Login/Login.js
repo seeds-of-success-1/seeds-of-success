@@ -7,6 +7,8 @@ import Bg from './Bg1.png'
 
 const LoginMain = styled.div`
 background-image:url(${Bg});
+background-reapeat:no-repeat;
+background-size:auto;
 height:87vh;
 display:flex;
 justify-content:center;
