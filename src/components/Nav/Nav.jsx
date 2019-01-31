@@ -46,8 +46,8 @@ list-style-type:none;
 const DropDownMenu = styled.div`
 background-color: #fff;
 padding: 0;
-transition: all .25s;
-height: ${props => props.open ? 'auto' : '0px'};
+height: ${props => props.open ? '100%' : '0px'};
+transition:all .4s;
 overflow: hidden;
 margin-top: 2px;
 `
@@ -77,7 +77,9 @@ class Nav extends Component {
         const mapped = this.state.projects.map(project => {
             return (
                 <Link key={project.id} to={`/project${project.id}`}>
-                    <DropdownItem>{project.name}</DropdownItem>
+                    <DropdownItem
+                    onClick={()=>this.setState({projectsOpen:!this.state.projectsOpen})}
+                    >{project.name}</DropdownItem>
                 </Link>
             )
         })
