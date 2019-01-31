@@ -31,7 +31,7 @@ margin-top:15%;
 @media (max-width: 1700px) {
     width:70vh;
     height:70vh;
-    margin-top:10%;
+    margin-top:22%;
     font-size:1.5rem;
   }
 `
@@ -164,7 +164,7 @@ class Login extends Component {
                         </RLogin> :
                         <RLogin className='register'>
                             
-                                <h5>Register Account</h5>
+                                <h4>Register Account</h4>
                                 
                                 <LoginInput
                                         value={this.state.username}
