@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import grass from './grass.png';
 import dirt from './dirt.png';
 import Toolbar from '../Toolbar/Toolbar'
-import trowel from './trowel.png';
 
 
 const ProjectAndToolbar = styled.div`
@@ -59,55 +58,62 @@ class Project extends Component {
     state = {
         cursor: '',
         toggleGridWidth:false,
-        images: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null],
+        plants: [{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},],
         edit: 1
     }
 
     imageUpdater = (id) => {
-        let squares = [...this.state.images]
+        let squares = [...this.state.plants]
         if (this.state.edit === 1) {
             squares[id] = this.state.cursor
             this.setState({
-                images: squares
+                plants: squares
             })
         } else if (this.state.edit === 2) {
             let cursor = squares[id];
-            squares[id] = true
-            this.setState({ cursor, images: squares, edit: 3 })
+            squares[id] = {id: true}
+            this.setState({ cursor, plants: squares, edit: 3 })
         } else if (this.state.edit === 3) {
             squares[id] = this.state.cursor
-            this.setState({ cursor: trowel, images: squares, edit: 2 })
+            this.setState({ cursor: {id: 'trowel'}, plants: squares, edit: 2 })
         }
     }
 
     toggleEdit = () => {
         if (this.state.edit === 1) {
-            this.setState({ edit: 2, cursor: trowel })
+            this.setState({ edit: 2, cursor: {id: 'trowel'} })
         } else {
-            this.setState({ edit: 1, cursor: '' })
+            this.setState({ edit: 1, cursor: {} })
         }
     }
 
     getBoxes = () => {
-        const boxes = this.state.images.map((box, i) => {
-            return (
-                <GridItem key={i} image={this.state.images[i]} onClick={() => this.imageUpdater(i)}>
-
-                    <Image src={this.state.images[i]} alt='' />
-                </GridItem>
-            )
+        const boxes = this.state.plants.map((box, i) => {
+            if (!box.id || box.id === true) {
+                return (
+                    <GridItem key={i} image={this.state.plants[i].id} onClick={() => this.imageUpdater(i)}>
+                    </GridItem>
+                )
+            } else {
+                return (
+                    <GridItem key={i} image={this.state.plants[i].id} onClick={() => this.imageUpdater(i)}>
+    
+                        <Image src={`./assets/40x40/${box.id}.png`} alt='' />
+                    </GridItem>
+                )
+            }
         })
         return boxes
     }
 
-    cursorProp = (cursor) => {
+    cursorProp = (obj) => {
         this.setState({
-            cursor: cursor
+            cursor: obj
         })
     }
 
-    updateCursor = (id) => {
-        this.setState({cursor: `./assets/40x40/${id}.png`})
+    updateCursor = (obj) => {
+        this.setState({cursor: obj})
     }
     toggleGridWidth = () =>{
         console.log('hello from grid')
@@ -116,8 +122,8 @@ class Project extends Component {
     render() {
         return (
             <ProjectAndToolbar>
-                <Toolbar toggleGrid={this.toggleGridWidth} edit={this.toggleEdit} cursorProp={(cursor) => this.cursorProp(cursor)} cursor={id => this.updateCursor(id)} />
-                <ProjectWrap cursor={this.state.cursor} gridExpand={this.state.toggleGridWidth}>
+                <Toolbar toggleGrid={this.toggleGridWidth} edit={this.toggleEdit} cursorProp={(cursor) => this.cursorProp(cursor)} cursor={id => this.updateCursor(id)} editState={this.state.edit} />
+                <ProjectWrap cursor={`./assets/40x40/${this.state.cursor.id}.png`} gridExpand={this.state.toggleGridWidth}>
                     <GridContainer>
                         {this.getBoxes()}
                     </GridContainer>
