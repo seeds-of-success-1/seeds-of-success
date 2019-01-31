@@ -8,11 +8,11 @@ import Bg from './Bg1.png'
 const LoginMain = styled.div`
 background-image:url(${Bg});
 background-reapeat:no-repeat;
-background-size:auto;
-height:87vh;
+background-size:cover;
+height:100vh;
 display:flex;
 justify-content:center;
-padding-top:13%;
+
 `
 const LoginContainer = styled.div`
 padding-top: 12px;
@@ -26,6 +26,14 @@ background-color:whitesmoke;
 opacity:0.80;
 text-align:center;
 border-radius:6px;
+margin-top:15%;
+
+@media (max-width: 1700px) {
+    width:70vh;
+    height:70vh;
+    margin-top:10%;
+    font-size:1.5rem;
+  }
 `
 const RLogin = styled.div`
 height:100%;
@@ -34,6 +42,9 @@ display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
+@media (max-width: 1700px) {
+    font-size:1.5rem;
+  }
 `
 const LoginInput = styled.input`
 font: inherit;
@@ -50,6 +61,10 @@ background: none;
 margin-left:8%
 outline: none !important;
 caret-color: green;
+@media (max-width: 1700px) {
+    height:50px;
+    text-size:1.5rem
+  }
 `
 
 const LoginButton = styled.button`
@@ -61,6 +76,20 @@ margin-bottom:1px;
 min-height:35px;
 min-width:55px;
 cursor:pointer;
+font-weight:650;
+@media (max-width: 1700px) {
+    height:50px;
+    min-width:100px;
+    font-size:1.5rem;
+    margin-bottom:10px
+  }
+`
+const LError = styled.p`
+color:red;
+font-weight:600;
+`
+const SReg=styled.a`
+font-weight:600;
 `
 
 class Login extends Component {
@@ -116,7 +145,7 @@ class Login extends Component {
                                     <LoginInput
                                         value={this.state.username}
                                         onChange={e => this.setState({ username: e.target.value })}
-                                        autoComplete="off" placeholder='username'
+                                        autoComplete="off" placeholder='Username'
                                     />
                                
                             
@@ -125,37 +154,37 @@ class Login extends Component {
                                     <LoginInput
                                         value={this.state.password}
                                         onChange={e => this.setState({ password: e.target.value })}
-                                        type="password" autoComplete='off' placeholder='password'
+                                        type="password" autoComplete='off' placeholder='Password'
                                     />
                                 
                             
                             <LoginButton onClick={() => this.login()}>Login</LoginButton>
-                            <p>Register<a onClick={this.toggleLogin}></a></p>
-                            <p className='login-error'>{this.state.message}</p>
+                            <p>Register <SReg onClick={this.toggleLogin}>Here</SReg></p>
+                            <LError className='login-error'>{this.state.message}</LError>
                         </RLogin> :
-                        <div className='register'>
-                            <div className='username'>
-                                <h3>Register Account</h3>
-                                <p>Username:
-                                <input
+                        <RLogin className='register'>
+                            
+                                <h5>Register Account</h5>
+                                
+                                <LoginInput
                                         value={this.state.username}
                                         onChange={e => this.setState({ username: e.target.value })}
+                                        placeholder='Username'
                                     />
-                                </p>
-                            </div>
-                            <div className='password'>
-                                <p>Password:
-                                <input
+                                
+                            
+                            
+                                
+                                <LoginInput
                                         value={this.state.password}
                                         onChange={e => this.setState({ password: e.target.value })}
-                                        type="password"
+                                        type="password" placeholder='Password'
                                     />
-                                </p>
-                            </div>
-                            <button onClick={() => this.register()}>Register</button>
-                            <p className='login-error'>{this.state.message}</p>
-                            <a onClick={this.toggleLogin}>Login?</a>
-                        </div>}
+                               
+                            
+                            <LoginButton onClick={() => this.register()}>Register</LoginButton>
+                            <SReg onClick={this.toggleLogin}>Login?</SReg>
+                        </RLogin>}
                 </LoginContainer>
             </LoginMain>
         )
