@@ -1,10 +1,9 @@
-INSERT INTO project_table
+INSERT INTO seeds_projects
 (
-user_id, name, array
+user_id, title, array
 )
 VALUES
 (
-$2, $3, $4
+$1, $2, $3
 )
-WHERE id = $1
 returning *;

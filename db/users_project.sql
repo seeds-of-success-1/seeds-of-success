@@ -1,3 +1,3 @@
 SELECT *
-FROM project_table
+FROM seeds_projects
 WHERE user_id = $1 && id = $2;

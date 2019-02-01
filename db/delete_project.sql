@@ -1,3 +1,3 @@
 DELETE
-FROM project_table
+FROM seeds_projects
 WHERE id = $1;
