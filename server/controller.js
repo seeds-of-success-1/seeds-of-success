@@ -94,5 +94,16 @@ module.exports = {
         if (!oldProject[0]) { return res.status(401).send({ message: `No project with id: ${project_id} associated with this account` }) }
         await db.delete_project([project_id])
         res.status(200).send({deleted: true, message: 'Successfully deleted project'})
+    },
+    getProjectTitles: async (req, res) => {
+        const user_id = req.session.user.id;
+        if(!user_id){return res.status(401).send({message:'Must login first'})};
+        const db = req.app.get('db');
+        const projects = await db.get_project_titles([user_id]);
+        if(!projects.length){
+            return res.status(200).send({message:'Unable to fetch projects'})
+        } else {
+            return res.status(200).send({projects, message:"Successfully aqcuired project titles"})
+        }
     }
 }

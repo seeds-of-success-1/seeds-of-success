@@ -13,7 +13,7 @@ transition:all .5s;
 `
 
 const ProjectWrap = styled.div`
-margin:${props => props.gridExpand ?'130px 0 0 0px':'130px 0 0 280px'};
+margin:${props => props.gridExpand ?'130px 0 0 0px':'130px 0 0 290px'};
 transition:all .5s;
 /* margin: 130px 0 0 270px; */
 width: 100%;
@@ -59,7 +59,6 @@ const Popup = styled.div`
     position: absolute;
     top: 0;
     background-color: white;
-    z-index: 2;
     padding: 4px;
     border-radius: 15px;
 `
@@ -79,14 +78,27 @@ class Project extends Component {
 
     async componentDidMount() {
         const project_id = this.props.match.params.id
-        console.log('here')
         const res = await axios.post('/api/project/get', {project_id})
-        console.log('there')
+        let plant_array = JSON.parse(res.data.project.plant_array);
         if (!res.data.project) {
             return alert("Error.  Couldn't retrive project info")
         } else {
-            this.setState({plants: res.data.project})
+            this.setState({plants: plant_array})
         }
+    }
+    async componentDidUpdate(prevProps){
+        let {id} = this.props.match.params
+        if(prevProps.match.params.id !== id){
+            let project_id = id;
+            let res = await axios.post('/api/project/get',{project_id})
+            this.setState({plants:JSON.parse(res.data.project.plant_array)});
+        }
+    }
+
+    saveProject = async() => {
+        const {plants} = this.state;
+        const project_id = this.props.match.params.id
+        let res = await axios.post(`/api/project/save`,{plants,project_id})
     }
 
     imageUpdater = (id) => {
@@ -121,6 +133,7 @@ class Project extends Component {
 
     getBoxes = () => {
         const boxes = this.state.plants.map((box, i) => {
+
             if (!box.id || box.id === true) {
                 return (
                     <GridItem key={i} image={this.state.plants[i].id} onClick={() => this.imageUpdater(i)}>
@@ -154,20 +167,22 @@ class Project extends Component {
     }
 
     updateCursor = (obj) => {
-        console.log(obj)
-        this.setState({cursor: obj})
+        const plantObj = {
+            id:obj.id,
+            name:obj.name
+        }
+        this.setState({cursor:plantObj})
     }
     toggleGridWidth = () =>{
-        console.log('hello from grid')
         this.setState({toggleGridWidth:!this.state.toggleGridWidth})
     }
     render() {
         return (
             <ProjectAndToolbar>
-                <Toolbar toggleGrid={this.toggleGridWidth} edit={this.toggleEdit} cursorProp={(cursor) => this.cursorProp(cursor)} cursor={id => this.updateCursor(id)} editState={this.state.edit} />
+                <Toolbar save={this.saveProject} toggleGrid={this.toggleGridWidth} edit={this.toggleEdit} cursorProp={(cursor) => this.cursorProp(cursor)} cursor={id => this.updateCursor(id)} editState={this.state.edit} />
                 <ProjectWrap cursor={`./assets/40x40/${this.state.cursor.id}.png`} gridExpand={this.state.toggleGridWidth}>
                     <GridContainer>
-                        {this.getBoxes()}
+                        {Array.isArray(this.state.plants) ? this.getBoxes() : null}
                     </GridContainer>
                 </ProjectWrap>
             </ProjectAndToolbar>
