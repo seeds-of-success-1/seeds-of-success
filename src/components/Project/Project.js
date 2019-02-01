@@ -19,14 +19,13 @@ width: 100%;
 cursor: url(${props => props.cursor}), auto;
 float:right;
 background:green;
-overflow-x:hidden
+overflow-x:hidden;
 `
 
 const GridContainer = styled.div`
 display:grid;
 /* grid-gap: 1px 3px; */
 grid-template-columns:minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%);
-/* grid-template-columns:80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px 80px; */
 padding:2px;
 scroll-behavior: smooth;
 min-width:80vw;
@@ -58,7 +57,6 @@ border-image: none;
 const Popup = styled.div`
     position: absolute;
     top: 0;
-    // right: -50px;
     background-color: white;
     z-index: 2;
     padding: 4px;
@@ -118,7 +116,7 @@ class Project extends Component {
             } else if (box.id === this.state.hoverPlantId) {
                 return (
                 <GridItem key={i} image={this.state.plants[i].id} onClick={() => this.imageUpdater(i)} onMouseLeave={() => {this.cancelHover()}} onMouseEnter={() => {this.state.details(box)}}>
-    
+
                         <Image src={`./assets/40x40/${box.id}.png`} alt=''  />
 
                         <Popup>{box.name}</Popup>
@@ -127,7 +125,7 @@ class Project extends Component {
             } else {
                 return (
                     <GridItem key={i} image={this.state.plants[i].id} onClick={() => this.imageUpdater(i)} onMouseLeave={() => {this.cancelHover()}} onMouseEnter={() => {this.state.details(box)}}>
-    
+
                         <Image src={`./assets/40x40/${box.id}.png`} alt='' onMouseEnter={() => {this.state.details(box)}}/>
                     </GridItem>
                 )
@@ -143,6 +141,7 @@ class Project extends Component {
     }
 
     updateCursor = (obj) => {
+        console.log(obj)
         this.setState({cursor: obj})
     }
     toggleGridWidth = () =>{
