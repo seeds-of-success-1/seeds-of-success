@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const DashboardContainer = styled.div`
 background:lightgrey;
 display:flex;
-flex-direction:column;
+flex-direction:row;
 height:75.5vh;
 margin-top:130px;
 width:100%;
@@ -23,7 +23,6 @@ class Dashboard extends Component {
         return (
             <>
                 <DashboardContainer>
-                    [Weather api?]
                     Lettuce begin
                     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
                     [current project]
