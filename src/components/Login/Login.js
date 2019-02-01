@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { updateUsername, updateId } from './../../ducks/reducer';
+import { updateUsername, updateId, updateProjects } from './../../ducks/reducer';
 import styled from 'styled-components';
 import Bg from './Bg1.png'
 import FadeIn from './FadeInAnimation';
@@ -128,8 +128,14 @@ class Login extends Component {
         this.props.updateUsername(res.data.username)
         this.props.updateId(res.data.id)
         if (res.data.loggedIn) {
+            this.fetchProjectTitles()
             this.props.history.push('/dashboard')
         }
+    }
+
+    fetchProjectTitles = async () => {
+        let res = await axios.get('/api/project/titles');
+        this.props.updateProjects(res.data.projects)
     }
 
     async register() {
@@ -157,23 +163,21 @@ class Login extends Component {
                     {this.state.toggleLogin ?
                         <RLogin className='login'>
                             <h4>Happy Gardening!</h4>
-                               
+
                                     <LoginInput
                                         value={this.state.username}
                                         onChange={e => this.setState({ username: e.target.value })}
                                         autoComplete="off" placeholder='Username'
                                     />
-                               
-                            
-                            
-                                
+
+
                                     <LoginInput
                                         value={this.state.password}
                                         onChange={e => this.setState({ password: e.target.value })}
                                         type="password" autoComplete='off' placeholder='Password'
                                     />
-                                
-                            
+
+
                             <LoginButton onClick={() => this.login()}>Login</LoginButton>
                             <p>Register <SReg onClick={this.toggleLogin}>Here</SReg></p>
                             <LError className='login-error'>{this.state.message}</LError>
@@ -187,17 +191,17 @@ class Login extends Component {
                                         onChange={e => this.setState({ username: e.target.value })}
                                         placeholder='Username'
                                     />
-                                
-                            
-                            
-                                
+
+
+
+
                                 <LoginInput
                                         value={this.state.password}
                                         onChange={e => this.setState({ password: e.target.value })}
                                         type="password" placeholder='Password'
                                     />
-                               
-                            
+
+
                             <LoginButton onClick={() => this.register()}>Register</LoginButton>
                             <SReg onClick={this.toggleLogin}>Login?</SReg>
                         </RLogin>}
@@ -212,4 +216,4 @@ function mapStateToProps(state) {
     return { ...state }
 }
 
-export default connect(mapStateToProps, { updateUsername, updateId })(Login);
+export default connect(mapStateToProps, { updateUsername, updateId, updateProjects })(Login);

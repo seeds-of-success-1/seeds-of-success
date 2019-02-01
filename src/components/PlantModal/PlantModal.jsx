@@ -13,7 +13,7 @@ const ModalOverlay = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-
+    overflow:auto;
 `
 const Modal = styled.div`
     height:auto;
@@ -36,6 +36,13 @@ const Modal = styled.div`
     left:10%;
     height:auto;
   }
+  @media (max-width: 900px) {
+    left:7%;
+  }
+  @media (max-height: 730px) {
+    position:absolute;
+
+  }
 `
 const CloseBtn = styled.img`
 height:30px;
@@ -50,8 +57,6 @@ max-height:300px;
 width:80%;
 align-self: center;
 margin-top: 30px;
-/* background: url('https://res-4.cloudinary.com/do6bw42am/image/upload/c_scale,f_auto,h_300/v1/${props => props.image}')no-repeat center ; */
-/* background-size:80% 80%; */
 box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 margin-bottom:10px;
 `
@@ -120,8 +125,6 @@ class PlantModal extends Component {
 
    render() {
         const {plant} = this.props;
-        console.log(this.state.selected)
-        console.log(this.state.selected === 'one'?true:false )
         return (
             <ModalOverlay
             show={this.props.show}

@@ -17,6 +17,7 @@ const SideNav = styled.div`
   height: ${props => props.open ? '100%' : '0px'};
   width: ${props => props.open ? '285px' : '0px'};
   position: fixed;
+  padding-right:10px;
   margin-top:130px;
   z-index: 3;
   top: 0;
@@ -31,6 +32,7 @@ border-bottom: solid 1px black;
 display:flex;
 justify-content:flex-start;
 align-items:flex-end;
+padding-right:10px;
 position:sticky;
 z-index:2;
 background-color:#ddd;
@@ -44,6 +46,9 @@ cursor: pointer;
 &:hover{
     background-color: #BBB;
 }
+`
+const SaveBtn = styled.button`
+
 `
 const NavList = styled.ul`
 padding:0;
@@ -186,6 +191,9 @@ class Toolbar extends Component {
 
             <SideNav open={this.state.navOpen}>
                 <NavToolbox id='toolbox'>
+                <SaveBtn
+                onClick={this.props.save}
+                >Save</SaveBtn>
             <CloseBtn
             onClick={this.toggleNav}
             src={close} alt=""/>

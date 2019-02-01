@@ -61,25 +61,24 @@ margin: 6px 0;
 `
 class Nav extends Component {
     state = {
-        projects: [{name:'Project 1',id:1}, {name:'Project 2',id:2}, {name:'Project 3',id:3}],
+        projects: [{name:'Project 1',id:1}, {name:'Project 2',id:2}, {name:'Project 4',id:4}],
         projectsOpen: false
     }
 
     logout = async () => {
         let res = await axios.get('/auth/logout');
-        console.log(res.data)
         if(!res.data.loggedIn){
             this.props.history.push('/')
         }
     }
 
     getProjects() {
-        const mapped = this.state.projects.map(project => {
+        const mapped = this.props.state.projects.map((project) => {
             return (
                 <Link key={project.id} to={`/project${project.id}`}>
                     <DropdownItem
                     onClick={()=>this.setState({projectsOpen:!this.state.projectsOpen})}
-                    >{project.name}</DropdownItem>
+                    >{project.title}</DropdownItem>
                 </Link>
             )
         })
@@ -87,7 +86,9 @@ class Nav extends Component {
     }
 
     render() {
-        let nav = this.props.location.pathname === "/"?
+
+
+      const nav = this.props.location.pathname === "/"?
         null
       : <NavWrap>
           <SiteTitle>Seeds of Success</SiteTitle>
@@ -104,10 +105,11 @@ class Nav extends Component {
               </NavListItem>
               <NavListItem>
                   <NavButton onClick={() => this.setState({projectsOpen: !this.state.projectsOpen})}>Projects</NavButton>
-                <DropDownMenu open={this.state.projectsOpen}>{this.getProjects()}</DropDownMenu>
+                <DropDownMenu open={this.state.projectsOpen}>{this.props.state.id ? this.getProjects():null}</DropDownMenu>
               </NavListItem>
           </NavList>
        </NavWrap>
+
         return (
             <div>
                 {nav}
@@ -116,4 +118,7 @@ class Nav extends Component {
     }
 }
 
-export default withRouter(connect(null,{updateId,updateUsername})(Nav));
+function mapStateToProps(state){
+    return{state}
+}
+export default withRouter(connect(mapStateToProps,{updateId,updateUsername})(Nav));
