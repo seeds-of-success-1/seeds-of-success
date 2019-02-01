@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import {connect} from 'react-redux';
+import PlantModal from '../PlantModal/PlantModal'
 import close from './close-btn.svg';
-
+import info from './info.svg';
 
 
 
@@ -14,7 +15,7 @@ z-index:4;
 const SideNav = styled.div`
   transition:all .3s;
   height: ${props => props.open ? '100%' : '0px'};
-  width: ${props => props.open ? '280px' : '0px'};
+  width: ${props => props.open ? '285px' : '0px'};
   position: fixed;
   margin-top:130px;
   z-index: 3;
@@ -25,7 +26,7 @@ const SideNav = styled.div`
 `
 const NavToolbox = styled.div`
 height:100px;
-width:280px;
+width:285px;
 border-bottom: solid 1px black;
 display:flex;
 justify-content:flex-start;
@@ -46,37 +47,64 @@ cursor: pointer;
 `
 const NavList = styled.ul`
 padding:0;
+padding-bottom:250px;
 margin:0;
 position:relative;
 top:10px;
 z-index:0;
 overflow:scroll;
+
 `
 const NavListItem = styled.li`
 padding:5px;
 margin:0;
 list-style-type:none;
-width:100%;
-display:inline-block;
-:hover {
-    cursor: pointer;
-    background-color: #ddd;
-};
+width:90%;
+display:flex;
+align-items:center;
+
 
 `
 const ListItemTitle = styled.p`
-    font-size:1.6em;
-    margin:5px 0 0 30px;
+    font-size:1.5em;
+    margin:5px 0 0 0px;
     padding:0;
     position:relative;
     bottom:0px;
     width:100%;
+
 `
 const ListItemImg = styled.img`
 width:35px;
 height:35px;
-margin:5px 20px 0 5px;
+margin:0px 20px 0 0px;
 float:left;
+
+`
+const ListTitleAndImage = styled.div`
+display:flex;
+width:90%;
+padding:3px;
+:hover {
+    cursor: pointer;
+    background-color: #ddd;
+    transition:0.3s;
+};
+`
+
+const ListItemIcon = styled.img`
+width:20px;
+height:20px;
+padding:10px;
+border-radius:50%;
+cursor: pointer;
+position:absolute;
+right:2px;
+&:hover {
+    background-color: rgba(128,128,128,0.2);
+    transition:all .3s;
+    transform:translateY(-1px)
+};
 `
 const Hamburger = styled.div`
  width: 30px;
@@ -128,6 +156,8 @@ z-index:3;
 class Toolbar extends Component {
     state ={
         navOpen:true,
+        showingModal:false,
+        selectedPlant:{}
     }
 
     toggleNav = () =>{
@@ -135,9 +165,12 @@ class Toolbar extends Component {
         this.props.toggleGrid()
     }
 
+    toggleModal = () =>{
+        this.setState({showingModal:!this.state.showingModal})
+    }
 
     render() {
-        console.log(this.props)
+
         return (
             <Container>
 
@@ -162,17 +195,28 @@ class Toolbar extends Component {
                 <div id="nav-ul" style={{overflow:"scroll",height:'100%',zIndex:-1}}>
                 <NavList>
                     {this.props.state.plants.map(plant =>(
-                        <NavListItem onClick={() => this.props.cursor(plant.id)} key={plant.id} >
+                        <NavListItem key={plant.id} >
+                        <ListTitleAndImage onClick={() => this.props.cursor(plant.id)} >
                             <ListItemImg src={`https://res-4.cloudinary.com/do6bw42am/image/upload/c_scale,f_auto,h_300/v1/${plant.image_url}`} alt=""/>
                             <ListItemTitle>
                                 {plant.name}
                             </ListItemTitle>
+                        </ListTitleAndImage>
+                        <ListItemIcon
+                        onClick={()=>this.setState({showingModal:!this.state.showingModal,selectedPlant:plant})}
+                        src={info} />
                         </NavListItem>
                     ))}
                 </NavList>
 
                 </div>
             </SideNav>
+            <PlantModal
+            updatePlant={this.updatePlantOnModalClose}
+            show={this.state.showingModal}
+            plant={this.state.selectedPlant}
+            toggleModal={this.toggleModal}
+            />
             </Container>
         );
     }
