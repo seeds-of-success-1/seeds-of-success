@@ -19,7 +19,7 @@ app.post('/auth/login', controller.login);
 app.get('/auth/logout', controller.logout)
 
 app.post('/api/project/get', controller.getProject)
-app.get('/api/project/new', controller.createNewProject)
+app.post('/api/project/new', controller.createNewProject)
 app.post('/api/project/save', controller.saveProject)
 app.post('/api/project/name', controller.editProjectName)
 app.post('/api/project/delete', controller.deleteProject)

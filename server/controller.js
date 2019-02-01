@@ -45,13 +45,15 @@ module.exports = {
     getProject: async (req, res) => {
         const { project_id } = req.body;
         const user_id = req.session.user.id
+        console.log(typeof project_id, project_id, typeof user_id, user_id)
         const db = req.app.get('db');
         //Make sure user is logged in
         if (!user_id) { return res.status(401).send({ message: 'Must login first' }) }
         //Make sure project belongs to user
         const project = await db.users_project([user_id, project_id])
+        console.log(project)
         if (!project[0]) { return res.status(401).send({ message: `No project with id: ${project_id} associated with this account` }) }
-        res.status(200).send({ project: JSON.parse(project[0]), message: 'Fetched project' })
+        res.status(200).send({ project: project[0], message: 'Fetched project' })
     },
     createNewProject: async (req, res) => {
         const user_id = req.session.user.id
@@ -60,7 +62,7 @@ module.exports = {
         const name = 'New Project'
         const arr = JSON.stringify([{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}])
         const newProject = await db.create_project([user_id, name, arr])
-        res.status(200).send({ project: JSON.parse(newProject[0]), message: 'Successfully created new project' })
+        res.status(200).send({ project: newProject[0], message: 'Successfully created new project' })
     },
     saveProject: async (req, res) => {
         const { plants, project_id } = req.body
@@ -71,7 +73,7 @@ module.exports = {
         const oldProject = await db.users_project([user_id, project_id])
         if (!oldProject[0]) { return res.status(401).send({ message: `No project with id: ${project_id} associated with this account` }) }
         const newProject = await db.save_project([project_id, arr])
-        res.status(200).send({ project: JSON.parse(newProject[0]), message: 'Successfully saved project' })
+        res.status(200).send({ project: newProject[0], message: 'Successfully saved project' })
     },
     editProjectName: async (req, res) => {
         const { name, project_id } = req.body;
@@ -81,7 +83,7 @@ module.exports = {
         const oldProject = await db.users_project([user_id, project_id])
         if (!oldProject[0]) { return res.status(401).send({ message: `No project with id: ${project_id} associated with this account` }) }
         const newProject = await db.edit_project_name([project_id, name])
-        res.status(200).send({project: JSON.parse(newProject[0]), message: 'Successfully edited project name'})
+        res.status(200).send({project: newProject[0], message: 'Successfully edited project name'})
     },
     deleteProject: async (req, res) => {
         const {project_id} = req.body;
