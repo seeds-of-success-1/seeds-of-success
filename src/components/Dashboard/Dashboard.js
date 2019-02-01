@@ -8,6 +8,7 @@ flex-direction:column;
 height:75.5vh;
 margin-top:130px;
 width:100%;
+justify-content:center;
 `
 const Footer = styled.div`
 height:10vh;
@@ -22,6 +23,7 @@ class Dashboard extends Component {
         return (
             <>
                 <DashboardContainer>
+                    [Weather api?]
                     Lettuce begin
                     <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
                     [current project]
