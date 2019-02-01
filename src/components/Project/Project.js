@@ -4,6 +4,7 @@ import grass from './grass.png';
 import dirt from './dirt.png';
 import Toolbar from '../Toolbar/Toolbar'
 import {debounce} from 'lodash';
+import axios from 'axios';
 
 
 const ProjectAndToolbar = styled.div`
@@ -19,7 +20,7 @@ width: 100%;
 cursor: url(${props => props.cursor}), auto;
 float:right;
 background:green;
-overflow-x:hidden
+overflow-x:hidden;
 `
 
 const GridContainer = styled.div`
@@ -76,6 +77,18 @@ class Project extends Component {
             this.setState({hoverPlantId: box.id})
         }, 1000, {trailing: true, leading: false}),
         hoverPlantId: -1
+    }
+
+    async componentDidMount() {
+        const project_id = this.props.match.params.id
+        console.log('here')
+        const res = await axios.post('/api/project/get', {project_id})
+        console.log('there')
+        if (!res.data.project) {
+            return alert("Error.  Couldn't retrive project info")
+        } else {
+            this.setState({plants: res.data.project})
+        }
     }
 
     imageUpdater = (id) => {
