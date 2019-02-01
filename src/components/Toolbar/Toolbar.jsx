@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import PlantModal from '../PlantModal/PlantModal'
 import close from './close-btn.svg';
 import info from './info.svg';
+import toggleOn from './toggle_on.svg'
+import toggleOff from './toggle_off.svg'
 
 
 
@@ -36,6 +38,7 @@ padding-right:10px;
 position:sticky;
 z-index:2;
 background-color:#ddd;
+
 `
 const ToolboxItem = styled.h6`
 padding:0;
@@ -43,11 +46,18 @@ margin:0 15px;
 font-size:1.5em;
 font-weight:400;
 cursor: pointer;
+:nth-child(3){
+    &:hover{
+        background:inherit;
+    }
+}
 &:hover{
     background-color: #BBB;
 }
 `
 const SaveBtn = styled.button`
+ position:absolute;
+ top:5px;
 
 `
 const NavList = styled.ul`
@@ -57,7 +67,7 @@ margin:0;
 position:relative;
 top:10px;
 z-index:0;
-height:75vh;
+height:72%;
 overflow:scroll;
 
 `
@@ -154,10 +164,16 @@ const Bar = styled.span`
 const CloseBtn = styled.img`
 height:30px;
 width: 30px;
-position:relative;
-left:85%;
+position:absolute;
+right:8px;
 bottom:65px ;
 z-index:3;
+`
+const EditIcon = styled.img`
+height:40px;
+width:40px;
+position:relative;
+top:13px;
 `
 class Toolbar extends Component {
     state ={
@@ -197,8 +213,17 @@ class Toolbar extends Component {
             <CloseBtn
             onClick={this.toggleNav}
             src={close} alt=""/>
-                    {this.props.editState === 1 ? <ToolboxItem style={{zIndex:4}} onClick={this.props.edit}>Edit: off</ToolboxItem> :
-                    <ToolboxItem style={{zIndex:4}} onClick={this.props.edit}>Edit: on</ToolboxItem> }
+                    {this.props.editState === 1 ? <ToolboxItem style={{zIndex:4}} onClick={this.props.edit}>Edit:
+                    <span>
+                    <EditIcon src={toggleOff} alt=""/>
+                    </span>
+                     </ToolboxItem> :
+                    <ToolboxItem style={{zIndex:4}} onClick={this.props.edit}>Edit:
+                    <span>
+                    <EditIcon src={toggleOn} alt=""/>
+                    </span>
+                    </ToolboxItem> }
+
                     <ToolboxItem onClick={() => this.props.cursorProp({})}>Grass</ToolboxItem>
                     <ToolboxItem onClick={() => this.props.cursorProp({id: true})}>Dirt</ToolboxItem>
                 </NavToolbox>
