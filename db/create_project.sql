@@ -1,6 +1,6 @@
 INSERT INTO seeds_projects
 (
-user_id, title, array
+user_id, title, plant_array
 )
 VALUES
 (
