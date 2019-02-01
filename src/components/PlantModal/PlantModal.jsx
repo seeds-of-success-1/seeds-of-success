@@ -125,8 +125,6 @@ class PlantModal extends Component {
 
    render() {
         const {plant} = this.props;
-        console.log(this.state.selected)
-        console.log(this.state.selected === 'one'?true:false )
         return (
             <ModalOverlay
             show={this.props.show}

@@ -23,6 +23,7 @@ app.post('/api/project/new', controller.createNewProject)
 app.post('/api/project/save', controller.saveProject)
 app.post('/api/project/name', controller.editProjectName)
 app.post('/api/project/delete', controller.deleteProject)
+app.get('/api/project/titles', controller.getProjectTitles)
 
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db);

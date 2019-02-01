@@ -71,7 +71,10 @@ export default function reducer(state = initialState, action) {
             return {...state, username: action.payload}
 
         case UPDATE_ID:
-            return {...state, id: action.payload}
+            return {...state, id: action.payload};
+
+        case UPDATE_PROJECTS:
+        return {...state, projects:action.payload};
 
         default:
             return state;
