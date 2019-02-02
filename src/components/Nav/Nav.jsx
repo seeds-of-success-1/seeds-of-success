@@ -59,6 +59,12 @@ margin: 6px 0;
     background-color: #ddd;
 }
 `
+
+const ProjectTitle = styled.h2`
+position: absolute;
+top: 5px;
+right: 5px;
+`
 class Nav extends Component {
     state = {
         projects: [{name:'Project 1',id:1}, {name:'Project 2',id:2}, {name:'Project 4',id:4}],
@@ -85,18 +91,33 @@ class Nav extends Component {
         return mapped
     }
 
-    render() {
+    createProject = async () => {
+        let res = await axios.post('/api/project/new')
+        if (res.data.project.id) {
+            this.props.history.push(`/project${res.data.project.id}`)
+        }
+    }
 
+    render() {
+        let currentProject = this.props.state.projects.filter((project, i) => {
+                let project_id = +this.props.location.pathname.slice(8)
+                console.log(project_id)
+                return project.id === project_id
+        })
 
       const nav = this.props.location.pathname === "/"?
         null
       : <NavWrap>
           <SiteTitle>Seeds of Success</SiteTitle>
+            { this.props.location.pathname.includes('/project') ?  <ProjectTitle>{currentProject[0].title}</ProjectTitle> : console.log(this.props.location.pathname) }
           <NavList>
               <NavListItem id="logout-btn">
                   <NavButton
                   onClick={this.logout}
                   >Logout</NavButton>
+              </NavListItem>
+              <NavListItem>
+                  <NavButton onClick={() => this.createProject()}>Create New Project</NavButton>
               </NavListItem>
               <NavListItem>
                   <Link to="/dashboard">

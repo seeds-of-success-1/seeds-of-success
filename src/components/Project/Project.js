@@ -15,7 +15,6 @@ transition:all .5s;
 const ProjectWrap = styled.div`
 margin:${props => props.gridExpand ?'130px 0 0 0px':'130px 0 0 290px'};
 transition:all .5s;
-/* margin: 130px 0 0 270px; */
 width: 100%;
 cursor: url(${props => props.cursor}), auto;
 float:right;
@@ -25,7 +24,6 @@ overflow-x:hidden;
 
 const GridContainer = styled.div`
 display:grid;
-/* grid-gap: 1px 3px; */
 grid-template-columns:minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%);
 padding:2px;
 scroll-behavior: smooth;
@@ -35,7 +33,6 @@ width:100%;
 const GridItem = styled.div`
 background-image: url(${props => props.image ? dirt : grass});
 display:inline-grid;
-/* border:1px solid rgba(0,0,0,.2); */
 margin: 0;
 text-align:center;
 height: 80px;
