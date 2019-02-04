@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { updateRecent } from '../../ducks/reducer';
+import axios from 'axios';
 
 const DashboardContainer = styled.div`
 background:lightgrey;
@@ -19,12 +22,17 @@ width:100%;
 `
 
 class Dashboard extends Component {
+
+    async componentDidMount() {
+        let res = await axios.get('/auth/user')
+        this.props.updateRecent(res.data.recentProject)
+    }
     render() {
         return (
             <>
                 <DashboardContainer>
                     Lettuce begin
-                    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
                     [current project]
                 </DashboardContainer>
                 <Footer>Currently displayed project title</Footer>
@@ -33,4 +41,4 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+export default connect(null, { updateRecent })(Dashboard);
