@@ -70,7 +70,14 @@ class Nav extends Component {
     state = {
         projects: [{ name: 'Project 1', id: 1 }, { name: 'Project 2', id: 2 }, { name: 'Project 4', id: 4 }],
         projectsOpen: false,
-        modalOpen:false
+        modalOpen:false,
+        edit: false,
+        name: ''
+    }
+
+    async componentDidMount() {
+        let res = await axios.get('/api/project/projects');
+        this.props.updateProjects(res.data.projects)
     }
 
     logout = async () => {
@@ -78,6 +85,27 @@ class Nav extends Component {
         if (!res.data.loggedIn) {
             this.props.history.push('/')
         }
+    }
+
+    toggleEdit = () => {
+        this.setState({edit: !this.state.edit})
+    }
+
+    editName = async () => {
+        let currentProject = this.props.state.projects.filter((project, i) => {
+            let project_id = +this.props.location.pathname.slice(8)
+            return project.id === project_id
+        })
+        const name = this.state.name
+        const project_id = currentProject[0].id
+        await axios.post('/api/project/name', {name, project_id})
+        const res = await axios.get('/api/project/projects');
+        this.props.updateProjects(res.data.projects)
+        this.setState({edit: false})
+    }
+
+    handleInputChange = (event) => {
+        this.setState({name: event.target.value})
     }
 
     getProjects() {
@@ -118,7 +146,8 @@ class Nav extends Component {
             null
             : <NavWrap>
                 <SiteTitle>Seeds of Success</SiteTitle>
-                {this.props.location.pathname.includes('/project') ? <ProjectTitle>{currentProject[0].title}</ProjectTitle> : console.log(this.props.location.pathname)}
+                {this.props.state.projects[0] ? (this.props.location.pathname.includes('/project') ? <ProjectTitle>{this.state.edit ? <div><input onChange={this.handleInputChange} value={this.state.name} placeholder={currentProject[0].title} /><button onClick={this.editName}>Save</button></div> : <div><button onClick={this.toggleEdit}>Edit</button>{' ' + currentProject[0].title}</div>}</ProjectTitle> : console.log(this.props.location.pathname)) : null
+                }
                 <NavList>
                     <NavListItem id="logout-btn">
                         <NavButton

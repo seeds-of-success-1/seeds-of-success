@@ -61,6 +61,11 @@ const SaveBtn = styled.button`
  top:5px;
 
 `
+const DeleteBtnContainer = styled.div`
+position: absolute;
+top: 2px;
+right: 50px;
+`
 const NavList = styled.ul`
 padding:0;
 padding-bottom:260px;
@@ -177,14 +182,15 @@ position:relative;
 top:13px;
 `
 class Toolbar extends Component {
-    state ={
-        navOpen:true,
-        showingModal:false,
-        selectedPlant:{}
+    state = {
+        navOpen: true,
+        showingModal: false,
+        selectedPlant: {},
+        delete: false
     }
 
-    toggleNav = () =>{
-        this.setState({navOpen:!this.state.navOpen,burgerOpen:true})
+    toggleNav = () => {
+        this.setState({ navOpen: !this.state.navOpen, burgerOpen: true })
         this.props.toggleGrid()
     }
 
@@ -193,42 +199,53 @@ class Toolbar extends Component {
         this.setState({showingModal:!this.state.showingModal,selectedPlant:plant})
     }
 
+    toggleDelete = () => {
+        this.setState({ delete: !this.state.delete })
+    }
+
     render() {
 
         return (
             <Container>
 
                 <Hamburger
-                onClick={this.toggleNav}
-                className={this.state.navOpen ? 'closed' : null}
+                    onClick={this.toggleNav}
+                    className={this.state.navOpen ? 'closed' : null}
                 >
-                    <Bar/>
-                    <Bar/>
-                    <Bar/>
+                    <Bar />
+                    <Bar />
+                    <Bar />
                 </Hamburger>
 
-            <SideNav open={this.state.navOpen}>
-                <NavToolbox id='toolbox'>
-                <SaveBtn
-                onClick={this.props.save}
-                >Save</SaveBtn>
-            <CloseBtn
-            onClick={this.toggleNav}
-            src={close} alt=""/>
-                    {this.props.editState === 1 ? <ToolboxItem style={{zIndex:4}} onClick={this.props.edit}>Edit:
-                    <span>
-                    <EditIcon src={toggleOff} alt=""/>
-                    </span>
-                     </ToolboxItem> :
-                    <ToolboxItem style={{zIndex:4}} onClick={this.props.edit}>Edit:
-                    <span>
-                    <EditIcon src={toggleOn} alt=""/>
-                    </span>
-                    </ToolboxItem> }
+                <SideNav open={this.state.navOpen}>
+                    <NavToolbox id='toolbox'>
+                        <SaveBtn
+                            onClick={this.props.save}
+                        >Save</SaveBtn>
+                        {this.state.delete ? (<DeleteBtnContainer>
+                            Are you sure?
+                            <br/>
+                            <button onClick={this.props.delete}>Yes</button>
+                            <button onClick={this.toggleDelete}>No</button>
+                        </DeleteBtnContainer>) : <DeleteBtnContainer><button onClick={this.toggleDelete}>Delete</button></DeleteBtnContainer>}
 
-                    <ToolboxItem onClick={() => this.props.cursorProp({})}>Grass</ToolboxItem>
-                    <ToolboxItem onClick={() => this.props.cursorProp({id: true})}>Dirt</ToolboxItem>
-                </NavToolbox>
+                        <CloseBtn
+                            onClick={this.toggleNav}
+                            src={close} alt="" />
+                        {this.props.editState === 1 ? <ToolboxItem style={{ zIndex: 4 }} onClick={this.props.edit}>Edit:
+                    <span>
+                                <EditIcon src={toggleOff} alt="" />
+                            </span>
+                        </ToolboxItem> :
+                            <ToolboxItem style={{ zIndex: 4 }} onClick={this.props.edit}>Edit:
+                    <span>
+                                    <EditIcon src={toggleOn} alt="" />
+                                </span>
+                            </ToolboxItem>}
+
+                        <ToolboxItem onClick={() => this.props.cursorProp({})}>Grass</ToolboxItem>
+                        <ToolboxItem onClick={() => this.props.cursorProp({ id: true })}>Dirt</ToolboxItem>
+                    </NavToolbox>
 
                 <NavList>
                     {this.props.state.plants.map(plant =>(
@@ -245,21 +262,21 @@ class Toolbar extends Component {
                         </NavListItem>
                     ))}
                 </NavList>
-
-            </SideNav>
-            <PlantModal
-            updatePlant={this.updatePlantOnModalClose}
-            show={this.state.showingModal}
-            plant={this.state.selectedPlant}
-            toggleModal={this.toggleModal}
-            />
+                </SideNav>
+                <PlantModal
+                    updatePlant={this.updatePlantOnModalClose}
+                    show={this.state.showingModal}
+                    plant={this.state.selectedPlant}
+                    toggleModal={this.toggleModal}
+                />
             </Container>
         );
     }
 }
 
-function mapStateToProps(state){
-    return{state}
+
+function mapStateToProps(state) {
+    return { state }
 }
 
 export default connect(mapStateToProps,{updateModal})(Toolbar);

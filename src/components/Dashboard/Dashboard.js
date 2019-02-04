@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { updateRecent } from '../../ducks/reducer';
-import Carousel from '../Carousel/Carousel'
+import { updateRecent, updateId, updateUsername } from '../../ducks/reducer';
+import {Loading} from '../Project/Project';
 import axios from 'axios';
 import grass from '../Project/grass.png';
 import dirt from '../Project/dirt.png';
@@ -56,9 +56,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 position: relative;
-:hover {
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${props => props.image ? dirt : grass});
-}
+
 `
 const Image = styled.img`
 border: none;
@@ -69,7 +67,7 @@ const ProjectTitle = styled.h1`
 padding:0;
 margin:0;
 position:relative;
-left:45px;
+
 `
 const Arrows = styled.img`
  display:${props => props.show ? 'inline' : 'none'};
@@ -80,7 +78,8 @@ const Arrows = styled.img`
 class Dashboard extends Component {
     state = {
         project: [],
-        title:''
+        title:'',
+        loading: true
     }
     mapProject = () => {
         const preview = this.state.project.map((square, i) => {
@@ -97,7 +96,7 @@ class Dashboard extends Component {
         if(prevProps.projects.length !== this.props.projects.length){
             let index = null;
             if(this.props.projects.length && this.props.projects[0].id){
-              index = this.props.projects.findIndex(project => project.id == this.props.recentProject);
+              index = this.props.projects.findIndex(project => project.id === this.props.recentProject);
               let {title} = this.props.projects[index]
               let project = JSON.parse(this.props.projects[index].plant_array)
               this.setState({ project,title})
@@ -107,6 +106,10 @@ class Dashboard extends Component {
     async componentDidMount() {
         let res = await axios.get('/auth/user')
         this.props.updateRecent(res.data.recentProject)
+        this.props.updateId(res.data.id)
+        this.props.updateUsername(res.data.user_name)
+        let projectRes = await axios.post('/api/project/get', { project_id: this.props.recentProject })
+        this.setState({ project: JSON.parse(projectRes.data.project.plant_array), loading: false })
     }
 
     flipThroughProjects = (direction)=>{
@@ -132,11 +135,16 @@ class Dashboard extends Component {
         this.setState({project,title})
     }
     render() {
+        if (this.state.loading) {
+            return (
+                <Loading><h1>Loading...</h1></Loading>
+            )
+        }
 
         return (
             <MainContainer>
                 <DashboardContainer>
-                    Lettuce begin
+
                     <Arrows show={this.state.project.length} src={before}
                     onClick={()=>this.flipThroughProjects('left')}
                     />
@@ -158,4 +166,4 @@ class Dashboard extends Component {
 function mapStateToProps(state) {
     return { ...state }
 }
-export default connect(mapStateToProps, { updateRecent })(Dashboard);
+export default connect(mapStateToProps, { updateRecent, updateId, updateUsername })(Dashboard);

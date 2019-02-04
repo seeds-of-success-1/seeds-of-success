@@ -6,7 +6,12 @@ import dirt from './dirt.png';
 import Toolbar from '../Toolbar/Toolbar'
 import { debounce } from 'lodash';
 import axios from 'axios';
+import { updateId, updateUsername, updateRecent } from '../../ducks/reducer';
 
+export const Loading = styled.div`
+    margin-top: 400px;
+    text-align: center;
+`
 
 const ProjectAndToolbar = styled.div`
 display: ${props => props.gridExpand ? 'inline-block' : 'flex'};
@@ -75,17 +80,22 @@ class Project extends Component {
         details: debounce((box) => {
             this.setState({ hoverPlantId: box.id })
         }, 1000, { trailing: true, leading: false }),
-        hoverPlantId: -1
+        hoverPlantId: -1,
+        loading: true
     }
 
     async componentDidMount() {
+        let userRes = await axios.get('/auth/user')
+        this.props.updateRecent(userRes.data.recentProject)
+        this.props.updateId(userRes.data.id)
+        this.props.updateUsername(userRes.data.username)
         const project_id = this.props.match.params.id
         const res = await axios.post('/api/project/get', { project_id })
         let plant_array = JSON.parse(res.data.project.plant_array);
         if (!res.data.project) {
             return alert("Error.  Couldn't retrive project info")
         } else {
-            this.setState({ plants: plant_array })
+            this.setState({ plants: plant_array, loading: false })
         }
     }
     async componentDidUpdate(prevProps) {
@@ -101,6 +111,12 @@ class Project extends Component {
         const { plants } = this.state;
         const project_id = this.props.match.params.id
         let res = await axios.post(`/api/project/save`, { plants, project_id })
+    }
+
+    deleteProject = async () => {
+        const project_id = this.props.match.params.id
+        const res = await axios.post('/api/project/delete', {project_id})
+        this.props.history.push('/dashboard')
     }
 
     imageUpdater = (id) => {
@@ -179,10 +195,17 @@ class Project extends Component {
         this.setState({ toggleGridWidth: !this.state.toggleGridWidth })
     }
     render() {
+        if (this.state.loading) {
+            return (
+                <Loading><h1>Loading...</h1></Loading>
+            )
+        }
         return (
             <ProjectAndToolbar>
-                <Toolbar save={this.saveProject} toggleGrid={this.toggleGridWidth} edit={this.toggleEdit} cursorProp={(cursor) => this.cursorProp(cursor)} cursor={id => this.updateCursor(id)} editState={this.state.edit} />
-                <ProjectWrap modalOpen={this.props.state.plantModalOpen} cursor={`./assets/40x40/${this.state.cursor.id}.png`} gridExpand={this.state.toggleGridWidth}>
+
+                <Toolbar save={this.saveProject} delete={this.deleteProject} toggleGrid={this.toggleGridWidth} edit={this.toggleEdit} cursorProp={(cursor) => this.cursorProp(cursor)} cursor={id => this.updateCursor(id)} editState={this.state.edit} />
+
+                <ProjectWrap modalOpen={this.props.plantModalOpen} cursor={`./assets/40x40/${this.state.cursor.id}.png`} gridExpand={this.state.toggleGridWidth}>
                     <GridContainer>
                         {Array.isArray(this.state.plants) ? this.getBoxes() : null}
                     </GridContainer>
@@ -191,8 +214,9 @@ class Project extends Component {
         );
     }
 }
-function mapStateToProps(state){
-    return{state}
+
+function mapStateToProps(state) {
+    return { ...state }
 }
 
-export default connect(mapStateToProps)(Project);
+export default connect(mapStateToProps, { updateId, updateUsername, updateRecent })(Project);

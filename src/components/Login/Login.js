@@ -77,7 +77,7 @@ outline: none !important;
 caret-color: green;
 @media (max-width: 1700px) {
     height:50px;
-    text-size:1.5rem
+    text-size:1.5rem;
   }
 `
 
