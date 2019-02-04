@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import PlantModal from '../PlantModal/PlantModal'
 import close from './close-btn.svg';
 import info from './info.svg';
@@ -59,6 +59,11 @@ const SaveBtn = styled.button`
  position:absolute;
  top:5px;
 
+`
+const DeleteBtnContainer = styled.div`
+position: absolute;
+top: 2px;
+right: 50px;
 `
 const NavList = styled.ul`
 padding:0;
@@ -176,19 +181,24 @@ position:relative;
 top:13px;
 `
 class Toolbar extends Component {
-    state ={
-        navOpen:true,
-        showingModal:false,
-        selectedPlant:{}
+    state = {
+        navOpen: true,
+        showingModal: false,
+        selectedPlant: {},
+        delete: false
     }
 
-    toggleNav = () =>{
-        this.setState({navOpen:!this.state.navOpen,burgerOpen:true})
+    toggleNav = () => {
+        this.setState({ navOpen: !this.state.navOpen, burgerOpen: true })
         this.props.toggleGrid()
     }
 
-    toggleModal = () =>{
-        this.setState({showingModal:!this.state.showingModal})
+    toggleModal = () => {
+        this.setState({ showingModal: !this.state.showingModal })
+    }
+
+    toggleDelete = () => {
+        this.setState({ delete: !this.state.delete })
     }
     
     render() {
@@ -197,67 +207,74 @@ class Toolbar extends Component {
             <Container>
 
                 <Hamburger
-                onClick={this.toggleNav}
-                className={this.state.navOpen ? 'closed' : null}
+                    onClick={this.toggleNav}
+                    className={this.state.navOpen ? 'closed' : null}
                 >
-                    <Bar/>
-                    <Bar/>
-                    <Bar/>
+                    <Bar />
+                    <Bar />
+                    <Bar />
                 </Hamburger>
 
-            <SideNav open={this.state.navOpen}>
-                <NavToolbox id='toolbox'>
-                <SaveBtn
-                onClick={this.props.save}
-                >Save</SaveBtn>
-            <CloseBtn
-            onClick={this.toggleNav}
-            src={close} alt=""/>
-                    {this.props.editState === 1 ? <ToolboxItem style={{zIndex:4}} onClick={this.props.edit}>Edit:
+                <SideNav open={this.state.navOpen}>
+                    <NavToolbox id='toolbox'>
+                        <SaveBtn
+                            onClick={this.props.save}
+                        >Save</SaveBtn>
+                        {this.state.delete ? (<DeleteBtnContainer>
+                            Are you sure?
+                            <br/>
+                            <button onClick={this.props.delete}>Yes</button>
+                            <button onClick={this.toggleDelete}>No</button>
+                        </DeleteBtnContainer>) : <DeleteBtnContainer><button onClick={this.toggleDelete}>Delete</button></DeleteBtnContainer>}
+
+                        <CloseBtn
+                            onClick={this.toggleNav}
+                            src={close} alt="" />
+                        {this.props.editState === 1 ? <ToolboxItem style={{ zIndex: 4 }} onClick={this.props.edit}>Edit:
                     <span>
-                    <EditIcon src={toggleOff} alt=""/>
-                    </span>
-                     </ToolboxItem> :
-                    <ToolboxItem style={{zIndex:4}} onClick={this.props.edit}>Edit:
+                                <EditIcon src={toggleOff} alt="" />
+                            </span>
+                        </ToolboxItem> :
+                            <ToolboxItem style={{ zIndex: 4 }} onClick={this.props.edit}>Edit:
                     <span>
-                    <EditIcon src={toggleOn} alt=""/>
-                    </span>
-                    </ToolboxItem> }
+                                    <EditIcon src={toggleOn} alt="" />
+                                </span>
+                            </ToolboxItem>}
 
-                    <ToolboxItem onClick={() => this.props.cursorProp({})}>Grass</ToolboxItem>
-                    <ToolboxItem onClick={() => this.props.cursorProp({id: true})}>Dirt</ToolboxItem>
-                </NavToolbox>
+                        <ToolboxItem onClick={() => this.props.cursorProp({})}>Grass</ToolboxItem>
+                        <ToolboxItem onClick={() => this.props.cursorProp({ id: true })}>Dirt</ToolboxItem>
+                    </NavToolbox>
 
-                <NavList>
-                    {this.props.state.plants.map(plant =>(
-                        <NavListItem key={plant.id} >
-                        <ListTitleAndImage onClick={() => this.props.cursor(plant)} >
-                            <ListItemImg src={`https://res-4.cloudinary.com/do6bw42am/image/upload/c_scale,f_auto,h_300/v1/${plant.image_url}`} alt=""/>
-                            <ListItemTitle>
-                                {plant.name}
-                            </ListItemTitle>
-                        </ListTitleAndImage>
-                        <ListItemIcon
-                        onClick={()=>this.setState({showingModal:!this.state.showingModal,selectedPlant:plant})}
-                        src={info} />
-                        </NavListItem>
-                    ))}
-                </NavList>
+                    <NavList>
+                        {this.props.state.plants.map(plant => (
+                            <NavListItem key={plant.id} >
+                                <ListTitleAndImage onClick={() => this.props.cursor(plant)} >
+                                    <ListItemImg src={`https://res-4.cloudinary.com/do6bw42am/image/upload/c_scale,f_auto,h_300/v1/${plant.image_url}`} alt="" />
+                                    <ListItemTitle>
+                                        {plant.name}
+                                    </ListItemTitle>
+                                </ListTitleAndImage>
+                                <ListItemIcon
+                                    onClick={() => this.setState({ showingModal: !this.state.showingModal, selectedPlant: plant })}
+                                    src={info} />
+                            </NavListItem>
+                        ))}
+                    </NavList>
 
-            </SideNav>
-            <PlantModal
-            updatePlant={this.updatePlantOnModalClose}
-            show={this.state.showingModal}
-            plant={this.state.selectedPlant}
-            toggleModal={this.toggleModal}
-            />
+                </SideNav>
+                <PlantModal
+                    updatePlant={this.updatePlantOnModalClose}
+                    show={this.state.showingModal}
+                    plant={this.state.selectedPlant}
+                    toggleModal={this.toggleModal}
+                />
             </Container>
         );
     }
 }
 
-function mapStateToProps(state){
-    return{state}
+function mapStateToProps(state) {
+    return { state }
 }
 
 export default connect(mapStateToProps)(Toolbar);
