@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import { updateUsername, updateId, updateProjects } from './../../ducks/reducer';
 import styled from 'styled-components';
 import Bg from './Bg1.png'
+import FadeIn from './FadeInAnimation';
 
 const LoginMain = styled.div`
 background-image:url(${Bg});
-background-reapeat:no-repeat;
+background-repeat:no-repeat;
 background-size:cover;
 height:100vh;
 display:flex;
@@ -23,16 +24,29 @@ box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0
 width:30vw;
 height:40vh;
 background-color:whitesmoke;
-opacity:0.80;
 text-align:center;
 border-radius:6px;
-margin-top:15%;
+margin-top:25%;
 
 @media (max-width: 1700px) {
     width:70vh;
     height:70vh;
-    margin-top:10%;
+    margin-top:12%;
     font-size:1.5rem;
+  }
+  @media(max-width:1025px){
+      height:40vh;
+      width:60vw;
+      margin-top:20%;
+  }
+  @media(max-width:815px){
+      height:70vh;
+      width:60vw
+  }
+  @media(max-width:600px){
+    margin-top:25%;
+    height:60vh
+    width:75vw
   }
 `
 const RLogin = styled.div`
@@ -90,6 +104,7 @@ font-weight:600;
 `
 const SReg=styled.a`
 font-weight:600;
+cursor:pointer;
 `
 
 class Login extends Component {
@@ -143,6 +158,7 @@ class Login extends Component {
     render() {
         return (
             <LoginMain>
+            <FadeIn duration='1.4s' delay='.3s'>
                 <LoginContainer className='login-background'>
                     {this.state.toggleLogin ?
                         <RLogin className='login'>
@@ -167,9 +183,9 @@ class Login extends Component {
                             <LError className='login-error'>{this.state.message}</LError>
                         </RLogin> :
                         <RLogin className='register'>
-
-                                <h5>Register Account</h5>
-
+                            
+                                <h4>Register Account</h4>
+                                
                                 <LoginInput
                                         value={this.state.username}
                                         onChange={e => this.setState({ username: e.target.value })}
@@ -190,6 +206,7 @@ class Login extends Component {
                             <SReg onClick={this.toggleLogin}>Login?</SReg>
                         </RLogin>}
                 </LoginContainer>
+                </FadeIn>
             </LoginMain>
         )
     }

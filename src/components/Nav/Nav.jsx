@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import {withRouter,Link} from 'react-router-dom'
-import {connect} from 'react-redux'
-import {updateUsername, updateId} from '../../ducks/reducer'
+import { withRouter, Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { updateUsername, updateId, updateProjects } from '../../ducks/reducer'
 import axios from 'axios'
 
 const NavWrap = styled.div`
@@ -27,7 +27,7 @@ font-size:1.5rem;
     cursor: pointer;
 }
 `
- const NavList = styled.ul`
+const NavList = styled.ul`
 padding:0;
 margin:0;
 position:relative;
@@ -67,23 +67,23 @@ right: 5px;
 `
 class Nav extends Component {
     state = {
-        projects: [{name:'Project 1',id:1}, {name:'Project 2',id:2}, {name:'Project 4',id:4}],
+        projects: [{ name: 'Project 1', id: 1 }, { name: 'Project 2', id: 2 }, { name: 'Project 4', id: 4 }],
         projectsOpen: false
     }
 
     logout = async () => {
         let res = await axios.get('/auth/logout');
-        if(!res.data.loggedIn){
+        if (!res.data.loggedIn) {
             this.props.history.push('/')
         }
     }
 
     getProjects() {
-        const mapped = this.props.state.projects.map(project => {
+        const mapped = this.props.state.projects.map((project) => {
             return (
                 <Link key={project.id} to={`/project${project.id}`}>
                     <DropdownItem
-                    onClick={()=>this.setState({projectsOpen:!this.state.projectsOpen})}
+                        onClick={() => this.setState({ projectsOpen: !this.state.projectsOpen })}
                     >{project.title}</DropdownItem>
                 </Link>
             )
@@ -93,6 +93,8 @@ class Nav extends Component {
 
     createProject = async () => {
         let res = await axios.post('/api/project/new')
+        let result = await axios.get('/api/project/titles');
+        this.props.updateProjects(result.data.projects)
         if (res.data.project.id) {
             this.props.history.push(`/project${res.data.project.id}`)
         }
@@ -100,46 +102,46 @@ class Nav extends Component {
 
     render() {
         let currentProject = this.props.state.projects.filter((project, i) => {
-                let project_id = +this.props.location.pathname.slice(8)
-                console.log(project_id)
-                return project.id === project_id
+            let project_id = +this.props.location.pathname.slice(8)
+            // console.log(project_id)
+            return project.id === project_id
         })
-
-      const nav = this.props.location.pathname === "/"?
-        null
-      : <NavWrap>
-          <SiteTitle>Seeds of Success</SiteTitle>
-            { this.props.location.pathname.includes('/project') ?  <ProjectTitle>{currentProject[0].title}</ProjectTitle> : console.log(this.props.location.pathname) }
-          <NavList>
-              <NavListItem id="logout-btn">
-                  <NavButton
-                  onClick={this.logout}
-                  >Logout</NavButton>
-              </NavListItem>
-              <NavListItem>
-                  <NavButton onClick={() => this.createProject()}>Create New Project</NavButton>
-              </NavListItem>
-              <NavListItem>
-                  <Link to="/dashboard">
-                    <NavButton>Dashboard</NavButton>
-                  </Link>
-              </NavListItem>
-              <NavListItem>
-                  <NavButton onClick={() => this.setState({projectsOpen: !this.state.projectsOpen})}>Projects</NavButton>
-                <DropDownMenu open={this.state.projectsOpen}>{this.props.state.id ? this.getProjects():null}</DropDownMenu>
-              </NavListItem>
-          </NavList>
-       </NavWrap>
+        // console.log(this.props.state.projects)
+        const nav = this.props.location.pathname === "/" ?
+            null
+            : <NavWrap>
+                <SiteTitle>Seeds of Success</SiteTitle>
+                {this.props.location.pathname.includes('/project') ? <ProjectTitle>{currentProject[0].title}</ProjectTitle> : console.log(this.props.location.pathname)}
+                <NavList>
+                    <NavListItem id="logout-btn">
+                        <NavButton
+                            onClick={this.logout}
+                        >Logout</NavButton>
+                    </NavListItem>
+                    <NavListItem>
+                        <NavButton onClick={() => this.createProject()}>Create New Project</NavButton>
+                    </NavListItem>
+                    <NavListItem>
+                        <Link to="/dashboard">
+                            <NavButton>Dashboard</NavButton>
+                        </Link>
+                    </NavListItem>
+                    <NavListItem>
+                        <NavButton onClick={() => this.setState({ projectsOpen: !this.state.projectsOpen })}>Projects</NavButton>
+                        <DropDownMenu open={this.state.projectsOpen}>{this.props.state.id ? this.getProjects() : null}</DropDownMenu>
+                    </NavListItem>
+                </NavList>
+            </NavWrap>
 
         return (
             <div>
                 {nav}
             </div>
-            );
+        );
     }
 }
 
-function mapStateToProps(state){
-    return{state}
+function mapStateToProps(state) {
+    return { state }
 }
-export default withRouter(connect(mapStateToProps,{updateId,updateUsername})(Nav));
+export default withRouter(connect(mapStateToProps, { updateId, updateUsername, updateProjects })(Nav));
