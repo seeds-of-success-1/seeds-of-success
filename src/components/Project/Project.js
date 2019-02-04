@@ -109,6 +109,12 @@ class Project extends Component {
         let res = await axios.post(`/api/project/save`, { plants, project_id })
     }
 
+    deleteProject = async () => {
+        const project_id = this.props.match.params.id
+        const res = await axios.post('/api/project/delete', {project_id})
+        this.props.history.push('/dashboard')
+    }
+
     imageUpdater = (id) => {
         let squares = [...this.state.plants]
         if (this.state.edit === 1) {
@@ -192,7 +198,7 @@ class Project extends Component {
         }
         return (
             <ProjectAndToolbar>
-                <Toolbar save={this.saveProject} toggleGrid={this.toggleGridWidth} edit={this.toggleEdit} cursorProp={(cursor) => this.cursorProp(cursor)} cursor={id => this.updateCursor(id)} editState={this.state.edit} />
+                <Toolbar save={this.saveProject} delete={this.deleteProject} toggleGrid={this.toggleGridWidth} edit={this.toggleEdit} cursorProp={(cursor) => this.cursorProp(cursor)} cursor={id => this.updateCursor(id)} editState={this.state.edit} />
                 <ProjectWrap cursor={`./assets/40x40/${this.state.cursor.id}.png`} gridExpand={this.state.toggleGridWidth}>
                     <GridContainer>
                         {Array.isArray(this.state.plants) ? this.getBoxes() : null}
