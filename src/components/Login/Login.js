@@ -45,8 +45,8 @@ margin-top:25%;
   }
   @media(max-width:600px){
     margin-top:25%;
-    height:60vh
-    width:75vw
+    height:60vh;
+    width:75vw;
   }
 `
 const RLogin = styled.div`
@@ -72,12 +72,12 @@ min-width: 0;
 box-sizing: content-box;
 background: none;
 -webkit-tap-highlight-color: white;
-margin-left:8%
+margin-left:8%;
 outline: none !important;
 caret-color: green;
 @media (max-width: 1700px) {
     height:50px;
-    text-size:1.5rem
+    text-size:1.5rem;
   }
 `
 
@@ -85,7 +85,7 @@ const LoginButton = styled.button`
 border-radius:4px;
 border:none;
 font-weight:650;
-margin-top:10px
+margin-top:10px;
 margin-bottom:1px;
 min-height:35px;
 min-width:55px;
