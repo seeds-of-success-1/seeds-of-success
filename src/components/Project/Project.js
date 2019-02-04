@@ -3,17 +3,17 @@ import styled from 'styled-components';
 import grass from './grass.png';
 import dirt from './dirt.png';
 import Toolbar from '../Toolbar/Toolbar'
-import {debounce} from 'lodash';
+import { debounce } from 'lodash';
 import axios from 'axios';
 
 
 const ProjectAndToolbar = styled.div`
-display: ${props => props.gridExpand ?'inline-block':'flex'};
+display: ${props => props.gridExpand ? 'inline-block' : 'flex'};
 transition:all .5s;
 `
 
 const ProjectWrap = styled.div`
-margin:${props => props.gridExpand ?'130px 0 0 0px':'130px 0 0 290px'};
+margin:${props => props.gridExpand ? '130px 0 0 0px' : '130px 0 0 290px'};
 transition:all .5s;
 width: 100%;
 cursor: url(${props => props.cursor}), auto;
@@ -22,7 +22,7 @@ background:green;
 overflow-x:hidden;
 `
 
-const GridContainer = styled.div`
+export const GridContainer = styled.div`
 display:grid;
 grid-template-columns:minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%);
 padding:2px;
@@ -30,7 +30,7 @@ scroll-behavior: smooth;
 min-width:80vw;
 width:100%;
 `
-const GridItem = styled.div`
+export const GridItem = styled.div`
 background-image: url(${props => props.image ? dirt : grass});
 display:inline-grid;
 margin: 0;
@@ -47,7 +47,7 @@ position: relative;
     background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${props => props.image ? dirt : grass});
 }
 `
-const Image = styled.img`
+export const Image = styled.img`
 border: none;
 border-image: none;
 `
@@ -64,38 +64,38 @@ class Project extends Component {
 
     state = {
         cursor: '',
-        toggleGridWidth:false,
-        plants: [{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},{}, {}, {}, {},{},{},{},{},{},{},{},{},{},{},{},],
+        toggleGridWidth: false,
+        plants: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},],
         edit: 1,
         details: debounce((box) => {
-            this.setState({hoverPlantId: box.id})
-        }, 1000, {trailing: true, leading: false}),
+            this.setState({ hoverPlantId: box.id })
+        }, 1000, { trailing: true, leading: false }),
         hoverPlantId: -1
     }
 
     async componentDidMount() {
         const project_id = this.props.match.params.id
-        const res = await axios.post('/api/project/get', {project_id})
+        const res = await axios.post('/api/project/get', { project_id })
         let plant_array = JSON.parse(res.data.project.plant_array);
         if (!res.data.project) {
             return alert("Error.  Couldn't retrive project info")
         } else {
-            this.setState({plants: plant_array})
+            this.setState({ plants: plant_array })
         }
     }
-    async componentDidUpdate(prevProps){
-        let {id} = this.props.match.params
-        if(prevProps.match.params.id !== id){
+    async componentDidUpdate(prevProps) {
+        let { id } = this.props.match.params
+        if (prevProps.match.params.id !== id) {
             let project_id = id;
-            let res = await axios.post('/api/project/get',{project_id})
-            this.setState({plants:JSON.parse(res.data.project.plant_array)});
+            let res = await axios.post('/api/project/get', { project_id })
+            this.setState({ plants: JSON.parse(res.data.project.plant_array) });
         }
     }
 
-    saveProject = async() => {
-        const {plants} = this.state;
+    saveProject = async () => {
+        const { plants } = this.state;
         const project_id = this.props.match.params.id
-        let res = await axios.post(`/api/project/save`,{plants,project_id})
+        let res = await axios.post(`/api/project/save`, { plants, project_id })
     }
 
     imageUpdater = (id) => {
@@ -107,17 +107,17 @@ class Project extends Component {
             })
         } else if (this.state.edit === 2) {
             let cursor = squares[id];
-            squares[id] = {id: true}
+            squares[id] = { id: true }
             this.setState({ cursor, plants: squares, edit: 3 })
         } else if (this.state.edit === 3) {
             squares[id] = this.state.cursor
-            this.setState({ cursor: {id: 'trowel'}, plants: squares, edit: 2 })
+            this.setState({ cursor: { id: 'trowel' }, plants: squares, edit: 2 })
         }
     }
 
     toggleEdit = () => {
         if (this.state.edit === 1) {
-            this.setState({ edit: 2, cursor: {id: 'trowel'} })
+            this.setState({ edit: 2, cursor: { id: 'trowel' } })
         } else {
             this.setState({ edit: 1, cursor: {} })
         }
@@ -125,7 +125,7 @@ class Project extends Component {
 
     cancelHover = () => {
         this.state.details.cancel()
-        this.setState({hoverPlantId: -1})
+        this.setState({ hoverPlantId: -1 })
     }
 
     getBoxes = () => {
@@ -138,18 +138,18 @@ class Project extends Component {
                 )
             } else if (box.id === this.state.hoverPlantId) {
                 return (
-                <GridItem key={i} image={this.state.plants[i].id} onClick={() => this.imageUpdater(i)} onMouseLeave={() => {this.cancelHover()}} onMouseEnter={() => {this.state.details(box)}}>
+                    <GridItem key={i} image={this.state.plants[i].id} onClick={() => this.imageUpdater(i)} onMouseLeave={() => { this.cancelHover() }} onMouseEnter={() => { this.state.details(box) }}>
 
-                        <Image src={`./assets/40x40/${box.id}.png`} alt=''  />
+                        <Image src={`./assets/40x40/${box.id}.png`} alt='' />
 
                         <Popup>{box.name}</Popup>
                     </GridItem>
                 )
             } else {
                 return (
-                    <GridItem key={i} image={this.state.plants[i].id} onClick={() => this.imageUpdater(i)} onMouseLeave={() => {this.cancelHover()}} onMouseEnter={() => {this.state.details(box)}}>
+                    <GridItem key={i} image={this.state.plants[i].id} onClick={() => this.imageUpdater(i)} onMouseLeave={() => { this.cancelHover() }} onMouseEnter={() => { this.state.details(box) }}>
 
-                        <Image src={`./assets/40x40/${box.id}.png`} alt='' onMouseEnter={() => {this.state.details(box)}}/>
+                        <Image src={`./assets/40x40/${box.id}.png`} alt='' onMouseEnter={() => { this.state.details(box) }} />
                     </GridItem>
                 )
             }
@@ -165,13 +165,13 @@ class Project extends Component {
 
     updateCursor = (obj) => {
         const plantObj = {
-            id:obj.id,
-            name:obj.name
+            id: obj.id,
+            name: obj.name
         }
-        this.setState({cursor:plantObj})
+        this.setState({ cursor: plantObj })
     }
-    toggleGridWidth = () =>{
-        this.setState({toggleGridWidth:!this.state.toggleGridWidth})
+    toggleGridWidth = () => {
+        this.setState({ toggleGridWidth: !this.state.toggleGridWidth })
     }
     render() {
         return (
