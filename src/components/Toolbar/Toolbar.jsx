@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import {connect} from 'react-redux';
+import {updateModal} from '../../ducks/reducer'
 import PlantModal from '../PlantModal/PlantModal'
 import close from './close-btn.svg';
 import info from './info.svg';
@@ -187,8 +188,9 @@ class Toolbar extends Component {
         this.props.toggleGrid()
     }
 
-    toggleModal = () =>{
-        this.setState({showingModal:!this.state.showingModal})
+    toggleModal = (plant) =>{
+        this.props.updateModal(!this.props.state.plantModalOpen)
+        this.setState({showingModal:!this.state.showingModal,selectedPlant:plant})
     }
 
     render() {
@@ -238,7 +240,7 @@ class Toolbar extends Component {
                             </ListItemTitle>
                         </ListTitleAndImage>
                         <ListItemIcon
-                        onClick={()=>this.setState({showingModal:!this.state.showingModal,selectedPlant:plant})}
+                        onClick={()=>this.toggleModal(plant)}
                         src={info} />
                         </NavListItem>
                     ))}
@@ -260,4 +262,4 @@ function mapStateToProps(state){
     return{state}
 }
 
-export default connect(mapStateToProps)(Toolbar);
+export default connect(mapStateToProps,{updateModal})(Toolbar);
