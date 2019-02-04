@@ -51,9 +51,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 position: relative;
-:hover {
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${props => props.image ? dirt : grass});
-}
+
 `
 const Image = styled.img`
 border: none;
