@@ -190,7 +190,7 @@ class Toolbar extends Component {
     toggleModal = () =>{
         this.setState({showingModal:!this.state.showingModal})
     }
-
+    
     render() {
 
         return (
