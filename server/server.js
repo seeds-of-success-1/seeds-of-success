@@ -16,14 +16,15 @@ app.use(session({
 
 app.post('/auth/register', controller.register);
 app.post('/auth/login', controller.login);
-app.get('/auth/logout', controller.logout)
+app.get('/auth/user', controller.getUser);
+app.get('/auth/logout', controller.logout);
 
-app.post('/api/project/get', controller.getProject)
-app.post('/api/project/new', controller.createNewProject)
-app.post('/api/project/save', controller.saveProject)
-app.post('/api/project/name', controller.editProjectName)
-app.post('/api/project/delete', controller.deleteProject)
-app.get('/api/project/titles', controller.getProjectTitles)
+app.post('/api/project/get', controller.getProject);
+app.post('/api/project/new', controller.createNewProject);
+app.post('/api/project/save', controller.saveProject);
+app.put('/api/project/name', controller.editProjectName);
+app.post('/api/project/delete', controller.deleteProject);
+app.get('/api/project/projects', controller.getProjects);
 
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db);
