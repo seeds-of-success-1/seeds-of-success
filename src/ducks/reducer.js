@@ -7,6 +7,7 @@ const initialState = {
     user: {},
     username: '',
     id: '',
+    plantModalOpen:false,
     recentProject: ''
 }
 
@@ -22,6 +23,7 @@ const UPDATE_RECENT = 'UPDATE_RECENT';
 const GET_PLANTS = 'GET_PLANTS';
 const GET_PLANTS_PENDING = 'GET_PLANTS_PENDING';
 const GET_PLANTS_FULFILLED = 'GET_PLANTS_FULFILLED';
+const UPDATE_PLANT_MODAL = 'UPDATE_PLANT_MODAL';
 
 //UPDATE USER INFO
 export function updateRecent(id) {
@@ -47,6 +49,13 @@ export const updateProjects = (projects) => {
     return {
         type: UPDATE_PROJECTS,
         payload: projects
+    }
+}
+
+export const updateModal = (bool) =>{
+    return {
+        type:UPDATE_PLANT_MODAL,
+        payload:bool
     }
 }
 
@@ -84,10 +93,14 @@ export default function reducer(state = initialState, action) {
             return { ...state, id: action.payload };
 
         case UPDATE_PROJECTS:
-            return { ...state, projects: action.payload };
+        return {...state, projects:action.payload};
+
+        case UPDATE_PLANT_MODAL:
+        return {...state, plantModalOpen:action.payload};
+
         case UPDATE_RECENT:
             return { ...state, recentProject: action.payload };
-            
+
         default:
             return state;
     }

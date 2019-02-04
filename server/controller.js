@@ -70,11 +70,13 @@ module.exports = {
     },
     createNewProject: async (req, res) => {
         const user_id = req.session.user.id
+        const {project_name} = req.body;
         if (!user_id) { return res.status(401).send({ message: 'Must login first' }) }
         const db = req.app.get('db')
-        const name = 'New Project'
+        const name = 'New Project';
+        const title = project_name ? project_name : name;
         const arr = JSON.stringify([{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}])
-        const newProject = await db.create_project([user_id, name, arr])
+        const newProject = await db.create_project([user_id,title, arr]);
         await db.recent_project(newProject[0].id, user_id)
         res.status(200).send({ project: newProject[0], message: 'Successfully created new project' })
     },
@@ -110,15 +112,14 @@ module.exports = {
         await db.delete_project([project_id])
         res.status(200).send({ deleted: true, message: 'Successfully deleted project' })
     },
-    getProjectTitles: async (req, res) => {
-        if (!req.session.user) { return res.status(401).send({ message: 'Must login first' }) };
+    getProjects: async (req, res) => {
         const user_id = req.session.user.id;
         const db = req.app.get('db');
         const projects = await db.get_project_titles([user_id]);
         if (!projects.length) {
             return res.status(200).send({ message: 'Unable to fetch projects' })
         } else {
-            return res.status(200).send({ projects, message: "Successfully aqcuired project titles" })
+            return res.status(200).send({ projects, message: "Successfully aquired project titles" })
         }
     }
 }
