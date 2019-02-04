@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { updateRecent, updateId, updateUsername } from '../../ducks/reducer';
+import {Loading} from '../Project/Project';
 import axios from 'axios';
 import grass from '../Project/grass.png';
 import dirt from '../Project/dirt.png';
@@ -60,7 +61,8 @@ width:40px;
 `
 class Dashboard extends Component {
     state = {
-        project: []
+        project: [],
+        loading: true
     }
     mapProject = () => {
         const preview = this.state.project.map((square, i) => {
@@ -79,9 +81,14 @@ class Dashboard extends Component {
         this.props.updateId(res.data.id)
         this.props.updateUsername(res.data.user_name)
         let projectRes = await axios.post('/api/project/get', { project_id: this.props.recentProject })
-        this.setState({ project: JSON.parse(projectRes.data.project.plant_array) })
+        this.setState({ project: JSON.parse(projectRes.data.project.plant_array), loading: false })
     }
-    render() {
+    render() { 
+        if (this.state.loading) {
+            return (
+                <Loading><h1>Loading...</h1></Loading>
+            )
+        }
 
         return (
             <MainContainer>

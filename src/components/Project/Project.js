@@ -8,7 +8,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { updateId, updateUsername, updateRecent } from '../../ducks/reducer';
 
-const Loading = styled.div`
+export const Loading = styled.div`
     margin-top: 400px;
     text-align: center;
 `
