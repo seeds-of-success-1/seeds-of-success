@@ -71,6 +71,11 @@ class Nav extends Component {
         projectsOpen: false
     }
 
+    async componentDidMount() {
+        let res = await axios.get('/api/project/titles');
+        this.props.updateProjects(res.data.projects)
+    }
+
     logout = async () => {
         let res = await axios.get('/auth/logout');
         if (!res.data.loggedIn) {
@@ -111,7 +116,8 @@ class Nav extends Component {
             null
             : <NavWrap>
                 <SiteTitle>Seeds of Success</SiteTitle>
-                {this.props.location.pathname.includes('/project') ? <ProjectTitle>{currentProject[0].title}</ProjectTitle> : console.log(this.props.location.pathname)}
+                {this.props.state.projects[0] ? (this.props.location.pathname.includes('/project') ? <ProjectTitle>{currentProject[0].title}</ProjectTitle> : console.log(this.props.location.pathname)) : null
+                }
                 <NavList>
                     <NavListItem id="logout-btn">
                         <NavButton

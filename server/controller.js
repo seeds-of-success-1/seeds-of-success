@@ -60,13 +60,11 @@ module.exports = {
     getProject: async (req, res) => {
         const { project_id } = req.body;
         const user_id = req.session.user.id
-        console.log(typeof project_id, project_id, typeof user_id, user_id)
         const db = req.app.get('db');
         //Make sure user is logged in
         if (!user_id) { return res.status(401).send({ message: 'Must login first' }) }
         //Make sure project belongs to user
         const project = await db.users_project([user_id, project_id])
-        console.log(project)
         if (!project[0]) { return res.status(401).send({ message: `No project with id: ${project_id} associated with this account` }) }
         res.status(200).send({ project: project[0], message: 'Fetched project' })
     },
@@ -113,8 +111,8 @@ module.exports = {
         res.status(200).send({ deleted: true, message: 'Successfully deleted project' })
     },
     getProjectTitles: async (req, res) => {
+        if (!req.session.user) { return res.status(401).send({ message: 'Must login first' }) };
         const user_id = req.session.user.id;
-        if (!user_id) { return res.status(401).send({ message: 'Must login first' }) };
         const db = req.app.get('db');
         const projects = await db.get_project_titles([user_id]);
         if (!projects.length) {

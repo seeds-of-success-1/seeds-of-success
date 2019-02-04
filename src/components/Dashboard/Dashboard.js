@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { updateRecent } from '../../ducks/reducer';
+import { updateRecent, updateId, updateUsername } from '../../ducks/reducer';
 import axios from 'axios';
 import grass from '../Project/grass.png';
 import dirt from '../Project/dirt.png';
@@ -76,7 +76,8 @@ class Dashboard extends Component {
     async componentDidMount() {
         let res = await axios.get('/auth/user')
         this.props.updateRecent(res.data.recentProject)
-
+        this.props.updateId(res.data.id)
+        this.props.updateUsername(res.data.user_name)
         let projectRes = await axios.post('/api/project/get', { project_id: this.props.recentProject })
         this.setState({ project: JSON.parse(projectRes.data.project.plant_array) })
     }
@@ -98,4 +99,4 @@ class Dashboard extends Component {
 function mapStateToProps(state) {
     return { ...state }
 }
-export default connect(mapStateToProps, { updateRecent })(Dashboard);
+export default connect(mapStateToProps, { updateRecent, updateId, updateUsername })(Dashboard);
