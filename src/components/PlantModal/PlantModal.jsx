@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import close from '../Toolbar/close-btn.svg';
 import more from './more.svg'
-import less from './less.svg'
+// import less from './less.svg'
 
 const ModalOverlay = styled.div`
    z-index: 20;
