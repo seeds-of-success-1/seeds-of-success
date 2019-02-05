@@ -113,13 +113,14 @@ module.exports = {
         res.status(200).send({ deleted: true, message: 'Successfully deleted project' })
     },
     getProjects: async (req, res) => {
-        const user_id = req.session.user.id;
         const db = req.app.get('db');
+        const user_id = req.session.user.id;
+        if (!user_id) { return res.status(401).send({ message: 'Must login first' }) }
         const projects = await db.get_project_titles([user_id]);
         if (!projects.length) {
             return res.status(200).send({ message: 'Unable to fetch projects' })
         } else {
-            return res.status(200).send({ projects, message: "Successfully aquired project titles" })
+            return res.status(200).send({ projects, message: "Successfully aquired projects" })
         }
     }
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { updateUsername, updateId, updateProjects } from '../../ducks/reducer';
+import { updateUsername, updateId, updateProjects,cleanUpState } from '../../ducks/reducer';
 import CreateModal from '../CreateModal/CreateModal'
 import axios from 'axios'
 
@@ -75,7 +75,13 @@ class Nav extends Component {
         name: ''
     }
 
-    async componentDidMount() {
+
+    componentDidUpdate(prevProps, prevState){
+        if(prevProps.id !== this.props.id){
+            this.fetchProjects()
+        }
+    }
+    fetchProjects = async() => {
         let res = await axios.get('/api/project/projects');
         this.props.updateProjects(res.data.projects)
     }
@@ -94,9 +100,12 @@ class Nav extends Component {
     logout = async () => {
         let res = await axios.get('/auth/logout');
         if (!res.data.loggedIn) {
-            this.props.history.push('/')
+            this.props.history.push('/');
+            this.props.cleanUpState();
         }
     }
+
+
 
     toggleEdit = () => {
         this.setState({edit: !this.state.edit})
@@ -196,4 +205,4 @@ class Nav extends Component {
 function mapStateToProps(state) {
     return { state }
 }
-export default withRouter(connect(mapStateToProps, { updateId, updateUsername, updateProjects })(Nav));
+export default withRouter(connect(mapStateToProps, { updateId, updateUsername, updateProjects,cleanUpState })(Nav));
