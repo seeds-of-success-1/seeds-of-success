@@ -102,18 +102,19 @@ cursor:pointer;
 font-weight:650;
 background: #8BC34A;
 color: #fff !important;
+outline: none;
 @media (max-width: 1700px) {
     height:50px;
     min-width:100px;
     font-size:1.5rem;
     margin-bottom:10px
-  }
+  } 
   :hover{
-    text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
--webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
--moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-transition: all 0.4s ease 0s;
-transform:scale(1.1);
+     text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.4s ease 0s;
+    transform:scale(1.1);
 }
 `
 const LError = styled.p`

@@ -26,7 +26,7 @@ const SideNav = styled.div`
   z-index: 3;
   top: 0;
   left: 0;
-  background-color: #fff;
+  background-color: #C5E1A5;
   overflow-y: hidden;
 `
 const NavToolbox = styled.div`
@@ -39,7 +39,7 @@ align-items:flex-end;
 padding-right:10px;
 position:sticky;
 z-index:2;
-background-color:#ddd;
+background-color:#C5E1A5;
 
 `
 const ToolboxItem = styled.h6`
@@ -48,6 +48,7 @@ margin:0 15px;
 font-size:1.5em;
 font-weight:400;
 cursor: pointer;
+border-radius:50px;
 :nth-child(3){
     &:hover{
         background:inherit;
@@ -57,6 +58,7 @@ cursor: pointer;
     transition: all 0.2s ease 0s;
     font-weight:420;
     color:#7CB342;
+    
 }
 `
 const SaveBtn = styled.button`
@@ -70,6 +72,7 @@ min-width:55px;
 cursor:pointer;
 font-weight:650;
 border: none;
+outline: none;
 color: #fff !important;
 background: #8BC34A;
 :hover{
@@ -88,6 +91,7 @@ min-height:35px;
 min-width:55px;
 cursor:pointer;
 border: none;
+outline: none;
 color: #fff !important;
 background: #8BC34A;
 :hover{
@@ -146,8 +150,12 @@ width:90%;
 padding:3px;
 :hover {
     cursor: pointer;
-    background-color: #ddd;
+    background-color: #8BC34A;
     transition:0.3s;
+    border-radius:5px
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.4s ease 0s;
 };
 `
 
@@ -160,7 +168,7 @@ cursor: pointer;
 position:absolute;
 right:2px;
 &:hover {
-    background-color: rgba(128,128,128,0.2);
+    background-color: #8BC34A;
     transition:all .3s;
     transform:translateY(-1px)
 };
@@ -225,6 +233,7 @@ height:40px;
 width:40px;
 position:relative;
 top:13px;
+
 `
 class Toolbar extends Component {
     state = {

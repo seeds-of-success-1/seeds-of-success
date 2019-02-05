@@ -40,11 +40,11 @@ color:#558B2F;
 const GridContainer = styled.div`
 display:grid;
 grid-template-columns:minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%);
-padding:2px;
 scroll-behavior: smooth;
-/* min-width:80vw; */
-width:50%;
 justify-content:center;
+-webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+-moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+transition: all 0.4s ease 0s;
 `
 const GridItem = styled.div`
 background-image: url(${props => props.image ? dirt : grass});
