@@ -128,14 +128,14 @@ class Login extends Component {
         this.props.updateUsername(res.data.username)
         this.props.updateId(res.data.id)
         if (res.data.loggedIn) {
-            this.fetchProjectTitles()
-            this.props.history.push('/dashboard')
+            this.fetchProjects()
         }
     }
 
-    fetchProjectTitles = async () => {
-        let res = await axios.get('/api/project/titles');
+    fetchProjects = async () => {
+        let res = await axios.get('/api/project/projects');
         this.props.updateProjects(res.data.projects)
+        this.props.history.push('/dashboard')
     }
 
     async register() {
@@ -183,9 +183,9 @@ class Login extends Component {
                             <LError className='login-error'>{this.state.message}</LError>
                         </RLogin> :
                         <RLogin className='register'>
-                            
+
                                 <h4>Register Account</h4>
-                                
+
                                 <LoginInput
                                         value={this.state.username}
                                         onChange={e => this.setState({ username: e.target.value })}

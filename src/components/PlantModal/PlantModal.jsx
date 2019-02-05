@@ -5,7 +5,7 @@ import more from './more.svg'
 import less from './less.svg'
 
 const ModalOverlay = styled.div`
-   z-index: 8;
+   z-index: 20;
    display:${props => props.show ? 'inline-block': 'none'};
     background-color: rgba(220,220,220,0.8);
     position: fixed;
@@ -18,7 +18,7 @@ const ModalOverlay = styled.div`
 const Modal = styled.div`
     height:auto;
     width: 60%;
-    max-width:700px;
+    max-width:600px;
     max-height:900px;
     min-width:300px;
     padding:10px;
@@ -30,16 +30,15 @@ const Modal = styled.div`
     top:10%;
     left:25%;
     background-color: #fff;
-    z-index: 10;
+    z-index: 30;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     @media (max-width: 900px) {
-    left:10%;
-    height:auto;
+    left:20%;
   }
-  @media (max-width: 900px) {
-    left:7%;
+  @media(max-width:600px){
+      left:7%;
   }
-  @media (max-height: 730px) {
+  @media (max-height: 740px) {
     position:absolute;
 
   }

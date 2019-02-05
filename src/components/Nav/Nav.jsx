@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { updateUsername, updateId, updateProjects } from '../../ducks/reducer'
+import { updateUsername, updateId, updateProjects,cleanUpState } from '../../ducks/reducer';
+import CreateModal from '../CreateModal/CreateModal'
 import axios from 'axios'
 
 const NavWrap = styled.div`
@@ -69,21 +70,31 @@ class Nav extends Component {
     state = {
         projects: [{ name: 'Project 1', id: 1 }, { name: 'Project 2', id: 2 }, { name: 'Project 4', id: 4 }],
         projectsOpen: false,
+        modalOpen:false,
         edit: false,
         name: ''
     }
 
-    async componentDidMount() {
-        let res = await axios.get('/api/project/titles');
+
+    componentDidUpdate(prevProps, prevState){
+        if(prevProps.id !== this.props.id){
+            this.fetchProjects()
+        }
+    }
+    fetchProjects = async() => {
+        let res = await axios.get('/api/project/projects');
         this.props.updateProjects(res.data.projects)
     }
 
     logout = async () => {
         let res = await axios.get('/auth/logout');
         if (!res.data.loggedIn) {
-            this.props.history.push('/')
+            this.props.history.push('/');
+            this.props.cleanUpState();
         }
     }
+
+
 
     toggleEdit = () => {
         this.setState({edit: !this.state.edit})
@@ -97,7 +108,7 @@ class Nav extends Component {
         const name = this.state.name
         const project_id = currentProject[0].id
         await axios.post('/api/project/name', {name, project_id})
-        const res = await axios.get('/api/project/titles');
+        const res = await axios.get('/api/project/projects');
         this.props.updateProjects(res.data.projects)
         this.setState({edit: false})
     }
@@ -119,13 +130,18 @@ class Nav extends Component {
         return mapped
     }
 
-    createProject = async () => {
-        let res = await axios.post('/api/project/new')
-        let result = await axios.get('/api/project/titles');
+    createProject = async (name) => {
+        this.setState({modalOpen:!this.state.modalOpen})
+        let res = await axios.post('/api/project/new',{project_name:name})
+        let result = await axios.get('/api/project/projects');
         this.props.updateProjects(result.data.projects)
         if (res.data.project.id) {
             this.props.history.push(`/project${res.data.project.id}`)
         }
+    }
+    toggleCreateModal = () =>{
+        console.log('TCM')
+        this.setState({modalOpen:!this.state.modalOpen})
     }
 
     render() {
@@ -148,7 +164,7 @@ class Nav extends Component {
                         >Logout</NavButton>
                     </NavListItem>
                     <NavListItem>
-                        <NavButton onClick={() => this.createProject()}>Create New Project</NavButton>
+                        <NavButton onClick={ this.toggleCreateModal}>Create New Project</NavButton>
                     </NavListItem>
                     <NavListItem>
                         <Link to="/dashboard">
@@ -165,6 +181,11 @@ class Nav extends Component {
         return (
             <div>
                 {nav}
+                <CreateModal
+                show={this.state.modalOpen}
+                toggleModal={this.toggleCreateModal}
+                create={this.createProject}
+                />
             </div>
         );
     }
@@ -173,4 +194,4 @@ class Nav extends Component {
 function mapStateToProps(state) {
     return { state }
 }
-export default withRouter(connect(mapStateToProps, { updateId, updateUsername, updateProjects })(Nav));
+export default withRouter(connect(mapStateToProps, { updateId, updateUsername, updateProjects,cleanUpState })(Nav));

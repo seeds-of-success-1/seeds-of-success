@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import {connect} from 'react-redux'
 import grass from './grass.png';
 import dirt from './dirt.png';
 import Toolbar from '../Toolbar/Toolbar'
 import { debounce } from 'lodash';
 import axios from 'axios';
-import { connect } from 'react-redux';
-import { updateId, updateUsername, updateRecent } from '../../ducks/reducer';
+import { updateId, updateUsername, updateRecent,updateAfterSave } from '../../ducks/reducer';
 
 export const Loading = styled.div`
     margin-top: 400px;
@@ -22,10 +22,14 @@ const ProjectWrap = styled.div`
 margin:${props => props.gridExpand ? '130px 0 0 0px' : '130px 0 0 290px'};
 transition:all .5s;
 width: 100%;
+position:${props => props.modalOpen ? "fixed" :"inline"};
 cursor: url(${props => props.cursor}), auto;
 float:right;
 background:green;
-overflow-x:hidden;
+overflow-x:auto;
+@media(min-width:1490){
+    overflow:hidden;
+}
 `
 
 export const GridContainer = styled.div`
@@ -107,6 +111,9 @@ class Project extends Component {
         const { plants } = this.state;
         const project_id = this.props.match.params.id
         let res = await axios.post(`/api/project/save`, { plants, project_id })
+        let index = this.props.projects.findIndex(project => project.id === res.data.project.id);
+        this.props.updateRecent(res.data.project.id)
+        this.props.updateAfterSave({project:res.data.project,index});
     }
 
     deleteProject = async () => {
@@ -198,8 +205,10 @@ class Project extends Component {
         }
         return (
             <ProjectAndToolbar>
+
                 <Toolbar save={this.saveProject} delete={this.deleteProject} toggleGrid={this.toggleGridWidth} edit={this.toggleEdit} cursorProp={(cursor) => this.cursorProp(cursor)} cursor={id => this.updateCursor(id)} editState={this.state.edit} />
-                <ProjectWrap cursor={`./assets/40x40/${this.state.cursor.id}.png`} gridExpand={this.state.toggleGridWidth}>
+
+                <ProjectWrap modalOpen={this.props.plantModalOpen} cursor={`./assets/40x40/${this.state.cursor.id}.png`} gridExpand={this.state.toggleGridWidth}>
                     <GridContainer>
                         {Array.isArray(this.state.plants) ? this.getBoxes() : null}
                     </GridContainer>
@@ -213,4 +222,4 @@ function mapStateToProps(state) {
     return { ...state }
 }
 
-export default connect(mapStateToProps, { updateId, updateUsername, updateRecent })(Project);
+export default connect(mapStateToProps, { updateId, updateUsername, updateRecent, updateAfterSave })(Project);
