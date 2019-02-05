@@ -54,7 +54,8 @@ cursor: pointer;
 }
 &:hover{
     transition: all 0.2s ease 0s;
-    font-weight:450;
+    font-weight:420;
+    color:#7CB342;
 }
 `
 const SaveBtn = styled.button`
@@ -180,6 +181,9 @@ justify-content:space-between;
     height:0;
     width:0;
     margin:0;
+}
+:hover{
+    transform:scale(1.3)
 }
 `
 const Bar = styled.span`

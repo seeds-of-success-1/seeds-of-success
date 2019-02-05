@@ -31,10 +31,11 @@ max-height:100vh;
 const Footer = styled.div`
 height:10vh;
 display:flex;
-background:#F0F8FF;
+background:#DCEDC8;
 justify-content:center;
 width:100%;
 align-items:center;
+color:#558B2F;
 `
 const GridContainer = styled.div`
 display:grid;

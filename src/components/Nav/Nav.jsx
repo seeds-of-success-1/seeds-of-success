@@ -21,8 +21,8 @@ box-sizing: content-box;
 background:transparent;
 outline: none !important;
 caret-color: green;
--webkit-box-shadow: 0px 5px 30px -10px rgba(0,0,0,0.57);
--moz-box-shadow: 0px 5px 30px -10px rgba(0,0,0,0.57);
+-webkit-box-shadow: 0px 2px 20px -5px rgba(0,0,0,0.57);
+-moz-box-shadow: 0px 2px 20px -5px rgba(0,0,0,0.57);
 @media (max-width: 1700px) {
     text-size:1.5rem;
   }
@@ -38,13 +38,13 @@ caret-color: green;
 const NavWrap = styled.div`
 height:130px;
 width:100%;
-background-color:aliceblue;
+background-color:#DCEDC8;
 position:fixed;
 top:0;
 `
 const SiteTitle = styled.h1`
 font-size:2em;
-color:green;
+color:#558B2F;
 text-align: center;
 `
 const NavButton = styled.button`
@@ -58,6 +58,7 @@ font-size:1.5rem;
     transition: all 0.2s ease 0s;
     transform:scale(1.1);
     font-weight:525;
+    color:#33691E;
 }
 `
 const NavList = styled.ul`
