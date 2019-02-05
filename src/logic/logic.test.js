@@ -79,3 +79,31 @@ describe('Testing updateRecent', () => {
     })
 })
 //DC
+//BS
+describe('Tests updateUsername', () => {
+    test('should return a payload with the same value that was passed in for username', () => {
+        let result = updateUsername('greg');
+        expect(result.payload).toBe('greg')
+    })
+
+    test('should return object with property of type and payload', () => {
+        let result = updateUsername('greg');
+        expect(result).toHaveProperty("type");
+    })
+
+    test('should return object with property of payload', () => {
+        let result = updateUsername('greg');
+        expect(result).toHaveProperty("payload");
+    })
+
+    test('Should return type UPDATE_USERNAME', () => {
+        let result = updateUsername();
+        expect(result.type).toBe("UPDATE_USERNAME")
+    })
+
+    test('Should always return an object', () => {
+        let result = updateUsername();
+        expect(typeof result).toBe('object')
+    })
+})
+//BS

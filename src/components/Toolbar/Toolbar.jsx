@@ -54,13 +54,48 @@ cursor: pointer;
     }
 }
 &:hover{
-    background-color: #BBB;
+    transition: all 0.2s ease 0s;
+    font-weight:450;
 }
 `
 const SaveBtn = styled.button`
  position:absolute;
  top:5px;
-
+ border-radius:50px;
+font-weight:650;
+margin-bottom:1px;
+min-height:35px;
+min-width:55px;
+cursor:pointer;
+font-weight:650;
+border: none;
+color: #fff !important;
+background: #8BC34A;
+:hover{
+    text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+    box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+-webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+-moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+transition: all 0.4s ease 0s;
+}
+`
+export const DeleteBtn = styled.button`
+ border-radius:50px;
+ margin-top:3px;
+font-weight:650;
+min-height:35px;
+min-width:55px;
+cursor:pointer;
+border: none;
+color: #fff !important;
+background: #8BC34A;
+:hover{
+    text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+    box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+-webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+-moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+transition: all 0.4s ease 0s;
+}
 `
 const DeleteBtnContainer = styled.div`
 position: absolute;
@@ -136,7 +171,7 @@ const Hamburger = styled.div`
  transition:all .5s;
  height:30px;
  margin:16px;
- background:#BBB;
+ background:transparent;
  border-radius:5px;
  padding:5px;
 cursor: pointer;
@@ -169,12 +204,17 @@ const Bar = styled.span`
 }
 `
 const CloseBtn = styled.img`
-height:30px;
-width: 30px;
+height:22px;
+width: 22px;
 position:absolute;
 right:8px;
 bottom:65px ;
 z-index:3;
+cursor:pointer;
+:hover{
+    transition: all 0.4s ease 0s;
+    transform:scale(1.3)
+}
 `
 const EditIcon = styled.img`
 height:40px;
@@ -204,7 +244,7 @@ class Toolbar extends Component {
     toggleDelete = () => {
         this.setState({ delete: !this.state.delete })
     }
-
+    
     render() {
 
         return (
@@ -226,10 +266,10 @@ class Toolbar extends Component {
                         >Save</SaveBtn>
                         {this.state.delete ? (<DeleteBtnContainer>
                             Are you sure?
-                            <br />
-                            <button onClick={this.props.delete}>Yes</button>
-                            <button onClick={this.toggleDelete}>No</button>
-                        </DeleteBtnContainer>) : <DeleteBtnContainer><button onClick={this.toggleDelete}>Delete</button></DeleteBtnContainer>}
+                            <br/>
+                            <DeleteBtn onClick={this.props.delete}>Yes</DeleteBtn>
+                            <DeleteBtn onClick={this.toggleDelete}>No</DeleteBtn>
+                        </DeleteBtnContainer>) : <DeleteBtnContainer><DeleteBtn onClick={this.toggleDelete}>Delete</DeleteBtn></DeleteBtnContainer>}
 
                         <CloseBtn
                             onClick={this.toggleNav}

@@ -62,16 +62,15 @@ align-items:center;
 `
 const LoginInput = styled.input`
 font: inherit;
-color: currentColor;
-width: 50%;
+width: 40%;
 border: 0;
-margin: 0;
+border-radius:5px;
+margin-bottom: 3px;
 padding: 6px 0 7px;
 display: block;
 min-width: 0;
 box-sizing: content-box;
-background: none;
--webkit-tap-highlight-color: white;
+background:transparent;
 margin-left:8%;
 outline: none !important;
 caret-color: green;
@@ -79,10 +78,20 @@ caret-color: green;
     height:50px;
     text-size:1.5rem;
   }
+  :focus{
+    transition: all 0.4s ease 0s;
+    -webkit-box-shadow: 0px 5px 30px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 30px -10px rgba(0,0,0,0.57);
+    transform:scale(1.1);
+    ::placeholder{
+        color:#424242;
+        font-weight:450;
+    }
+  }
 `
 
 const LoginButton = styled.button`
-border-radius:4px;
+border-radius:50px;
 border:none;
 font-weight:650;
 margin-top:10px;
@@ -91,12 +100,21 @@ min-height:35px;
 min-width:55px;
 cursor:pointer;
 font-weight:650;
+background: #8BC34A;
+color: #fff !important;
 @media (max-width: 1700px) {
     height:50px;
     min-width:100px;
     font-size:1.5rem;
     margin-bottom:10px
   }
+  :hover{
+    text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+-webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+-moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+transition: all 0.4s ease 0s;
+transform:scale(1.1);
+}
 `
 const LError = styled.p`
 color:red;
@@ -105,6 +123,9 @@ font-weight:600;
 const SReg=styled.a`
 font-weight:600;
 cursor:pointer;
+:hover{
+    transform:scale(1.15);
+}
 `
 
 class Login extends Component {
@@ -203,7 +224,7 @@ class Login extends Component {
 
 
                             <LoginButton onClick={() => this.register()}>Register</LoginButton>
-                            <SReg onClick={this.toggleLogin}>Login?</SReg>
+                            <SReg onClick={this.toggleLogin}>Log-in</SReg>
                         </RLogin>}
                 </LoginContainer>
                 </FadeIn>
