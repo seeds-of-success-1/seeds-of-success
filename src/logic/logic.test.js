@@ -1,6 +1,5 @@
 import { toggle } from './logic';
-import {updateModal} from '../ducks/reducer'
-import {updateRecent} from '../ducks/reducer'
+import {updateModal,updateUsername,updateRecent,updateAfterSave} from '../ducks/reducer';
 
 describe('Tests Toggle Show button', () => {
     test('when given true, returns false', () => {
@@ -107,3 +106,30 @@ describe('Tests updateUsername', () => {
     })
 })
 //BS
+//RI
+describe('Tests updateAfterSave', () => {
+    test('should return a payload with the same value that was passed in for project', () => {
+        let result = updateAfterSave('Taste the Rainbow');
+        expect(result.payload).not.toBe('Taste the Raindbow')
+    })
+
+    test('should return object with property of payload', () => {
+        let result = updateAfterSave('Taste The Rainbow');
+        expect(result).toHaveProperty("payload");
+    })
+
+    test('Should not return a string', () => {
+        let result = updateAfterSave();
+        expect(typeof result).not.toBe('string')
+    })
+
+    test('Should not return and array', () => {
+        let result = updateAfterSave();
+        expect(typeof result).not.toBe('array')
+    })
+    test('Should not return null', () => {
+        let result = updateAfterSave();
+        expect(typeof result).not.toBe(null)
+    })
+})
+//RI

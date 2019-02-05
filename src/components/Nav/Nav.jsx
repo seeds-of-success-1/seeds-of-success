@@ -17,12 +17,13 @@ margin-bottom: 3px;
 margin-right:8px;
 padding: 6px 0 7px;
 display: block;
+outline: none;
 box-sizing: content-box;
 background:transparent;
 outline: none !important;
 caret-color: green;
--webkit-box-shadow: 0px 5px 30px -10px rgba(0,0,0,0.57);
--moz-box-shadow: 0px 5px 30px -10px rgba(0,0,0,0.57);
+-webkit-box-shadow: 0px 2px 20px -5px rgba(0,0,0,0.57);
+-moz-box-shadow: 0px 2px 20px -5px rgba(0,0,0,0.57);
 @media (max-width: 1700px) {
     text-size:1.5rem;
   }
@@ -38,13 +39,13 @@ caret-color: green;
 const NavWrap = styled.div`
 height:130px;
 width:100%;
-background-color:aliceblue;
+background-color:#DCEDC8;
 position:fixed;
 top:0;
 `
 const SiteTitle = styled.h1`
 font-size:2em;
-color:green;
+color:#558B2F;
 text-align: center;
 `
 const NavButton = styled.button`
@@ -52,19 +53,24 @@ margin:0;
 border:none;
 outline:transparent;
 background-color:inherit;
+border-radius:50px;
 font-size:1.5rem;
+outline: none;
 :hover {
     cursor: pointer;
     transition: all 0.2s ease 0s;
     transform:scale(1.1);
     font-weight:525;
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+-moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+transition: all 0.4s ease 0s;
 }
 `
 const NavList = styled.ul`
 padding:0;
 margin:0;
 position:relative;
-top:16px;
+top:10px;
 display:flex;
 justify-content:flex-end;
 z-index: 1;
@@ -78,19 +84,30 @@ list-style-type:none;
 
 `
 const DropDownMenu = styled.div`
-background-color: #fff;
+background-color: #DCEDC8;
 padding: 0;
 height: ${props => props.open ? '100%' : '0px'};
 transition:all .4s;
 overflow: hidden;
+position:relative;
+left:4px;
+bottom:4px;
 margin-top: 2px;
+& a{
+    text-decoration:none;
+    color:black;
+}
 `
 const DropdownItem = styled.h3`
 padding: 0 6px;
 margin: 6px 0;
+font-weight:500;
 :hover {
     cursor: pointer;
-    background-color: #ddd;
+    background-color: #AED581;
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.4s ease 0s;
 }
 `
 
