@@ -58,6 +58,14 @@ cursor: pointer;
 const SaveBtn = styled.button`
  position:absolute;
  top:5px;
+ border-radius:4px;
+font-weight:650;
+margin-top:10px;
+margin-bottom:1px;
+min-height:35px;
+min-width:55px;
+cursor:pointer;
+font-weight:650;
 
 `
 const DeleteBtnContainer = styled.div`
