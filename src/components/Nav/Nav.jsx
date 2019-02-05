@@ -80,6 +80,17 @@ class Nav extends Component {
         this.props.updateProjects(res.data.projects)
     }
 
+    async componentDidUpdate(prevProps, prevState) {
+        if (this.props.location.pathname.includes('/project') && prevProps.location.pathname !== this.props.location.pathname) {
+            let currentProject = this.props.state.projects.filter((project, i) => {
+                let project_id = +this.props.location.pathname.slice(8)
+                // console.log(project_id)
+                return project.id === project_id
+            })
+            this.setState({name: currentProject[0].title})
+        }
+    }
+
     logout = async () => {
         let res = await axios.get('/auth/logout');
         if (!res.data.loggedIn) {
