@@ -134,7 +134,7 @@ const Hamburger = styled.div`
  transition:all .5s;
  height:30px;
  margin:16px;
- background:#BBB;
+ background:transparent;
  border-radius:5px;
  padding:5px;
 cursor: pointer;
