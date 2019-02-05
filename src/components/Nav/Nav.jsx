@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter, Link,Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { updateUsername, updateId, updateProjects,cleanUpState } from '../../ducks/reducer';
+import { updateUsername, updateId, updateProjects,cleanUpState,updateUser } from '../../ducks/reducer';
 import CreateModal from '../CreateModal/CreateModal'
 import axios from 'axios'
 
@@ -75,6 +75,23 @@ class Nav extends Component {
         name: ''
     }
 
+    async componentDidMount(){
+       try{
+           let res = await axios.get('/auth/user')
+           if(res.data.id && !this.props.state.projects.length){
+           this.fetchProjects()
+           }
+           if(!this.props.id && res.data.id){
+               this.props.updateUser({id:res.data.id, username:res.data.username, recentProject:res.data.recentProject});
+           }
+       }catch(err){
+           console.log('err',err.response)
+            if(err.response.status !== 200){
+                this.props.history.push('/')
+            }
+        }
+    }
+
     fetchProjects = async() => {
         let res = await axios.get('/api/project/projects');
         this.props.updateProjects(res.data.projects)
@@ -84,7 +101,7 @@ class Nav extends Component {
         if(prevProps.id !== this.props.id){
             this.fetchProjects()
         }
-        if (this.props.location.pathname.includes('/project') && prevProps.location.pathname !== this.props.location.pathname) {
+        if (this.props.location.pathname.includes('/project') && prevProps.location.pathname !== this.props.location.pathname && this.props.id) {
             let currentProject = this.props.state.projects.filter((project, i) => {
                 let project_id = +this.props.location.pathname.slice(8)
                 // console.log(project_id)
@@ -202,4 +219,4 @@ class Nav extends Component {
 function mapStateToProps(state) {
     return { state }
 }
-export default withRouter(connect(mapStateToProps, { updateId, updateUsername, updateProjects,cleanUpState })(Nav));
+export default withRouter(connect(mapStateToProps, { updateId, updateUsername, updateProjects,cleanUpState,updateUser })(Nav));
