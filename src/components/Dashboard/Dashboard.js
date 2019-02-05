@@ -6,17 +6,18 @@ import {Loading} from '../Project/Project';
 import axios from 'axios';
 import grass from '../Project/grass.png';
 import dirt from '../Project/dirt.png';
-import next from './next.svg'
-import before from './before.svg'
+import next from './next.svg';
+import before from './before.svg';
 
 const MainContainer = styled.div`
 display:flex;
 flex-direction:column;
 justify-content:center;
+
 `
 
 const DashboardContainer = styled.div`
-background:lightgrey;
+background:transparent;
 display:flex;
 flex-direction:row;
 height:75.5vh;
@@ -25,11 +26,12 @@ width:100%;
 justify-content:center;
 align-items:center;
 max-height:100vh;
+
 `
 const Footer = styled.div`
 height:10vh;
 display:flex;
-background:darkgrey;
+background:#F0F8FF;
 justify-content:center;
 width:100%;
 align-items:center;
@@ -72,8 +74,13 @@ position:relative;
 const Arrows = styled.img`
  display:${props => props.show ? 'inline' : 'none'};
  cursor:pointer;
- width:60px;
- height:60px;
+ width:50px;
+ height:50px;
+ :hover{
+    text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+    transition: all 0.4s ease 0s;
+    transform:scale(1.2);
+}
 `
 class Dashboard extends Component {
     state = {
