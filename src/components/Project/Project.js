@@ -118,7 +118,7 @@ class Project extends Component {
 
     deleteProject = async () => {
         const project_id = this.props.match.params.id
-        const res = await axios.post('/api/project/delete', {project_id})
+        await axios.post('/api/project/delete', {project_id})
         this.props.history.push('/dashboard')
     }
 

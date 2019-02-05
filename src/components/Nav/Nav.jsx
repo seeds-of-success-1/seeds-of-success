@@ -75,15 +75,23 @@ class Nav extends Component {
         name: ''
     }
 
-
-    componentDidUpdate(prevProps, prevState){
-        if(prevProps.id !== this.props.id){
-            this.fetchProjects()
-        }
-    }
     fetchProjects = async() => {
         let res = await axios.get('/api/project/projects');
         this.props.updateProjects(res.data.projects)
+    }
+
+    async componentDidUpdate(prevProps, prevState) {
+        if(prevProps.id !== this.props.id){
+            this.fetchProjects()
+        }
+        if (this.props.location.pathname.includes('/project') && prevProps.location.pathname !== this.props.location.pathname) {
+            let currentProject = this.props.state.projects.filter((project, i) => {
+                let project_id = +this.props.location.pathname.slice(8)
+                // console.log(project_id)
+                return project.id === project_id
+            })
+            this.setState({name: currentProject[0].title})
+        }
     }
 
     logout = async () => {
@@ -155,7 +163,7 @@ class Nav extends Component {
             null
             : <NavWrap>
                 <SiteTitle>Seeds of Success</SiteTitle>
-                {this.props.state.projects[0] ? (this.props.location.pathname.includes('/project') ? <ProjectTitle>{this.state.edit ? <div><input onChange={this.handleInputChange} value={this.state.name} placeholder={currentProject[0].title} /><button onClick={this.editName}>Save</button></div> : <div><button onClick={this.toggleEdit}>Edit</button>{' ' + currentProject[0].title}</div>}</ProjectTitle> : console.log(this.props.location.pathname)) : null
+                {this.props.state.projects[0] ? (this.props.location.pathname.includes('/project') ? <ProjectTitle>{this.state.edit ? <div><input onChange={this.handleInputChange} value={this.state.name}/><button onClick={this.editName}>Save</button></div> : <div><button onClick={this.toggleEdit}>Edit</button>{' ' + currentProject[0].title}</div>}</ProjectTitle> : console.log(this.props.location.pathname)) : null
                 }
                 <NavList>
                     <NavListItem id="logout-btn">
