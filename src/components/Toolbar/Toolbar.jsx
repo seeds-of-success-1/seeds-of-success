@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import {connect} from 'react-redux';
-import {updateModal} from '../../ducks/reducer'
+import { connect } from 'react-redux';
+import { updateModal } from '../../ducks/reducer'
 import PlantModal from '../PlantModal/PlantModal'
 import close from './close-btn.svg';
 import info from './info.svg';
 import toggleOn from './toggle_on.svg'
 import toggleOff from './toggle_off.svg'
+import asparagus from './asparagus.png'
 
 
 
@@ -194,9 +195,10 @@ class Toolbar extends Component {
         this.props.toggleGrid()
     }
 
-    toggleModal = (plant) =>{
+    toggleModal = (plant) => {
+        console.log(plant)
         this.props.updateModal(!this.props.state.plantModalOpen)
-        this.setState({showingModal:!this.state.showingModal,selectedPlant:plant})
+        this.setState({ showingModal: !this.state.showingModal, selectedPlant: plant })
     }
 
     toggleDelete = () => {
@@ -224,7 +226,7 @@ class Toolbar extends Component {
                         >Save</SaveBtn>
                         {this.state.delete ? (<DeleteBtnContainer>
                             Are you sure?
-                            <br/>
+                            <br />
                             <button onClick={this.props.delete}>Yes</button>
                             <button onClick={this.toggleDelete}>No</button>
                         </DeleteBtnContainer>) : <DeleteBtnContainer><button onClick={this.toggleDelete}>Delete</button></DeleteBtnContainer>}
@@ -247,21 +249,39 @@ class Toolbar extends Component {
                         <ToolboxItem onClick={() => this.props.cursorProp({ id: true })}>Dirt</ToolboxItem>
                     </NavToolbox>
 
-                <NavList>
-                    {this.props.state.plants.map(plant =>(
-                        <NavListItem key={plant.id} >
-                        <ListTitleAndImage onClick={() => this.props.cursor(plant)} >
-                            <ListItemImg src={`https://res-4.cloudinary.com/do6bw42am/image/upload/c_scale,f_auto,h_300/v1/${plant.image_url}`} alt=""/>
-                            <ListItemTitle>
-                                {plant.name}
-                            </ListItemTitle>
-                        </ListTitleAndImage>
-                        <ListItemIcon
-                        onClick={()=>this.toggleModal(plant)}
-                        src={info} />
-                        </NavListItem>
-                    ))}
-                </NavList>
+                    <NavList>
+                        {this.props.state.plants.map(plant => {
+                            if (plant.id === 5) {
+                                return (
+                                    <NavListItem key={plant.id} >
+                                        <ListTitleAndImage onClick={() => this.props.cursor(plant)} >
+                                            <ListItemImg src={asparagus} alt={plant.name} />
+                                            <ListItemTitle>
+                                                {plant.name}
+                                            </ListItemTitle>
+                                        </ListTitleAndImage>
+                                        <ListItemIcon
+                                            onClick={() => this.toggleModal(plant)}
+                                            src={info} />
+                                    </NavListItem>)
+                            } else {
+                                return (
+                                    <NavListItem key={plant.id} >
+                                        <ListTitleAndImage onClick={() => this.props.cursor(plant)} >
+                                            <ListItemImg src={`https://res-4.cloudinary.com/do6bw42am/image/upload/c_scale,f_auto,h_300/v1/${plant.image_url}`} alt={plant.name} />
+                                            <ListItemTitle>
+                                                {plant.name}
+                                            </ListItemTitle>
+                                        </ListTitleAndImage>
+                                        <ListItemIcon
+                                            onClick={() => this.toggleModal(plant)}
+                                            src={info} />
+                                    </NavListItem>
+                                )
+                            }
+
+                        })}
+                    </NavList>
                 </SideNav>
                 <PlantModal
                     updatePlant={this.updatePlantOnModalClose}
@@ -279,4 +299,4 @@ function mapStateToProps(state) {
     return { state }
 }
 
-export default connect(mapStateToProps,{updateModal})(Toolbar);
+export default connect(mapStateToProps, { updateModal })(Toolbar);

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import close from '../Toolbar/close-btn.svg';
 import more from './more.svg'
+import asparagus from '../Toolbar/asparagus.png'
 // import less from './less.svg'
 
 const ModalOverlay = styled.div`
@@ -134,8 +135,8 @@ class PlantModal extends Component {
                 <CloseBtn
                 onClick={this.props.toggleModal}
                 src={close} alt=""/>
-
-                <Image src={`https://res-4.cloudinary.com/do6bw42am/image/upload/c_scale,f_auto,h_300/v1/${plant.image_url}`}  />
+                
+                {plant.id === 5 ? <Image src={asparagus}  /> : <Image src={`https://res-4.cloudinary.com/do6bw42am/image/upload/c_scale,f_auto,h_300/v1/${plant.image_url}`}  />}
 
                 <Title>{plant.name}</Title>
 
