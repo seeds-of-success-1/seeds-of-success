@@ -86,7 +86,7 @@ class Dashboard extends Component {
     state = {
         project: [],
         title:'',
-        loading: true
+        loading: true,
     }
     mapProject = () => {
         const preview = this.state.project.map((square, i) => {
@@ -115,12 +115,23 @@ class Dashboard extends Component {
     }
 
     async componentDidMount() {
-        let res = await axios.get('/auth/user')
-        this.props.updateRecent(res.data.recentProject)
-        this.props.updateId(res.data.id)
-        this.props.updateUsername(res.data.user_name)
-        let projectRes = await axios.post('/api/project/get', { project_id: this.props.recentProject })
-        this.setState({ project: JSON.parse(projectRes.data.project.plant_array), loading: false })
+        try{
+            let res = await axios.get('/auth/user')
+            this.props.updateRecent(res.data.recentProject)
+            this.props.updateId(res.data.id)
+            this.props.updateUsername(res.data.user_name)
+            let projectRes = await axios.post('/api/project/get', { project_id: this.props.recentProject })
+            this.setState({ project: JSON.parse(projectRes.data.project.plant_array), loading: false, loggedIn:true });
+        }catch(err){
+            if(err.response.header !== 200){
+                this.props.history.push('/')
+               setTimeout(()=>{
+                alert(err.response.data.message)
+               },500)
+
+            }
+        }
+
     }
 
     flipThroughProjects = (direction)=>{
@@ -148,13 +159,15 @@ class Dashboard extends Component {
     }
 
     render() {
+        console.log('dashboard')
         if (this.state.loading) {
             return (
                 <Loading><h1>Loading...</h1></Loading>
-            )
-        }
+                )
+            }
 
         return (
+
             <MainContainer>
                 <DashboardContainer>
 
@@ -173,6 +186,7 @@ class Dashboard extends Component {
                     <ProjectTitle>{this.state.title}</ProjectTitle>
                 </Footer>
             </MainContainer>
+
         );
     }
 }

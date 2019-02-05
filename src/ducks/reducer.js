@@ -18,7 +18,8 @@ const UPDATE_USERNAME = 'UPDATE_USERNAME';
 const UPDATE_ID = 'UPDATE_ID';
 const UPDATE_PROJECTS = 'UPDATE_PROJECTS';
 const UPDATE_RECENT = 'UPDATE_RECENT';
-const UPDATE_AFTER_SAVE = 'UPDATE_AFTER_SAVE'
+const UPDATE_AFTER_SAVE = 'UPDATE_AFTER_SAVE';
+const UPDATE_USER = 'UPDATE_USER'
 
 const GET_PLANTS = 'GET_PLANTS';
 const GET_PLANTS_PENDING = 'GET_PLANTS_PENDING';
@@ -27,6 +28,13 @@ const UPDATE_PLANT_MODAL = 'UPDATE_PLANT_MODAL';
 const CLEAN_UP = "CLEAN_UP";
 
 //UPDATE USER INFO
+export const updateUser = (info) => {
+    return{
+        type:UPDATE_USER,
+        payload:info
+    }
+}
+
 export function updateRecent(id) {
     return {
         type: UPDATE_RECENT,
@@ -67,7 +75,7 @@ export const cleanUpState = () =>{
             projects:[],
             username:'',
             id:'',
-            recentProject:null
+            recentProject:null,
         }
     }
 }
@@ -103,7 +111,10 @@ export default function reducer(state = initialState, action) {
                         return -1
                     } else return 0
                 })
-            }
+            };
+
+        case UPDATE_USER:
+        return {...state, id:action.payload.id, username:action.payload.username, recentProject:action.payload.recentProject}
 
         case UPDATE_USERNAME:
             return { ...state, username: action.payload }
