@@ -1,5 +1,6 @@
 import { toggle } from './logic';
 import {updateModal} from '../ducks/reducer'
+import {updateRecent} from '../ducks/reducer'
 
 describe('Tests Toggle Show button', () => {
     test('when given true, returns false', () => {
@@ -53,3 +54,28 @@ describe('Tests updateModal', () => {
     });
 });
 //CS
+//DC
+describe('Testing updateRecent', () => {
+    const UPDATE_RECENT = 'UPDATE_RECENT';
+    const value = 5
+    test('Should never return null', () => {
+        expect(updateRecent()).not.toBeNull()
+    })
+    test('Should return a truthy value', () => {
+        expect(updateRecent()).toBeTruthy()
+    })
+    test('If nothing is passed in, should have payload equal to undefined', () => {
+        expect(updateRecent()).toHaveProperty('payload', undefined)
+    })
+    test('Should successfully update payload property based on value passed in', () => {
+        expect(updateRecent(value)).toHaveProperty('payload', value)
+    })
+    test('Should always return an object with type equal to UPDATE_RECENT', () => {
+        expect(updateRecent()).toHaveProperty('type', UPDATE_RECENT)
+    })
+    test('Should not modify value passed in', () => {
+        updateRecent(value)
+        expect(value).toBe(5)
+    })
+})
+//DC
