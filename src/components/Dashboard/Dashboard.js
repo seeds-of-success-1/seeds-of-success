@@ -8,7 +8,6 @@ import grass from '../Project/grass.png';
 import dirt from '../Project/dirt.png';
 import next from './next.svg';
 import before from './before.svg';
-import Bg from './bg.png';
 
 const MainContainer = styled.div`
 display:flex;
@@ -75,8 +74,13 @@ position:relative;
 const Arrows = styled.img`
  display:${props => props.show ? 'inline' : 'none'};
  cursor:pointer;
- width:60px;
- height:60px;
+ width:50px;
+ height:50px;
+ :hover{
+    text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+    transition: all 0.4s ease 0s;
+    transform:scale(1.2);
+}
 `
 class Dashboard extends Component {
     state = {
