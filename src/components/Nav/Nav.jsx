@@ -5,7 +5,36 @@ import { connect } from 'react-redux'
 import { updateUsername, updateId, updateProjects,cleanUpState } from '../../ducks/reducer';
 import CreateModal from '../CreateModal/CreateModal'
 import axios from 'axios'
+import {DeleteBtn} from './../Toolbar/Toolbar';
 
+const EditInput = styled.input`
+font: inherit;
+font-weight:350;
+width: 58%;
+border: 0;
+border-radius:5px;
+margin-bottom: 3px;
+margin-right:8px;
+padding: 6px 0 7px;
+display: block;
+box-sizing: content-box;
+background:transparent;
+outline: none !important;
+caret-color: green;
+-webkit-box-shadow: 0px 5px 30px -10px rgba(0,0,0,0.57);
+-moz-box-shadow: 0px 5px 30px -10px rgba(0,0,0,0.57);
+@media (max-width: 1700px) {
+    text-size:1.5rem;
+  }
+  :focus{
+    transition: all 0.4s ease 0s;
+    transform:scale(1.1);
+    ::placeholder{
+        color:#424242;
+        font-weight:450;
+    }
+  }
+`
 const NavWrap = styled.div`
 height:130px;
 width:100%;
@@ -26,6 +55,9 @@ background-color:inherit;
 font-size:1.5rem;
 :hover {
     cursor: pointer;
+    transition: all 0.2s ease 0s;
+    transform:scale(1.1);
+    font-weight:525;
 }
 `
 const NavList = styled.ul`
@@ -43,6 +75,7 @@ z-index: 1;
 const NavListItem = styled.li`
 margin:0 5px;
 list-style-type:none;
+
 `
 const DropDownMenu = styled.div`
 background-color: #fff;
@@ -163,7 +196,9 @@ class Nav extends Component {
             null
             : <NavWrap>
                 <SiteTitle>Seeds of Success</SiteTitle>
-                {this.props.state.projects[0] ? (this.props.location.pathname.includes('/project') ? <ProjectTitle>{this.state.edit ? <div><input onChange={this.handleInputChange} value={this.state.name}/><button onClick={this.editName}>Save</button></div> : <div><button onClick={this.toggleEdit}>Edit</button>{' ' + currentProject[0].title}</div>}</ProjectTitle> : console.log(this.props.location.pathname)) : null
+                {this.props.state.projects[0] ? (this.props.location.pathname.includes('/project') ? <ProjectTitle>{this.state.edit ? <div style={{
+                    display:'flex',
+                }}><EditInput onChange={this.handleInputChange} value={this.state.name}/><DeleteBtn onClick={this.editName} >Save</DeleteBtn></div> : <div><DeleteBtn onClick={this.toggleEdit}>Edit</DeleteBtn>{' ' + currentProject[0].title}</div>}</ProjectTitle> : console.log(this.props.location.pathname)) : null
                 }
                 <NavList>
                     <NavListItem id="logout-btn">
@@ -172,7 +207,7 @@ class Nav extends Component {
                         >Logout</NavButton>
                     </NavListItem>
                     <NavListItem>
-                        <NavButton onClick={ this.toggleCreateModal}>Create New Project</NavButton>
+                        <NavButton onClick={ this.toggleCreateModal}> New Project</NavButton>
                     </NavListItem>
                     <NavListItem>
                         <Link to="/dashboard">
