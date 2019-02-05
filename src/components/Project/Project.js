@@ -6,7 +6,7 @@ import dirt from './dirt.png';
 import Toolbar from '../Toolbar/Toolbar'
 import { debounce } from 'lodash';
 import axios from 'axios';
-import { updateUser,updateAfterSave } from '../../ducks/reducer';
+import { updateUser,updateAfterSave,updateRecent } from '../../ducks/reducer';
 
 export const Loading = styled.div`
     margin-top: 400px;
@@ -227,4 +227,4 @@ function mapStateToProps(state) {
     return { ...state }
 }
 
-export default connect(mapStateToProps, { updateUser, updateAfterSave })(Project);
+export default connect(mapStateToProps, { updateUser,updateRecent, updateAfterSave })(Project);
