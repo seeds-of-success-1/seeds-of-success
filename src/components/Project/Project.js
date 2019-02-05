@@ -6,7 +6,7 @@ import dirt from './dirt.png';
 import Toolbar from '../Toolbar/Toolbar'
 import { debounce } from 'lodash';
 import axios from 'axios';
-import { updateId, updateUsername, updateRecent,updateAfterSave } from '../../ducks/reducer';
+import { updateUser,updateAfterSave } from '../../ducks/reducer';
 
 export const Loading = styled.div`
     margin-top: 400px;
@@ -85,17 +85,22 @@ class Project extends Component {
     }
 
     async componentDidMount() {
-        let userRes = await axios.get('/auth/user')
-        this.props.updateRecent(userRes.data.recentProject)
-        this.props.updateId(userRes.data.id)
-        this.props.updateUsername(userRes.data.username)
         const project_id = this.props.match.params.id
-        const res = await axios.post('/api/project/get', { project_id })
-        let plant_array = JSON.parse(res.data.project.plant_array);
-        if (!res.data.project) {
-            return alert("Error.  Couldn't retrive project info")
-        } else {
+        try{
+            let userRes = await axios.get('/auth/user')
+            this.props.updateUser({id:userRes.data.id,username:userRes.data.username,recentProject:userRes.data.recentProject})
+            const res = await axios.post('/api/project/get', { project_id })
+            let plant_array = JSON.parse(res.data.project.plant_array);
             this.setState({ plants: plant_array, loading: false })
+        }catch(err){
+            if(err.response.status !== 200 && err.response.status !== 400){
+                this.props.history.push('/')
+                setTimeout(()=>{
+                    alert(err.response.data.message)
+                },500)
+            }else if(err.response.status === 400){
+                alert(err.response.data.message)
+            }
         }
     }
     async componentDidUpdate(prevProps) {
@@ -222,4 +227,4 @@ function mapStateToProps(state) {
     return { ...state }
 }
 
-export default connect(mapStateToProps, { updateId, updateUsername, updateRecent, updateAfterSave })(Project);
+export default connect(mapStateToProps, { updateUser, updateAfterSave })(Project);
