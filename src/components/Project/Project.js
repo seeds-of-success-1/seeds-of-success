@@ -6,7 +6,7 @@ import dirt from './dirt.png';
 import Toolbar from '../Toolbar/Toolbar'
 import { debounce } from 'lodash';
 import axios from 'axios';
-import { updateId, updateUsername, updateRecent } from '../../ducks/reducer';
+import { updateId, updateUsername, updateRecent,updateAfterSave } from '../../ducks/reducer';
 
 export const Loading = styled.div`
     margin-top: 400px;
@@ -111,6 +111,9 @@ class Project extends Component {
         const { plants } = this.state;
         const project_id = this.props.match.params.id
         let res = await axios.post(`/api/project/save`, { plants, project_id })
+        let index = this.props.projects.findIndex(project => project.id === res.data.project.id);
+        this.props.updateRecent(res.data.project.id)
+        this.props.updateAfterSave({project:res.data.project,index});
     }
 
     deleteProject = async () => {
@@ -219,4 +222,4 @@ function mapStateToProps(state) {
     return { ...state }
 }
 
-export default connect(mapStateToProps, { updateId, updateUsername, updateRecent })(Project);
+export default connect(mapStateToProps, { updateId, updateUsername, updateRecent, updateAfterSave })(Project);

@@ -129,13 +129,13 @@ class Login extends Component {
         this.props.updateId(res.data.id)
         if (res.data.loggedIn) {
             this.fetchProjects()
-            this.props.history.push('/dashboard')
         }
     }
 
     fetchProjects = async () => {
         let res = await axios.get('/api/project/projects');
         this.props.updateProjects(res.data.projects)
+        this.props.history.push('/dashboard')
     }
 
     async register() {

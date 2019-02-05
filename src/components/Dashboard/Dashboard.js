@@ -92,17 +92,21 @@ class Dashboard extends Component {
         })
         return preview
     }
+
     componentDidUpdate(prevProps, prevState){
-        if(prevProps.projects.length !== this.props.projects.length){
+        if(!this.state.loading && prevState.project.length !== this.state.project.length){
             let index = null;
-            if(this.props.projects.length && this.props.projects[0].id){
+            if(this.props.projects.length ){
               index = this.props.projects.findIndex(project => project.id === this.props.recentProject);
-              let {title} = this.props.projects[index]
-              let project = JSON.parse(this.props.projects[index].plant_array)
-              this.setState({ project,title})
+              if(index !== -1 ){
+                  let {title} = this.props.projects[index]
+                  let project = JSON.parse(this.props.projects[index].plant_array)
+                  this.setState({ project,title})
+                }
             }
         }
     }
+
     async componentDidMount() {
         let res = await axios.get('/auth/user')
         this.props.updateRecent(res.data.recentProject)
@@ -127,6 +131,7 @@ class Dashboard extends Component {
            this.setProject(index+1);
        }
     }
+
     setProject = (index) => {
         let project = JSON.parse(this.props.projects[index].plant_array)
         let id  = this.props.projects[index].id
@@ -134,6 +139,7 @@ class Dashboard extends Component {
         this.props.updateRecent(id)
         this.setState({project,title})
     }
+
     render() {
         if (this.state.loading) {
             return (

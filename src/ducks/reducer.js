@@ -4,7 +4,6 @@ const initialState = {
     plants: [],
     plantsLoading: false,
     projects: [],
-    user: {},
     username: '',
     id: '',
     plantModalOpen:false,
@@ -19,11 +18,13 @@ const UPDATE_USERNAME = 'UPDATE_USERNAME';
 const UPDATE_ID = 'UPDATE_ID';
 const UPDATE_PROJECTS = 'UPDATE_PROJECTS';
 const UPDATE_RECENT = 'UPDATE_RECENT';
+const UPDATE_AFTER_SAVE = 'UPDATE_AFTER_SAVE'
 
 const GET_PLANTS = 'GET_PLANTS';
 const GET_PLANTS_PENDING = 'GET_PLANTS_PENDING';
 const GET_PLANTS_FULFILLED = 'GET_PLANTS_FULFILLED';
 const UPDATE_PLANT_MODAL = 'UPDATE_PLANT_MODAL';
+const CLEAN_UP = "CLEAN_UP";
 
 //UPDATE USER INFO
 export function updateRecent(id) {
@@ -56,6 +57,24 @@ export const updateModal = (bool) =>{
     return {
         type:UPDATE_PLANT_MODAL,
         payload:bool
+    }
+}
+
+export const cleanUpState = () =>{
+    return{
+        type: CLEAN_UP,
+        payload:{
+            projects:[],
+            username:'',
+            id:'',
+            recentProject:null
+        }
+    }
+}
+export const updateAfterSave = (project) => {
+    return{
+        type:UPDATE_AFTER_SAVE,
+        payload:project
     }
 }
 
@@ -100,6 +119,16 @@ export default function reducer(state = initialState, action) {
 
         case UPDATE_RECENT:
             return { ...state, recentProject: action.payload };
+
+        case UPDATE_AFTER_SAVE:
+        let updatedProjects = [...state.projects];
+        updatedProjects.splice(action.payload.index,1,action.payload.project);
+        return {...state, projects:updatedProjects};
+
+
+
+        case CLEAN_UP:
+        return {...state, projects:action.payload.projects, username:action.payload.username,id:action.payload.id, recentProject:action.payload.recentProject}
 
         default:
             return state;
