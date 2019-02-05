@@ -3,6 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const massive = require('massive');
 const controller = require('./controller')
+const articleCtrl = require('./articles');
 
 const app = express();
 const { PORT, CONNECTION_STRING, SECRET } = process.env
@@ -25,6 +26,8 @@ app.post('/api/project/save', controller.saveProject);
 app.post('/api/project/name', controller.editProjectName);
 app.post('/api/project/delete', controller.deleteProject);
 app.get('/api/project/projects', controller.getProjects);
+
+app.get('/api/articles',articleCtrl.getArticles);
 
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db);

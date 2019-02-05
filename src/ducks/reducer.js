@@ -1,4 +1,5 @@
 import * as plants from '../services/plants';
+import axios from 'axios';
 
 const initialState = {
     plants: [],
@@ -7,7 +8,9 @@ const initialState = {
     username: '',
     id: '',
     plantModalOpen:false,
-    recentProject: ''
+    recentProject: '',
+    articles:[],
+    articlesLoading:false
 }
 
 
@@ -26,6 +29,10 @@ const GET_PLANTS_PENDING = 'GET_PLANTS_PENDING';
 const GET_PLANTS_FULFILLED = 'GET_PLANTS_FULFILLED';
 const UPDATE_PLANT_MODAL = 'UPDATE_PLANT_MODAL';
 const CLEAN_UP = "CLEAN_UP";
+
+const GET_ARTICLES = 'GET_ARTICLES';
+const GET_ARTICLES_PENDING = 'GET_ARTICLES_PENDING';
+const GET_ARTICLES_FULFILLED = 'GET_ARTICLES_FULFILLED';
 
 //UPDATE USER INFO
 export const updateUser = (info) => {
@@ -93,7 +100,13 @@ export const getPlants = () => {
         payload: plants.getPlants(),
     }
 }
-
+export const getArticles = () =>{
+    let articles = axios.get('/api/articles');
+    return{
+        type:GET_ARTICLES,
+        payload:articles
+    }
+}
 
 export default function reducer(state = initialState, action) {
 
@@ -136,10 +149,14 @@ export default function reducer(state = initialState, action) {
         updatedProjects.splice(action.payload.index,1,action.payload.project);
         return {...state, projects:updatedProjects};
 
-
-
         case CLEAN_UP:
-        return {...state, projects:action.payload.projects, username:action.payload.username,id:action.payload.id, recentProject:action.payload.recentProject}
+        return {...state, projects:action.payload.projects, username:action.payload.username,id:action.payload.id, recentProject:action.payload.recentProject};
+
+        case GET_ARTICLES_PENDING:
+        return {...state, articlesLoading:true};
+
+        case GET_ARTICLES_FULFILLED:
+        return {...state, articlesLoading:false, articles:action.payload.data.items}
 
         default:
             return state;

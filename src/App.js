@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { HashRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
-import {getPlants} from './ducks/reducer';
+import {getPlants,getArticles} from './ducks/reducer';
 import routes from './routes';
 import Nav from './components/Nav/Nav'
 import './App.css';
 
 class App extends Component {
   componentDidMount(){
-    this.props.getPlants()
+    this.props.getPlants();
+    this.props.getArticles();
   }
   render() {
     return (
@@ -25,5 +26,5 @@ class App extends Component {
   }
 }
 
-export default connect(null,{getPlants})(App) ;
+export default connect(null,{getPlants,getArticles})(App) ;
 

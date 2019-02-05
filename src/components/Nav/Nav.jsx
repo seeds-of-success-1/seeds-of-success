@@ -195,7 +195,7 @@ class Nav extends Component {
     getProjects() {
         const mapped = this.props.state.projects.map((project) => {
             return (
-                <Link key={project.id} to={`/project${project.id}`}>
+                <Link style={{textDecoration:'none'}} key={project.id} to={`/project${project.id}`}>
                     <DropdownItem
                         onClick={() => this.setState({ projectsOpen: !this.state.projectsOpen })}
                     >{project.title}</DropdownItem>
