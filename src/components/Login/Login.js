@@ -3,6 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { updateUsername, updateId, updateProjects } from './../../ducks/reducer';
 import styled from 'styled-components';
+import {getuser} from '../../get'
 import Bg from './Bg1.png'
 import FadeIn from './FadeInAnimation';
 
@@ -108,7 +109,7 @@ outline: none;
     min-width:100px;
     font-size:1.5rem;
     margin-bottom:10px
-  } 
+  }
   :hover{
      text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
     -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
@@ -143,16 +144,21 @@ class Login extends Component {
 
     async login() {
         let { username, password } = this.state;
-        let res = await axios.post('/auth/login', { username, password });
-        this.setState({
-            username: '', password: '', message: res.data.message
-        })
-        this.props.updateUsername(res.data.username)
-        this.props.updateId(res.data.id)
-        if (res.data.loggedIn) {
-            this.fetchProjects()
+        if(username.length && password.length){
+            let res = await axios.post('/auth/login', { username, password });
+            this.setState({
+                username: '', password: '', message: res.data.message
+            })
+            this.props.updateUsername(res.data.username)
+            this.props.updateId(res.data.id)
+            if (res.data.loggedIn) {
+                getuser(res.data.name)
+                this.fetchProjects()
+            }
         }
     }
+
+
 
     fetchProjects = async () => {
         let res = await axios.get('/api/project/projects');
