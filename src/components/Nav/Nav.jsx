@@ -178,9 +178,9 @@ class Nav extends Component {
 
     editName = async () => {
         let currentProject = this.props.state.projects.filter((project, i) => {
-            let project_id = +this.props.location.pathname.slice(8)
-            return project.id === project_id
-        })
+                let project_id = +this.props.location.pathname.slice(8)
+                return project.id === project_id
+            })
         const name = this.state.name
         const project_id = currentProject[0].id
         await axios.post('/api/project/name', {name, project_id})
@@ -211,6 +211,7 @@ class Nav extends Component {
         let res = await axios.post('/api/project/new',{project_name:name})
         let result = await axios.get('/api/project/projects');
         this.props.updateProjects(result.data.projects)
+        console.log('nav create', result.data.projects)
         if (res.data.project.id) {
             this.props.history.push(`/project${res.data.project.id}`)
         }
@@ -221,11 +222,18 @@ class Nav extends Component {
     }
 
     render() {
-        let currentProject = this.props.state.projects.filter((project, i) => {
-            let project_id = +this.props.location.pathname.slice(8)
-            // console.log(project_id)
-            return project.id === project_id
-        })
+        let currentProject;
+        if (this.props.state.projects.length) {
+            if (Object.keys(this.props.state.projects[0]).length) {
+                currentProject = this.props.state.projects.filter((project, i) => {
+                    let project_id = +this.props.location.pathname.slice(8)
+                    console.log(project_id)
+                    return project.id === project_id
+                })
+            }
+        }
+        
+        
         // console.log(this.props.state.projects)
         const nav = this.props.location.pathname === "/" ?
             null
@@ -233,7 +241,7 @@ class Nav extends Component {
                 <SiteTitle>Seeds of Success</SiteTitle>
                 {this.props.state.projects[0] ? (this.props.location.pathname.includes('/project') ? <ProjectTitle>{this.state.edit ? <div style={{
                     display:'flex',
-                }}><EditInput onChange={this.handleInputChange} value={this.state.name}/><DeleteBtn onClick={this.editName} >Save</DeleteBtn></div> : <div><DeleteBtn onClick={this.toggleEdit}>Edit</DeleteBtn>{' ' + currentProject[0].title}</div>}</ProjectTitle> : console.log(this.props.location.pathname)) : null
+                }}><EditInput onChange={this.handleInputChange} value={this.state.name}/><DeleteBtn onClick={this.editName} >Save</DeleteBtn></div> : <div><DeleteBtn onClick={this.toggleEdit}>Edit</DeleteBtn>{' ' + currentProject[0].title }</div>}</ProjectTitle> : console.log(this.props.location.pathname)) : null
                 }
                 <NavList>
                     <NavListItem id="logout-btn">

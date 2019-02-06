@@ -126,5 +126,12 @@ module.exports = {
         } else {
             return res.status(200).send({ projects, message: "Successfully aquired projects" })
         }
+    },
+    updateRecent: async (req, res) => {
+        const db = req.app.get('db');
+        const user_id = req.session.user.id;
+        let {recent_id} = req.body;
+        const recent = await db.recent_project([recent_id, user_id])
+        res.sendStatus(200);
     }
 }

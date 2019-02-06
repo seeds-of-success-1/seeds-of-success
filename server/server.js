@@ -26,6 +26,7 @@ app.post('/api/project/save', controller.saveProject);
 app.post('/api/project/name', controller.editProjectName);
 app.post('/api/project/delete', controller.deleteProject);
 app.get('/api/project/projects', controller.getProjects);
+app.put('/api/recent', controller.updateRecent);
 
 app.get('/api/articles',articleCtrl.getArticles);
 

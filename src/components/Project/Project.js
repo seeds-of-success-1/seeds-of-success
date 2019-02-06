@@ -6,7 +6,7 @@ import dirt from './dirt.png';
 import Toolbar from '../Toolbar/Toolbar'
 import { debounce } from 'lodash';
 import axios from 'axios';
-import { updateUser,updateAfterSave,updateRecent } from '../../ducks/reducer';
+import { updateUser,updateAfterSave,updateRecent, updateProjects } from '../../ducks/reducer';
 
 export const Loading = styled.div`
     margin-top: 400px;
@@ -122,10 +122,30 @@ class Project extends Component {
     }
 
     deleteProject = async () => {
-        if (this.props.projects.length > 1) {
+        let { projects, recentProject } = this.props
+        if (projects.length > 1) {
             const project_id = this.props.match.params.id
             await axios.post('/api/project/delete', {project_id})
-            this.props.history.push('/dashboard')
+            console.log('original', projects)
+            if (project_id == this.props.recentProject) {
+                console.log('hit if statement')
+                this.props.updateRecent(projects[0].id)
+                await axios.put('/api/recent', {recent_id: projects[0].id})
+            }
+            let mappedProjects = projects.filter((project, i) => {
+                return project.id != project_id
+            })
+            console.log('mapped', mappedProjects)
+            this.props.updateProjects(mappedProjects)
+            console.log('updated projects', projects)
+            // if (project_id == recentProject && project_id == projects[0].id) {
+            //     this.props.updateRecent(projects[1].id)
+            //     await axios.put('/api/recent', {recent_id: projects[1].id})
+            // }
+            setTimeout(() => {
+                this.props.history.push('/dashboard')
+            }, 0)
+        
         } else {
             alert('You must keep at least one project at a time')
         }
@@ -231,4 +251,4 @@ function mapStateToProps(state) {
     return { ...state }
 }
 
-export default connect(mapStateToProps, { updateUser,updateRecent, updateAfterSave })(Project);
+export default connect(mapStateToProps, { updateUser,updateRecent, updateAfterSave, updateProjects })(Project);
