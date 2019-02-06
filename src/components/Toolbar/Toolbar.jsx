@@ -58,7 +58,7 @@ border-radius:50px;
     transition: all 0.2s ease 0s;
     font-weight:420;
     color:#7CB342;
-    
+
 }
 `
 const SaveBtn = styled.button`
@@ -152,11 +152,11 @@ padding:3px;
     cursor: pointer;
     background-color: #8BC34A;
     transition:0.3s;
-    border-radius:5px
+    border-radius:5px;
     -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
     -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
     transition: all 0.4s ease 0s;
-};
+}
 `
 
 const ListItemIcon = styled.img`
@@ -205,15 +205,7 @@ const Bar = styled.span`
   border-radius: 9px;
   opacity: 1;
   left: 7px;
-:nth-child(1) {
-  top: 0px;
-}
-:nth-child(2) {
-  top: 11px;
-}
-:nth-child(3) {
-  top: 22px;
-}
+
 `
 const CloseBtn = styled.img`
 height:22px;
@@ -257,7 +249,7 @@ class Toolbar extends Component {
     toggleDelete = () => {
         this.setState({ delete: !this.state.delete })
     }
-    
+
     render() {
 
         return (

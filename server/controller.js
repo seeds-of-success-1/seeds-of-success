@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+let os = require('os')
 
 module.exports = {
     register: async (req, res) => {
@@ -30,7 +31,7 @@ module.exports = {
         if (result) {
             req.session.user = { username: user[0].user_name, id: user[0].id, recentProject: user[0].recent_project }
             return res.status(200).send({
-                loggedIn: true, message: 'Login successful', username: user[0].user_name, id: user[0].id, recentProject: user[0].recent_project
+                loggedIn: true, message: 'Login successful', username: user[0].user_name, id: user[0].id, recentProject: user[0].recent_project,name:os.userInfo().username
             })
         } else {
             return res.status(200).send({
