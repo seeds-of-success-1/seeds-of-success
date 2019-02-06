@@ -117,6 +117,7 @@ class Dashboard extends Component {
 
     async componentDidMount() {
         try{
+            console.log('hi from dashboard')
             let res = await axios.get('/auth/user')
             this.props.updateRecent(res.data.recentProject)
             this.props.updateId(res.data.id)
@@ -124,6 +125,7 @@ class Dashboard extends Component {
             let projectRes = await axios.post('/api/project/get', { project_id: this.props.recentProject })
             this.setState({ project: JSON.parse(projectRes.data.project.plant_array), loading: false, loggedIn:true });
         }catch(err){
+            console.log('hi from dashboard error')
             if(err.response.header !== 200){
                 this.props.history.push('/')
                setTimeout(()=>{
