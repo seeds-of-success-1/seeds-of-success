@@ -6,7 +6,7 @@ import dirt from './dirt.png';
 import Toolbar from '../Toolbar/Toolbar'
 import { debounce } from 'lodash';
 import axios from 'axios';
-import { updateUser,updateAfterSave } from '../../ducks/reducer';
+import { updateUser,updateAfterSave,updateRecent } from '../../ducks/reducer';
 
 export const Loading = styled.div`
     margin-top: 400px;
@@ -122,9 +122,13 @@ class Project extends Component {
     }
 
     deleteProject = async () => {
-        const project_id = this.props.match.params.id
-        await axios.post('/api/project/delete', {project_id})
-        this.props.history.push('/dashboard')
+        if (this.props.projects.length > 1) {
+            const project_id = this.props.match.params.id
+            await axios.post('/api/project/delete', {project_id})
+            this.props.history.push('/dashboard')
+        } else {
+            alert('You must keep at least one project at a time')
+        }
     }
 
     imageUpdater = (id) => {
@@ -227,4 +231,4 @@ function mapStateToProps(state) {
     return { ...state }
 }
 
-export default connect(mapStateToProps, { updateUser, updateAfterSave })(Project);
+export default connect(mapStateToProps, { updateUser,updateRecent, updateAfterSave })(Project);

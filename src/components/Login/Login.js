@@ -102,6 +102,7 @@ cursor:pointer;
 font-weight:650;
 background: #8BC34A;
 color: #fff !important;
+outline: none;
 @media (max-width: 1700px) {
     height:50px;
     min-width:100px;
@@ -109,11 +110,11 @@ color: #fff !important;
     margin-bottom:10px
   }
   :hover{
-    text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
--webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
--moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-transition: all 0.4s ease 0s;
-transform:scale(1.1);
+     text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.4s ease 0s;
+    transform:scale(1.1);
 }
 `
 const LError = styled.p`
@@ -142,16 +143,20 @@ class Login extends Component {
 
     async login() {
         let { username, password } = this.state;
-        let res = await axios.post('/auth/login', { username, password });
-        this.setState({
-            username: '', password: '', message: res.data.message
-        })
-        this.props.updateUsername(res.data.username)
-        this.props.updateId(res.data.id)
-        if (res.data.loggedIn) {
-            this.fetchProjects()
+        if(username.length && password.length){
+            let res = await axios.post('/auth/login', { username, password });
+            this.setState({
+                username: '', password: '', message: res.data.message
+            })
+            this.props.updateUsername(res.data.username)
+            this.props.updateId(res.data.id)
+            if (res.data.loggedIn) {
+                this.fetchProjects()
+            }
         }
     }
+
+
 
     fetchProjects = async () => {
         let res = await axios.get('/api/project/projects');
@@ -169,6 +174,13 @@ class Login extends Component {
         this.props.updateId(res.data.id)
         if (res.data.loggedIn) {
             this.props.history.push('/dashboard')
+        }
+        let response = await axios.post('/api/project/new')
+        this.props.updateProjects(JSON.parse(response.data.project.plant_array))
+        if (res.data.loggedIn) {
+            setTimeout(() => {
+                this.props.history.push('/dashboard')
+            }, 2000)
         }
     }
 
