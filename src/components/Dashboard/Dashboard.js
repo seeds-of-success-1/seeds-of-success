@@ -92,6 +92,7 @@ const Arrows = styled.img`
 `
 const Weather = styled.div`
  position: absolute;
+ top: 131px;
  transition: all .2s;
  overflow: ${props => props.open ? 'inherit' : 'hidden'};
  height: ${props => props.open ? '276px' : '0'};
@@ -118,7 +119,7 @@ height: 35px;
 z-index:2;
 `
 const OpenWeather = styled(ForecastBtn)`
-top: 130px;
+top: 131px;
 right: 0;
 `
 
