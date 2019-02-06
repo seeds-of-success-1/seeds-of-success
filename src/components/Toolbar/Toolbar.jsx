@@ -61,7 +61,7 @@ border-radius:50px;
 
 }
 `
-const SaveBtn = styled.button`
+export const SaveBtn = styled.button`
  position:absolute;
  top:5px;
  border-radius:50px;
@@ -153,6 +153,7 @@ padding:3px;
     background-color: #8BC34A;
     transition:0.3s;
     border-radius:5px;
+    box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
     -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
     -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
     transition: all 0.4s ease 0s;
@@ -207,7 +208,7 @@ const Bar = styled.span`
   left: 7px;
 
 `
-const CloseBtn = styled.img`
+export const CloseBtn = styled.img`
 height:22px;
 width: 22px;
 position:absolute;

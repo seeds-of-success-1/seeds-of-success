@@ -2,12 +2,19 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { updateRecent, updateId, updateUsername } from '../../ducks/reducer';
-import {Loading} from '../Project/Project';
+import { Loading } from '../Project/Project';
 import axios from 'axios';
 import grass from '../Project/grass.png';
 import dirt from '../Project/dirt.png';
 import next from './next.svg';
 import before from './before.svg';
+import ReactWeather from 'react-open-weather';
+import { weatherApiKey } from '../../config';
+//Optional include of the default css styles 
+import 'react-open-weather/lib/css/ReactWeather.css';
+import { CloseBtn, SaveBtn } from '../Toolbar/Toolbar';
+import close from '../Toolbar/close-btn.svg';
+
 
 const MainContainer = styled.div`
 display:flex;
@@ -15,7 +22,6 @@ flex-direction:column;
 justify-content:center;
 
 `
-
 const DashboardContainer = styled.div`
 background:#F1F8E9;
 display:flex;
@@ -42,6 +48,7 @@ display:grid;
 grid-template-columns:minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%);
 scroll-behavior: smooth;
 justify-content:center;
+box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
 -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
 -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
 transition: all 0.4s ease 0s;
@@ -78,16 +85,51 @@ const Arrows = styled.img`
  width:50px;
  height:50px;
  :hover{
-    text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
-    transition: all 0.4s ease 0s;
-    transform:scale(1.2);
-}
+     text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+     transition: all 0.4s ease 0s;
+     transform:scale(1.2);
+    }
 `
+const Weather = styled.div`
+ position: absolute;
+ top: 131px;
+ transition: all .2s;
+ overflow: ${props => props.open ? 'inherit' : 'hidden'};
+ height: ${props => props.open ? '276px' : '0'};
+ width: ${props => props.open ? '330px' : '0'};
+ z-index: 1;
+ .rw-box-days {
+     transition: all .5s;
+     z-index: -1;
+     position:absolute;
+     top: ${props => props.forecast ? '276px' : '10px'};
+ }
+`
+const CloseWeather = styled(CloseBtn)`
+ z-index:2;
+ position: absolute;
+ top: 5px;
+ left: 5px;
+`
+const ForecastBtn = styled(SaveBtn)`
+background: #4BC4F7;
+right: 0;
+top: 241px;
+height: 35px;
+z-index:2;
+`
+const OpenWeather = styled(ForecastBtn)`
+top: 131px;
+right: 0;
+`
+
 class Dashboard extends Component {
     state = {
         project: [],
-        title:'',
+        title: '',
         loading: true,
+        weather: false,
+        forecast: false
     }
     mapProject = () => {
         const preview = this.state.project.map((square, i) => {
@@ -100,16 +142,22 @@ class Dashboard extends Component {
         })
         return preview
     }
+    toggleWeather = () => {
+        this.setState({ weather: !this.state.weather, forecast: false })
+    }
+    toggleForecast = () => {
+        this.setState({forecast: !this.state.forecast})
+    }
 
-    componentDidUpdate(prevProps, prevState){
-        if(!this.state.loading && prevState.project.length !== this.state.project.length){
+    componentDidUpdate(prevProps, prevState) {
+        if (!this.state.loading && prevState.project.length !== this.state.project.length) {
             let index = null;
-            if(this.props.projects.length ){
-              index = this.props.projects.findIndex(project => project.id === this.props.recentProject);
-              if(index !== -1 ){
-                  let {title} = this.props.projects[index]
-                  let project = JSON.parse(this.props.projects[index].plant_array)
-                  this.setState({ project,title})
+            if (this.props.projects.length) {
+                index = this.props.projects.findIndex(project => project.id === this.props.recentProject);
+                if (index !== -1) {
+                    let { title } = this.props.projects[index]
+                    let project = JSON.parse(this.props.projects[index].plant_array)
+                    this.setState({ project, title })
                 }
             }
         }
@@ -117,6 +165,7 @@ class Dashboard extends Component {
 
     async componentDidMount() {
         try{
+            console.log('hi from dashboard')
             let res = await axios.get('/auth/user')
             this.props.updateRecent(res.data.recentProject)
             this.props.updateId(res.data.id)
@@ -124,39 +173,40 @@ class Dashboard extends Component {
             let projectRes = await axios.post('/api/project/get', { project_id: this.props.recentProject })
             this.setState({ project: JSON.parse(projectRes.data.project.plant_array), loading: false, loggedIn:true });
         }catch(err){
+            console.log('hi from dashboard error')
             if(err.response.header !== 200){
                 this.props.history.push('/')
-               setTimeout(()=>{
-                alert(err.response.data.message)
-               },500)
+                setTimeout(() => {
+                    alert(err.response.data.message)
+                }, 500)
 
             }
         }
 
     }
 
-    flipThroughProjects = (direction)=>{
-        const {projects} = this.props;
-       let index = projects.findIndex(project => project.id === this.props.recentProject);
-       if(index === 0){
-           if(direction ==='left'){return}
-           this.setProject(index+2)
-       }else if(direction === "left" && index > 0){
-           this.setProject(index-1);
-        }else if(index === projects.length-1){
-            if(direction === 'right'){return}
-            this.setProject(index-2);
-        }else if(direction === 'right' && index < projects.length){
-           this.setProject(index+1);
-       }
+    flipThroughProjects = (direction) => {
+        const { projects } = this.props;
+        let index = projects.findIndex(project => project.id === this.props.recentProject);
+        if (index === 0) {
+            if (direction === 'left') { return }
+            this.setProject(index + 2)
+        } else if (direction === "left" && index > 0) {
+            this.setProject(index - 1);
+        } else if (index === projects.length - 1) {
+            if (direction === 'right') { return }
+            this.setProject(index - 2);
+        } else if (direction === 'right' && index < projects.length) {
+            this.setProject(index + 1);
+        }
     }
 
     setProject = (index) => {
         let project = JSON.parse(this.props.projects[index].plant_array)
-        let id  = this.props.projects[index].id
-        let {title} = this.props.projects[index]
+        let id = this.props.projects[index].id
+        let { title } = this.props.projects[index]
         this.props.updateRecent(id)
-        this.setState({project,title})
+        this.setState({ project, title })
     }
 
     render() {
@@ -164,23 +214,35 @@ class Dashboard extends Component {
         if (this.state.loading) {
             return (
                 <Loading><h1>Loading...</h1></Loading>
-                )
-            }
-
+            )
+        }
         return (
 
             <MainContainer>
                 <DashboardContainer>
-
+                    <OpenWeather onClick={this.toggleWeather}>Local Weather</OpenWeather>
                     <Arrows show={this.state.project.length} src={before}
-                    onClick={()=>this.flipThroughProjects('left')}
+                        onClick={() => this.flipThroughProjects('left')}
                     />
                     <GridContainer>
                         {this.mapProject()}
                     </GridContainer>
                     <Arrows show={this.state.project.length} src={next}
-                    onClick={()=>this.flipThroughProjects('right')}
+                        onClick={() => this.flipThroughProjects('right')}
                     />
+                    <Weather open={this.state.weather} forecast={this.state.forecast}>
+                        <ReactWeather
+                            forecast="5days"
+                            apikey={weatherApiKey}
+                            type="auto"
+                            unit='imperial'
+                        >
+                        </ReactWeather>
+                        <CloseWeather
+                            onClick={this.toggleWeather}
+                            src={close} alt="" />
+                        <ForecastBtn onClick={this.toggleForecast} >5-Day Forecast</ForecastBtn>    
+                    </Weather>
 
                 </DashboardContainer>
                 <Footer>
