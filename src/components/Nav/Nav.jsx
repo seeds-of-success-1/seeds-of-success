@@ -127,6 +127,7 @@ class Nav extends Component {
 
     async componentDidMount(){
        try{
+           console.log('hi from nav')
            let res = await axios.get('/auth/user')
            if(res.data.id && !this.props.state.projects.length){
            this.fetchProjects()

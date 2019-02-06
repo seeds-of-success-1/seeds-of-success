@@ -13,8 +13,11 @@ module.exports = {
             let salt = bcrypt.genSaltSync(10);
             let hash = bcrypt.hashSync(password, salt)
             let createdUser = await db.create_user([username, hash])
-            req.session.user = { username: createdUser[0].username, id: createdUser[0].id }
-            res.status(200).send({ loggedIn: true, message: 'Register successful', username: createdUser[0].username, id: createdUser[0].id })
+            let arr = JSON.stringify([{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}])
+            let createdProject = await db.create_project([createdUser[0].id, "new project", arr])
+            await db.recent_project(createdProject[0].id, createdUser[0].id)
+            req.session.user = { username: createdUser[0].user_name, id: createdUser[0].id }
+            res.status(200).send({ loggedIn: true, message: 'Register successful', username: createdUser[0].user_name, id: createdUser[0].id })
         }
     },
     login: async (req, res) => {
@@ -47,6 +50,7 @@ module.exports = {
             return res.status(401).send({ message: 'You must log in first!' });
         }
         const username = req.session.user.username;
+        console.log(req.session)
         const db = req.app.get('db');
         const user = await db.find_user([username]);
         if (!user[0]) {
