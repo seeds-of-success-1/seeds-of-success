@@ -48,6 +48,7 @@ display:grid;
 grid-template-columns:minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%);
 scroll-behavior: smooth;
 justify-content:center;
+box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
 -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
 -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
 transition: all 0.4s ease 0s;
@@ -162,15 +163,17 @@ class Dashboard extends Component {
     }
 
     async componentDidMount() {
-        try {
+        try{
+            console.log('hi from dashboard')
             let res = await axios.get('/auth/user')
             this.props.updateRecent(res.data.recentProject)
             this.props.updateId(res.data.id)
             this.props.updateUsername(res.data.user_name)
             let projectRes = await axios.post('/api/project/get', { project_id: this.props.recentProject })
-            this.setState({ project: JSON.parse(projectRes.data.project.plant_array), loading: false, loggedIn: true });
-        } catch (err) {
-            if (err.response.header !== 200) {
+            this.setState({ project: JSON.parse(projectRes.data.project.plant_array), loading: false, loggedIn:true });
+        }catch(err){
+            console.log('hi from dashboard error')
+            if(err.response.header !== 200){
                 this.props.history.push('/')
                 setTimeout(() => {
                     alert(err.response.data.message)
