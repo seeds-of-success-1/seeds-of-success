@@ -71,7 +71,7 @@ module.exports = {
         const project = await db.users_project([user_id, project_id])
         if (!project[0]) { return res.status(400).send({ message: `No project with id: ${project_id} associated with this account` }) }
         res.status(200).send({ project: project[0], message: 'Fetched project' })
-    },
+    }, 
     createNewProject: async (req, res) => {
         const user_id = req.session.user.id
         const {project_name} = req.body;

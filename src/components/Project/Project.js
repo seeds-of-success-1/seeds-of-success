@@ -65,7 +65,7 @@ border-image: none;
 const Popup = styled.div`
     position: absolute;
     top: 0;
-    background-color: white;
+    background-color: #C5E1A5;
     padding: 4px;
     border-radius: 15px;
 `

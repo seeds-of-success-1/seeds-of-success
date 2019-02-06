@@ -9,7 +9,7 @@ import dirt from '../Project/dirt.png';
 import next from './next.svg';
 import before from './before.svg';
 import ReactWeather from 'react-open-weather';
-import { weatherApiKey } from '../../config';
+import {weatherApiKey}  from '../../config';
 //Optional include of the default css styles 
 import 'react-open-weather/lib/css/ReactWeather.css';
 import { CloseBtn, SaveBtn } from '../Toolbar/Toolbar';
@@ -23,7 +23,7 @@ justify-content:center;
 
 `
 const DashboardContainer = styled.div`
-background:transparent;
+background:#F1F8E9;
 display:flex;
 flex-direction:row;
 height:75.5vh;
@@ -35,7 +35,7 @@ max-height:100vh;
 
 `
 const Footer = styled.div`
-height:10vh;
+height:11vh;
 display:flex;
 background:#DCEDC8;
 justify-content:center;
@@ -93,6 +93,7 @@ const Arrows = styled.img`
 const Weather = styled.div`
  position: absolute;
  top: 131px;
+ right:1px;
  transition: all .2s;
  overflow: ${props => props.open ? 'inherit' : 'hidden'};
  height: ${props => props.open ? '276px' : '0'};
@@ -210,7 +211,6 @@ class Dashboard extends Component {
     }
 
     render() {
-        console.log('dashboard')
         if (this.state.loading) {
             return (
                 <Loading><h1>Loading...</h1></Loading>
