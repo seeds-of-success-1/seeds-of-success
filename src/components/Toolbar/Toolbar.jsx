@@ -58,7 +58,7 @@ cursor: pointer;
     font-weight:450;
 }
 `
-const SaveBtn = styled.button`
+export const SaveBtn = styled.button`
  position:absolute;
  top:5px;
  border-radius:50px;
@@ -203,7 +203,7 @@ const Bar = styled.span`
   top: 22px;
 }
 `
-const CloseBtn = styled.img`
+export const CloseBtn = styled.img`
 height:22px;
 width: 22px;
 position:absolute;

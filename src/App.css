@@ -1,12 +1,6 @@
-/* html {
-    height: 100%;
+.rw-box {
+    position: absolute;
+    z-index: 2;
+    height: inherit;
+    width: inherit;
 }
-body {
-    height: 100%;
-}
-#root {
-    height: 100%;
-}
-.App {
-    height: 100%;
-} */
