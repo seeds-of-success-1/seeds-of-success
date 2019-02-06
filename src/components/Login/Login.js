@@ -3,7 +3,6 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { updateUsername, updateId, updateProjects } from './../../ducks/reducer';
 import styled from 'styled-components';
-import {getuser} from '../../get'
 import Bg from './Bg1.png'
 import FadeIn from './FadeInAnimation';
 
@@ -122,7 +121,7 @@ const LError = styled.p`
 color:red;
 font-weight:600;
 `
-const SReg=styled.a`
+const SReg = styled.a`
 font-weight:600;
 cursor:pointer;
 :hover{
@@ -144,7 +143,7 @@ class Login extends Component {
 
     async login() {
         let { username, password } = this.state;
-        if(username.length && password.length){
+        if (username.length && password.length) {
             let res = await axios.post('/auth/login', { username, password });
             this.setState({
                 username: '', password: '', message: res.data.message
@@ -152,7 +151,6 @@ class Login extends Component {
             this.props.updateUsername(res.data.username)
             this.props.updateId(res.data.id)
             if (res.data.loggedIn) {
-                getuser(res.data.name)
                 this.fetchProjects()
             }
         }
@@ -175,8 +173,10 @@ class Login extends Component {
         this.props.updateUsername(res.data.username)
         this.props.updateId(res.data.id)
         if (res.data.loggedIn) {
+
             this.props.history.push('/dashboard')
         }
+
     }
 
     toggleLogin = () => {
@@ -186,54 +186,54 @@ class Login extends Component {
     render() {
         return (
             <LoginMain>
-            <FadeIn duration='1.4s' delay='.3s'>
-                <LoginContainer className='login-background'>
-                    {this.state.toggleLogin ?
-                        <RLogin className='login'>
-                            <h4>Happy Gardening!</h4>
+                <FadeIn duration='1.4s' delay='.3s'>
+                    <LoginContainer className='login-background'>
+                        {this.state.toggleLogin ?
+                            <RLogin className='login'>
+                                <h4>Happy Gardening!</h4>
 
-                                    <LoginInput
-                                        value={this.state.username}
-                                        onChange={e => this.setState({ username: e.target.value })}
-                                        autoComplete="off" placeholder='Username'
-                                    />
-
-
-                                    <LoginInput
-                                        value={this.state.password}
-                                        onChange={e => this.setState({ password: e.target.value })}
-                                        type="password" autoComplete='off' placeholder='Password'
-                                    />
+                                <LoginInput
+                                    value={this.state.username}
+                                    onChange={e => this.setState({ username: e.target.value })}
+                                    autoComplete="off" placeholder='Username'
+                                />
 
 
-                            <LoginButton onClick={() => this.login()}>Login</LoginButton>
-                            <p>Register <SReg onClick={this.toggleLogin}>Here</SReg></p>
-                            <LError className='login-error'>{this.state.message}</LError>
-                        </RLogin> :
-                        <RLogin className='register'>
+                                <LoginInput
+                                    value={this.state.password}
+                                    onChange={e => this.setState({ password: e.target.value })}
+                                    type="password" autoComplete='off' placeholder='Password'
+                                />
+
+
+                                <LoginButton onClick={() => this.login()}>Login</LoginButton>
+                                <p>Register <SReg onClick={this.toggleLogin}>Here</SReg></p>
+                                <LError className='login-error'>{this.state.message}</LError>
+                            </RLogin> :
+                            <RLogin className='register'>
 
                                 <h4>Register Account</h4>
 
                                 <LoginInput
-                                        value={this.state.username}
-                                        onChange={e => this.setState({ username: e.target.value })}
-                                        placeholder='Username'
-                                    />
+                                    value={this.state.username}
+                                    onChange={e => this.setState({ username: e.target.value })}
+                                    placeholder='Username'
+                                />
 
 
 
 
                                 <LoginInput
-                                        value={this.state.password}
-                                        onChange={e => this.setState({ password: e.target.value })}
-                                        type="password" placeholder='Password'
-                                    />
+                                    value={this.state.password}
+                                    onChange={e => this.setState({ password: e.target.value })}
+                                    type="password" placeholder='Password'
+                                />
 
 
-                            <LoginButton onClick={() => this.register()}>Register</LoginButton>
-                            <SReg onClick={this.toggleLogin}>Log-in</SReg>
-                        </RLogin>}
-                </LoginContainer>
+                                <LoginButton onClick={() => this.register()}>Register</LoginButton>
+                                <SReg onClick={this.toggleLogin}>Log-in</SReg>
+                            </RLogin>}
+                    </LoginContainer>
                 </FadeIn>
             </LoginMain>
         )

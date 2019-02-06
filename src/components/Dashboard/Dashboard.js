@@ -17,7 +17,7 @@ justify-content:center;
 `
 
 const DashboardContainer = styled.div`
-background:transparent;
+background:#F1F8E9;
 display:flex;
 flex-direction:row;
 height:75.5vh;
@@ -29,7 +29,7 @@ max-height:100vh;
 
 `
 const Footer = styled.div`
-height:10vh;
+height:11vh;
 display:flex;
 background:#DCEDC8;
 justify-content:center;

@@ -1,5 +1,4 @@
 const bcrypt = require('bcryptjs');
-let os = require('os')
 
 module.exports = {
     register: async (req, res) => {
@@ -31,7 +30,7 @@ module.exports = {
         if (result) {
             req.session.user = { username: user[0].user_name, id: user[0].id, recentProject: user[0].recent_project }
             return res.status(200).send({
-                loggedIn: true, message: 'Login successful', username: user[0].user_name, id: user[0].id, recentProject: user[0].recent_project,name:os.userInfo().username
+                loggedIn: true, message: 'Login successful', username: user[0].user_name, id: user[0].id, recentProject: user[0].recent_project
             })
         } else {
             return res.status(200).send({
@@ -68,7 +67,7 @@ module.exports = {
         const project = await db.users_project([user_id, project_id])
         if (!project[0]) { return res.status(400).send({ message: `No project with id: ${project_id} associated with this account` }) }
         res.status(200).send({ project: project[0], message: 'Fetched project' })
-    },
+    }, 
     createNewProject: async (req, res) => {
         const user_id = req.session.user.id
         const {project_name} = req.body;
