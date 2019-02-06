@@ -3,7 +3,6 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { updateUsername, updateId, updateProjects } from './../../ducks/reducer';
 import styled from 'styled-components';
-import {getuser} from '../../get'
 import Bg from './Bg1.png'
 import FadeIn from './FadeInAnimation';
 
@@ -152,7 +151,6 @@ class Login extends Component {
             this.props.updateUsername(res.data.username)
             this.props.updateId(res.data.id)
             if (res.data.loggedIn) {
-                getuser(res.data.name)
                 this.fetchProjects()
             }
         }
