@@ -122,9 +122,13 @@ class Project extends Component {
     }
 
     deleteProject = async () => {
-        const project_id = this.props.match.params.id
-        await axios.post('/api/project/delete', {project_id})
-        this.props.history.push('/dashboard')
+        if (this.props.projects.length > 1) {
+            const project_id = this.props.match.params.id
+            await axios.post('/api/project/delete', {project_id})
+            this.props.history.push('/dashboard')
+        } else {
+            alert('You must keep at least one project at a time')
+        }
     }
 
     imageUpdater = (id) => {
