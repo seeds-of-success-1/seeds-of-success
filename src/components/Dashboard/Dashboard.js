@@ -51,6 +51,7 @@ color:#558B2F;
 z-index:500;
 `
 const GridContainer = styled.div`
+position: relative;
 display:grid;
 grid-template-columns:minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%) minmax(40px, 3.66%);
 scroll-behavior: smooth;
@@ -120,7 +121,6 @@ const CloseWeather = styled(CloseBtn)`
  top: 5px;
  right: 5px;
 `
-//left 3px?
 const ForecastBtn = styled(SaveBtn)`
 background: #4BC4F7;
 right: 0;
@@ -132,6 +132,19 @@ const OpenWeather = styled(ForecastBtn)`
 top: 136px;
 left: 5px;
 background-color: ${props => props.open ? 'transparent' : '#4BC4F7'};
+:hover{
+    box-shadow: ${props => props.open ? 'none' : '0px 5px 40px -10px rgba(0,0,0,0.57)'};
+}
+`
+const EditProjectBtn = styled(SaveBtn)`
+position: absolute;
+top: 0;
+left: 0;
+z-index:4;
+background-color: transparent;
+:hover{
+    box-shadow: none;
+}
 `
 const NewsBtn = styled(ForecastBtn)`
 top:136px;
@@ -234,6 +247,10 @@ class Dashboard extends Component {
         this.setState({ project, title })
     }
 
+    editProject = () => {
+        this.props.history.push(`/project${this.props.recentProject}`)
+    }
+
     render() {
         if (this.state.loading) {
             return (
@@ -268,6 +285,7 @@ class Dashboard extends Component {
                     />
                     <GridContainer onClick={this.toggleSlide} >
                         {this.mapProject()}
+                        <EditProjectBtn onClick={this.editProject}>Edit this project</EditProjectBtn>
                     </GridContainer>
                     <Arrows show={this.state.project.length} src={next}
                         onClick={() => this.flipThroughProjects('right')}
