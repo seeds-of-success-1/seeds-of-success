@@ -92,7 +92,10 @@ transition:all .4s;
 overflow: hidden;
 position:relative;
 left:4px;
-bottom:4px;
+bottom:0px;
+display: flex;
+flex-direction: column;
+justify-content: space-around;
 margin-top: 2px;
 & a{
     text-decoration:none;
@@ -101,7 +104,7 @@ margin-top: 2px;
 `
 const DropdownItem = styled.h3`
 padding: 0 6px;
-margin: 6px 0;
+margin: 0;
 font-weight:500;
 :hover {
     cursor: pointer;
