@@ -176,13 +176,6 @@ class Login extends Component {
 
             this.props.history.push('/dashboard')
         }
-        // let response = await axios.post('/api/project/new')
-        // this.props.updateProjects(JSON.parse(response.data.project.plant_array))
-        // if (res.data.loggedIn) {
-        //     setTimeout(() => {
-        //         this.props.history.push('/dashboard')
-        //     }, 2000)
-        // }
     }
 
     toggleLogin = () => {
