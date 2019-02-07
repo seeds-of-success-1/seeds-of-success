@@ -1,5 +1,5 @@
 import React from 'react'
-import {ArticleWrap} from './Articles'
+import {ArticleWrap,Title,SubTitle} from './Articles'
 import {DeleteBtn} from '../Toolbar/Toolbar'
 
 const Article = (props) => {
@@ -7,14 +7,14 @@ const Article = (props) => {
     console.log(date)
 
     return(
-        <ArticleWrap>
-            <h6>{date}</h6>
             <a href={props.article.link}>
-                <h3>{props.article.title}</h3>
-            </a>
-            <p>{props.article.contentSnippet}</p>
-            <DeleteBtn/>
+        <ArticleWrap>
+            <SubTitle>{date}</SubTitle>
+                <Title>{props.article.title}</Title>
+            <SubTitle>{props.article.contentSnippet}</SubTitle>
+            <DeleteBtn>VIEW ARTICLE</DeleteBtn>
         </ArticleWrap>
+            </a>
 
     )
 }

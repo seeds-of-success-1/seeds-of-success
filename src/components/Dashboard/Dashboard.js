@@ -10,10 +10,11 @@ import next from './next.svg';
 import before from './before.svg';
 import ReactWeather from 'react-open-weather';
 import { weatherApiKey } from '../../config';
-//Optional include of the default css styles 
+//Optional include of the default css styles
 import 'react-open-weather/lib/css/ReactWeather.css';
 import { CloseBtn, SaveBtn } from '../Toolbar/Toolbar';
 import close from '../Toolbar/close-btn.svg';
+import Articles from '../Articles/Articles'
 
 
 const MainContainer = styled.div`
@@ -186,10 +187,12 @@ class Dashboard extends Component {
     }
 
     flipThroughProjects = (direction) => {
+
         const { projects } = this.props;
         let index = projects.findIndex(project => project.id === this.props.recentProject);
         if (index === 0) {
             if (direction === 'left') { return }
+
             this.setProject(index + 2)
         } else if (direction === "left" && index > 0) {
             this.setProject(index - 1);
@@ -221,6 +224,7 @@ class Dashboard extends Component {
             <MainContainer>
                 <DashboardContainer>
                     <OpenWeather onClick={this.toggleWeather}>Local Weather</OpenWeather>
+                    <Articles/>
                     <Arrows show={this.state.project.length} src={before}
                         onClick={() => this.flipThroughProjects('left')}
                     />
@@ -241,7 +245,7 @@ class Dashboard extends Component {
                         <CloseWeather
                             onClick={this.toggleWeather}
                             src={close} alt="" />
-                        <ForecastBtn onClick={this.toggleForecast} >5-Day Forecast</ForecastBtn>    
+                        <ForecastBtn onClick={this.toggleForecast} >5-Day Forecast</ForecastBtn>
                     </Weather>
 
                 </DashboardContainer>

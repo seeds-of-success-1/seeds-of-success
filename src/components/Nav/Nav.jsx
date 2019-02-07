@@ -233,7 +233,15 @@ class Nav extends Component {
                 <SiteTitle>Seeds of Success</SiteTitle>
                 {this.props.state.projects[0] ? (this.props.location.pathname.includes('/project') ? <ProjectTitle>{this.state.edit ? <div style={{
                     display:'flex',
-                }}><EditInput onChange={this.handleInputChange} value={this.state.name}/><DeleteBtn onClick={this.editName} >Save</DeleteBtn></div> : <div><DeleteBtn onClick={this.toggleEdit}>Edit</DeleteBtn>{' ' + currentProject[0].title}</div>}</ProjectTitle> : console.log(this.props.location.pathname)) : null
+                }}>
+                <EditInput onChange={this.handleInputChange} value={this.state.name}/>
+                <DeleteBtn onClick={this.editName} >Save</DeleteBtn></div>
+
+                        : <div><DeleteBtn onClick={this.toggleEdit}>Edit</DeleteBtn>{' ' + currentProject[0].title}</div>}</ProjectTitle>
+
+                    : console.log(this.props.location.pathname))
+
+                : null
                 }
                 <NavList>
                     <NavListItem id="logout-btn">
