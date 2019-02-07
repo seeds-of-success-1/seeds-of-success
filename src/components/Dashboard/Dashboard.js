@@ -92,18 +92,18 @@ const Arrows = styled.img`
 `
 const Weather = styled.div`
  position: absolute;
- top: 131px;
+ top: 136px;
  right:1px;
- transition: all .2s;
+ transition: all 1s;
  overflow: ${props => props.open ? 'inherit' : 'hidden'};
- height: ${props => props.open ? '276px' : '0'};
+ height: ${props => props.open ? '295px' : '0'};
  width: ${props => props.open ? '330px' : '0'};
  z-index: 1;
  .rw-box-days {
-     transition: all .5s;
+     transition: all 1s;
      z-index: -1;
      position:absolute;
-     top: ${props => props.forecast ? '276px' : '10px'};
+     top: ${props => props.forecast ? '286px' : '10px'};
  }
 `
 const CloseWeather = styled(CloseBtn)`
@@ -111,6 +111,7 @@ const CloseWeather = styled(CloseBtn)`
  position: absolute;
  top: 5px;
  left: 5px;
+ right:3px;
 `
 const ForecastBtn = styled(SaveBtn)`
 background: #4BC4F7;
@@ -120,8 +121,8 @@ height: 35px;
 z-index:2;
 `
 const OpenWeather = styled(ForecastBtn)`
-top: 131px;
-right: 0;
+top: 136px;
+right: 5px;
 `
 
 class Dashboard extends Component {
