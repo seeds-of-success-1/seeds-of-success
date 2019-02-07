@@ -22,12 +22,12 @@ const Modal = styled.div`
     padding:10px;
     display:${props => props.show ? 'flex': 'none'};
     flex-direction:column;
-    align-items: flex-start;
-    justify-content:flex-start;
+    align-items: center;
+    justify-content:center;
     position: fixed;
     top:10%;
     left:28%;
-    background-color: #fff;
+    background-color: #DCEDC8;
     z-index: 30;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     @media (max-width: 900px) {
@@ -41,17 +41,80 @@ const Modal = styled.div`
 
   }
 `
-const Title = styled.h2`
+const Title = styled.h4`
 
 `
 const Input = styled.input`
-
+font: inherit;
+width: 40%;
+border: 0;
+border-radius:5px;
+margin-bottom: 3px;
+padding: 6px 0 7px;
+display: block;
+min-width: 0;
+box-sizing: content-box;
+background:transparent;
+margin-left:8%;
+outline: none !important;
+caret-color: green;
+@media (max-width: 1700px) {
+    height:50px;
+    text-size:1.5rem;
+  }
+  :focus{
+    transition: all 0.4s ease 0s;
+    -webkit-box-shadow: 0px 5px 30px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 30px -10px rgba(0,0,0,0.57);
+    transform:scale(1.1);
+    ::placeholder{
+        color:#424242;
+        font-weight:450;
+    }
+  }
 `
 const CloseBtn = styled.img`
-
+height:15px;
+width:15px;
+cursor:pointer;
+position:absolute;
+right:1px;
+top:1px;
+:hover{
+    transition: all 0.2s ease 0s;
+    transform:scale(1.5);
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.4s ease 0s;
+}
 `
 const OptionsBtn = styled.button`
-
+border-radius:50px;
+border:none;
+font-weight:650;
+margin-top:15px;
+margin-left:8px;
+margin-bottom:1px;
+min-height:35px;
+min-width:55px;
+cursor:pointer;
+font-weight:650;
+background: #8BC34A;
+color: #fff !important;
+outline: none;
+@media (max-width: 1700px) {
+    height:50px;
+    min-width:100px;
+    font-size:1.5rem;
+    margin-bottom:10px
+  }
+  :hover{
+     text-shadow: 0px 0px 6px rgba(255, 255, 255, 1);
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.4s ease 0s;
+    transform:scale(1.1);
+}
 `
 const ButtonBar = styled.div`
 
@@ -72,7 +135,7 @@ class CreateModal extends Component {
                     onClick={this.props.toggleModal}
                     src={close} />
                     <Title>Project Name</Title>
-                    <Input onChange={(e) => this.setState({projectName:e.target.value})}/>
+                    <Input placeholder='Project Name' onChange={(e) => this.setState({projectName:e.target.value})}/>
                     <ButtonBar>
                         <OptionsBtn
                         onClick={()=> this.props.create(this.state.projectName)}

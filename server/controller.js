@@ -50,7 +50,6 @@ module.exports = {
             return res.status(401).send({ message: 'You must log in first!' });
         }
         const username = req.session.user.username;
-        console.log(req.session)
         const db = req.app.get('db');
         const user = await db.find_user([username]);
         if (!user[0]) {
@@ -71,7 +70,7 @@ module.exports = {
         const project = await db.users_project([user_id, project_id])
         if (!project[0]) { return res.status(400).send({ message: `No project with id: ${project_id} associated with this account` }) }
         res.status(200).send({ project: project[0], message: 'Fetched project' })
-    },
+    }, 
     createNewProject: async (req, res) => {
         const user_id = req.session.user.id
         const {project_name} = req.body;
@@ -126,5 +125,12 @@ module.exports = {
         } else {
             return res.status(200).send({ projects, message: "Successfully aquired projects" })
         }
+    },
+    updateRecent: async (req, res) => {
+        const db = req.app.get('db');
+        const user_id = req.session.user.id;
+        let {recent_id} = req.body;
+        const recent = await db.recent_project([recent_id, user_id])
+        res.sendStatus(200);
     }
 }

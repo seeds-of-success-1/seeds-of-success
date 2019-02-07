@@ -24,7 +24,7 @@ justify-content:center;
 
 `
 const DashboardContainer = styled.div`
-background:transparent;
+background:#F1F8E9;
 display:flex;
 flex-direction:row;
 height:75.5vh;
@@ -36,7 +36,7 @@ max-height:100vh;
 
 `
 const Footer = styled.div`
-height:10vh;
+height:11vh;
 display:flex;
 background:#DCEDC8;
 justify-content:center;
@@ -94,6 +94,7 @@ const Arrows = styled.img`
 const Weather = styled.div`
  position: absolute;
  top: 131px;
+ right:1px;
  transition: all .2s;
  overflow: ${props => props.open ? 'inherit' : 'hidden'};
  height: ${props => props.open ? '276px' : '0'};
@@ -187,12 +188,10 @@ class Dashboard extends Component {
     }
 
     flipThroughProjects = (direction) => {
-
         const { projects } = this.props;
         let index = projects.findIndex(project => project.id === this.props.recentProject);
         if (index === 0) {
             if (direction === 'left') { return }
-
             this.setProject(index + 2)
         } else if (direction === "left" && index > 0) {
             this.setProject(index - 1);
@@ -213,7 +212,6 @@ class Dashboard extends Component {
     }
 
     render() {
-        console.log('dashboard')
         if (this.state.loading) {
             return (
                 <Loading><h1>Loading...</h1></Loading>

@@ -62,8 +62,8 @@ outline: none;
     transform:scale(1.1);
     font-weight:525;
     -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
--moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-transition: all 0.4s ease 0s;
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.4s ease 0s;
 }
 `
 const NavList = styled.ul`
@@ -178,9 +178,9 @@ class Nav extends Component {
 
     editName = async () => {
         let currentProject = this.props.state.projects.filter((project, i) => {
-            let project_id = +this.props.location.pathname.slice(8)
-            return project.id === project_id
-        })
+                let project_id = +this.props.location.pathname.slice(8)
+                return project.id === project_id
+            })
         const name = this.state.name
         const project_id = currentProject[0].id
         await axios.post('/api/project/name', {name, project_id})
@@ -211,6 +211,7 @@ class Nav extends Component {
         let res = await axios.post('/api/project/new',{project_name:name})
         let result = await axios.get('/api/project/projects');
         this.props.updateProjects(result.data.projects)
+        console.log('nav create', result.data.projects)
         if (res.data.project.id) {
             this.props.history.push(`/project${res.data.project.id}`)
         }
@@ -223,9 +224,13 @@ class Nav extends Component {
     render() {
         let currentProject = this.props.state.projects.filter((project, i) => {
             let project_id = +this.props.location.pathname.slice(8)
-            // console.log(project_id)
             return project.id === project_id
         })
+        if (currentProject.length < 1) {
+            currentProject = [{title: 'Project'}];
+        }
+
+
         // console.log(this.props.state.projects)
         const nav = this.props.location.pathname === "/" ?
             null
