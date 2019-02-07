@@ -22,7 +22,7 @@ const SideNav = styled.div`
   width: ${props => props.open ? '285px' : '0px'};
   position: fixed;
   padding-right:10px;
-  margin-top:130px;
+  margin-top:90px;
   z-index: 3;
   top: 0;
   left: 0;
@@ -67,7 +67,7 @@ export const SaveBtn = styled.button`
  border-radius:50px;
 font-weight:650;
 margin-bottom:1px;
-min-height:35px;
+min-height:20px;
 min-width:55px;
 cursor:pointer;
 font-weight:650;
@@ -82,13 +82,16 @@ background: #8BC34A;
 -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
 transition: all 0.4s ease 0s;
 }
+@media (max-width: 500px){
+    font-size:1rem;
+ }
 `
 export const DeleteBtn = styled.button`
  border-radius:50px;
  margin-top:3px;
 font-weight:650;
-min-height:35px;
-min-width:55px;
+min-height:20px;
+min-width:45px;
 cursor:pointer;
 border: none;
 outline: none;
@@ -101,6 +104,10 @@ background: #8BC34A;
 -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
 transition: all 0.4s ease 0s;
 }
+@media (max-width: 500px){
+    font-size:1rem;
+    height:10px
+ }
 `
 const DeleteBtnContainer = styled.div`
 position: absolute;
@@ -177,7 +184,7 @@ right:2px;
 const Hamburger = styled.div`
  width: 30px;
  position: fixed;
- top: 130px;
+ top: 90px;
  transition:all .5s;
  height:30px;
  margin:16px;
@@ -202,7 +209,7 @@ const Bar = styled.span`
  display: block;
   height: 5px;
   width: 100%;
-  background: #333;
+  background:#DCEDC8;
   border-radius: 9px;
   opacity: 1;
   left: 7px;
