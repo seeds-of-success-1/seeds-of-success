@@ -189,16 +189,14 @@ class Dashboard extends Component {
     flipThroughProjects = (direction) => {
         const { projects } = this.props;
         let index = projects.findIndex(project => project.id === this.props.recentProject);
-        if (index === 0) {
-            if (direction === 'left') { return }
-            this.setProject(index + 2)
-        } else if (direction === "left" && index > 0) {
-            this.setProject(index - 1);
-        } else if (index === projects.length - 1) {
-            if (direction === 'right') { return }
-            this.setProject(index - 2);
-        } else if (direction === 'right' && index < projects.length) {
-            this.setProject(index + 1);
+        if (index === 0 && direction === 'left') {
+            this.setProject(projects.length -1)
+        } else if (index === projects.length - 1 && direction === 'right') {
+            this.setProject(0)
+        } else if (direction === 'left') {
+            this.setProject(index - 1)
+        } else if (direction === 'right') {
+            this.setProject(index + 1)
         }
     }
 
