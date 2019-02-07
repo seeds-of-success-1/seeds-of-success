@@ -93,7 +93,7 @@ const Arrows = styled.img`
 const Weather = styled.div`
  position: absolute;
  top: 131px;
- right:1px;
+ left:1px;
  transition: all .2s;
  overflow: ${props => props.open ? 'inherit' : 'hidden'};
  height: ${props => props.open ? '276px' : '0'};
@@ -110,7 +110,7 @@ const CloseWeather = styled(CloseBtn)`
  z-index:2;
  position: absolute;
  top: 5px;
- left: 5px;
+ right: 5px;
 `
 const ForecastBtn = styled(SaveBtn)`
 background: #4BC4F7;
@@ -121,7 +121,8 @@ z-index:2;
 `
 const OpenWeather = styled(ForecastBtn)`
 top: 131px;
-right: 0;
+left: 0;
+background-color: ${props => props.open ? 'transparent' : '#4BC4F7'};
 `
 
 class Dashboard extends Component {
@@ -218,7 +219,7 @@ class Dashboard extends Component {
 
             <MainContainer>
                 <DashboardContainer>
-                    <OpenWeather onClick={this.toggleWeather}>Local Weather</OpenWeather>
+                    <OpenWeather open={this.state.weather} onClick={this.toggleWeather}>Local Weather</OpenWeather>
                     <Arrows show={this.state.project.length} src={before}
                         onClick={() => this.flipThroughProjects('left')}
                     />
