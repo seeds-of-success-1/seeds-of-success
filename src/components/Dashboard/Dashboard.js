@@ -96,14 +96,14 @@ const Weather = styled.div`
  left:1px;
  transition: all 1s;
  overflow: ${props => props.open ? 'inherit' : 'hidden'};
- height: ${props => props.open ? '295px' : '0'};
+ height: ${props => props.open ? '300px' : '0'};
  width: ${props => props.open ? '330px' : '0'};
  z-index: 1;
  .rw-box-days {
      transition: all 1s;
      z-index: -1;
      position:absolute;
-     top: ${props => props.forecast ? '286px' : '10px'};
+     top: ${props => props.forecast ? '296px' : '10px'};
  }
 `
 const CloseWeather = styled(CloseBtn)`
@@ -116,7 +116,7 @@ const CloseWeather = styled(CloseBtn)`
 const ForecastBtn = styled(SaveBtn)`
 background: #4BC4F7;
 right: 0;
-top: 241px;
+top: 265px;
 height: 35px;
 z-index:2;
 `
