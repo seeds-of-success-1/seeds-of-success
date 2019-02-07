@@ -109,12 +109,11 @@ right: 50px;
 `
 const NavList = styled.ul`
 padding:0;
-padding-bottom:260px;
 margin:0;
 position:relative;
 top:10px;
 z-index:0;
-height:72%;
+height:74.5vh;
 overflow:scroll;
 
 `

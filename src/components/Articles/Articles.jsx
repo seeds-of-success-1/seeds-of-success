@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import {connect} from 'react-redux';
 import Article from './Article';
-
+import {CloseBtn} from '../Toolbar/Toolbar';
+import close from '../Toolbar/close-btn.1.svg';
 
 const ArticlesWrap = styled.div`
 width:350px;
@@ -10,7 +11,6 @@ min-width:350px;
 max-width:350px;
 height: 72vh;
 overflow-y:hidden;
-/* margin-top:240px; */
 padding:0 10px;
 position:absolute;
 top:180px;
@@ -20,10 +20,9 @@ bottom:100px;
 overflow-x:hidden;
 z-index:100;
 transform:translateY(0px);
-/* border-top-right-radius:5px; */
 `
 const CardContainer = styled.div`
-height:100%;
+height:65vh;
 width:97%;
 display:flex;
 flex-direction:column;
@@ -33,6 +32,7 @@ padding:0 10px;
 overflow-y:auto;
 overflow-x:hidden;
 position:relative;
+/* padding-bottom:420px; */
 & a {
     text-decoration:none;
     color:inherit;
@@ -85,6 +85,12 @@ export const SubTitle = styled.p`
     color:#8BC34A;
 }
 `
+const Close = styled(CloseBtn)`
+position:absolute;
+top:4px;
+right:4px;
+color:#fff;
+`
 
 
 class Articles extends Component {
@@ -92,11 +98,14 @@ class Articles extends Component {
         let articles = this.props.articlesLoading
         ? <div style={{marginTop:'100px'}} >Loading</div>
         :  <>
+
             <MainTitleWrap>
+            <Close onClick={this.props.close} src={close} ></Close>
             <MainTitle>Gardening News</MainTitle>
             </MainTitleWrap>
 
             <CardContainer>
+
             {this.props.state.articles.map(article => (
                 <Article key={article.id} article={article} />
             ))}
