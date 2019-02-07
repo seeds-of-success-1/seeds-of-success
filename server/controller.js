@@ -50,7 +50,6 @@ module.exports = {
             return res.status(401).send({ message: 'You must log in first!' });
         }
         const username = req.session.user.username;
-        console.log(req.session)
         const db = req.app.get('db');
         const user = await db.find_user([username]);
         if (!user[0]) {

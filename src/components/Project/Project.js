@@ -126,25 +126,20 @@ class Project extends Component {
         if (projects.length > 1) {
             const project_id = this.props.match.params.id
             await axios.post('/api/project/delete', {project_id})
-            console.log('original', projects)
-            if (project_id == this.props.recentProject) {
-                console.log('hit if statement')
-                this.props.updateRecent(projects[0].id)
-                await axios.put('/api/recent', {recent_id: projects[0].id})
-            }
             let mappedProjects = projects.filter((project, i) => {
                 return project.id != project_id
             })
-            console.log('mapped', mappedProjects)
             this.props.updateProjects(mappedProjects)
-            console.log('updated projects', projects)
-            // if (project_id == recentProject && project_id == projects[0].id) {
-            //     this.props.updateRecent(projects[1].id)
-            //     await axios.put('/api/recent', {recent_id: projects[1].id})
-            // }
+            if (project_id == recentProject && project_id == projects[0].id) {
+                this.props.updateRecent(projects[1].id)
+                await axios.put('/api/recent', {recent_id: projects[1].id})
+            } else if (project_id == this.props.recentProject) {
+                this.props.updateRecent(projects[0].id)
+                await axios.put('/api/recent', {recent_id: projects[0].id})
+            }
             setTimeout(() => {
                 this.props.history.push('/dashboard')
-            }, 0)
+            }, 2000)
         
         } else {
             alert('You must keep at least one project at a time')

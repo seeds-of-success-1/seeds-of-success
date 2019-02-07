@@ -222,15 +222,12 @@ class Nav extends Component {
     }
 
     render() {
-        let currentProject;
-        if (this.props.state.projects.length) {
-            if (Object.keys(this.props.state.projects[0]).length) {
-                currentProject = this.props.state.projects.filter((project, i) => {
-                    let project_id = +this.props.location.pathname.slice(8)
-                    console.log(project_id)
-                    return project.id === project_id
-                })
-            }
+        let currentProject = this.props.state.projects.filter((project, i) => {
+            let project_id = +this.props.location.pathname.slice(8)
+            return project.id === project_id
+        })
+        if (currentProject.length < 1) {
+            currentProject = [{title: 'Project'}];
         }
         
         
