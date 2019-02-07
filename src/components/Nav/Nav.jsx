@@ -64,6 +64,7 @@ outline: none;
     -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
     -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
     transition: all 0.4s ease 0s;
+    color:#558B2F;
 }
 `
 const NavList = styled.ul`
@@ -216,7 +217,12 @@ class Nav extends Component {
             this.props.history.push(`/project${res.data.project.id}`)
         }
     }
-    toggleCreateModal = () => {
+    onKeyPress=(e)=>{
+        if(e.key==="Enter"){
+            this.createProject()
+        }
+    }
+    toggleCreateModal = () =>{
         console.log('TCM')
         this.setState({ modalOpen: !this.state.modalOpen })
     }
@@ -291,9 +297,10 @@ class Nav extends Component {
             <div>
                 {nav}
                 <CreateModal
-                    show={this.state.modalOpen}
-                    toggleModal={this.toggleCreateModal}
-                    create={this.createProject}
+                show={this.state.modalOpen}
+                toggleModal={this.toggleCreateModal}
+                create={this.createProject}
+                onKeyPress={this.onKeyPress}
                 />
             </div>
         );
