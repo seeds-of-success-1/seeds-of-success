@@ -232,10 +232,14 @@ class Nav extends Component {
             : <NavWrap>
                 <SiteTitle>Seeds of Success</SiteTitle>
                 {
+                    //Check if there is a project in redux state
                     this.props.state.projects[0] ? (
+                        //If so, check if we are on the project page
                         this.props.location.pathname.includes('/project') ? (
+                            //If that is also true, then we will render the project name
                             <ProjectTitle>{
                                 this.state.edit ? (
+                                    //And we will render what goes here based on whether the edit is true or false
                                     <div style={{
                                         display: 'flex',
                                     }}>
@@ -249,8 +253,13 @@ class Nav extends Component {
                                         </div>
                                     )
                             }</ProjectTitle>
-                        ) : console.log(this.props.location.pathname)
-                    ) : null
+                        ) : (
+                            //then if either there are no projects or we are not on the project page, don't render anything here
+                                null
+                            )
+                    ) : (
+                            null
+                        )
                 }
                 <NavList>
                     <NavListItem id="logout-btn">
