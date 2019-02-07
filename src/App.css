@@ -4,3 +4,7 @@
     height: inherit;
     width: inherit;
 }
+body{
+    background-color: #F1F8E9;
+    overflow: hidden;
+}

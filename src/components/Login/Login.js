@@ -173,13 +173,17 @@ class Login extends Component {
         this.props.updateUsername(res.data.username)
         this.props.updateId(res.data.id)
         if (res.data.loggedIn) {
-
-            this.props.history.push('/dashboard')
+            this.fetchProjects()
         }
     }
 
     toggleLogin = () => {
         this.setState({ toggleLogin: !this.state.toggleLogin })
+    }
+    onKeyPress = (e)=>{
+        if(e.key=="Enter"){
+            this.login()
+        }
     }
 
     render() {
@@ -201,11 +205,15 @@ class Login extends Component {
                                 <LoginInput
                                     value={this.state.password}
                                     onChange={e => this.setState({ password: e.target.value })}
+                                    onKeyPress={(e)=>{this.onKeyPress(e)}}
                                     type="password" autoComplete='off' placeholder='Password'
                                 />
 
 
-                                <LoginButton onClick={() => this.login()}>Login</LoginButton>
+                                <LoginButton  
+                                onClick={() => this.login()}
+                                onKeyPress={(e)=>{this.onKeyPress(e)}}
+                                >Login</LoginButton>
                                 <p>Register <SReg onClick={this.toggleLogin}>Here</SReg></p>
                                 <LError className='login-error'>{this.state.message}</LError>
                             </RLogin> :

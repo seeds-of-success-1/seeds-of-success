@@ -33,7 +33,12 @@ width:100%;
 justify-content:center;
 align-items:center;
 max-height:100vh;
+position:relative;
+@media(max-width:1200px){
+    left:${props => props.slide ? "400px" : 0};
+    transition: all 1s ease-in-out;
 
+}
 `
 const Footer = styled.div`
 height:11vh;
@@ -94,40 +99,44 @@ const Arrows = styled.img`
 `
 const Weather = styled.div`
  position: absolute;
- top: 131px;
- right:1px;
- transition: all .2s;
+ top: 136px;
+ left:1px;
+ transition: all 1s;
  overflow: ${props => props.open ? 'inherit' : 'hidden'};
- height: ${props => props.open ? '276px' : '0'};
- width: ${props => props.open ? '330px' : '0'};
- z-index: 1;
+ height: ${props => props.open ? '350px' : '0'};
+ width: ${props => props.open ? '400px' : '0'};
+ z-index: 110;
  .rw-box-days {
-     transition: all .5s;
+     transition: all 1s;
      z-index: -1;
      position:absolute;
-     top: ${props => props.forecast ? '276px' : '10px'};
+     opacity: ${props => props.forecast ? 1 : 0};
+     top: ${props => props.forecast ? '346px' : '10px'};
  }
 `
 const CloseWeather = styled(CloseBtn)`
  z-index:2;
  position: absolute;
  top: 5px;
- left: 5px;
+ right: 5px;
 `
+//left 3px?
 const ForecastBtn = styled(SaveBtn)`
 background: #4BC4F7;
 right: 0;
-top: 241px;
+top: 315px;
 height: 35px;
-z-index:2;
+z-index:112;
 `
 const OpenWeather = styled(ForecastBtn)`
-top: 131px;
-right: 0;
+top: 136px;
+left: 5px;
+background-color: ${props => props.open ? 'transparent' : '#4BC4F7'};
 `
 const NewsBtn = styled(ForecastBtn)`
-top:131px;
-left:0;
+top:136px;
+left:100px;
+background-color: ${props => props.open ? 'transparent' : '#4BC4F7'};
 `
 
 class Dashboard extends Component {
@@ -151,11 +160,23 @@ class Dashboard extends Component {
         return preview
     }
     toggleWeather = () => {
-        this.setState({ weather: !this.state.weather, forecast: false })
+        this.setState({ weather: !this.state.weather, forecast: false ,showNews:false})
     }
     toggleForecast = () => {
         this.setState({forecast: !this.state.forecast})
     }
+    toggleNews = () => {
+        this.setState({showNews:!this.state.showNews, weather:false})
+    }
+    toggleSlide = () => {
+        if(this.state.showNews){
+            this.setState({showNews:false})
+        }
+        if(this.state.weather){
+            this.setState({weather:false})
+        }
+    }
+
 
     componentDidUpdate(prevProps, prevState) {
         if (!this.state.loading && prevState.project.length !== this.state.project.length) {
@@ -222,19 +243,11 @@ class Dashboard extends Component {
         return (
 
             <MainContainer>
-                    <NewsBtn onClick={()=>this.setState({showNews:!this.state.showNews})} >News</NewsBtn>
+                <OpenWeather open={this.state.weather} onClick={this.toggleWeather}>Local Weather</OpenWeather>
+                    <NewsBtn
+                    open={this.state.weather}
+                    onClick={this.toggleNews} >News</NewsBtn>
                     <Articles show={this.state.showNews} />
-                <DashboardContainer>
-                    <OpenWeather onClick={this.toggleWeather}>Local Weather</OpenWeather>
-                    <Arrows show={this.state.project.length} src={before}
-                        onClick={() => this.flipThroughProjects('left')}
-                    />
-                    <GridContainer>
-                        {this.mapProject()}
-                    </GridContainer>
-                    <Arrows show={this.state.project.length} src={next}
-                        onClick={() => this.flipThroughProjects('right')}
-                    />
                     <Weather open={this.state.weather} forecast={this.state.forecast}>
                         <ReactWeather
                             forecast="5days"
@@ -248,6 +261,30 @@ class Dashboard extends Component {
                             src={close} alt="" />
                         <ForecastBtn onClick={this.toggleForecast} >5-Day Forecast</ForecastBtn>
                     </Weather>
+                <DashboardContainer
+                slide={this.state.showNews || this.state.weather} >
+                    <Arrows show={this.state.project.length} src={before}
+                        onClick={() => this.flipThroughProjects('left')}
+                    />
+                    <GridContainer onClick={this.toggleSlide} >
+                        {this.mapProject()}
+                    </GridContainer>
+                    <Arrows show={this.state.project.length} src={next}
+                        onClick={() => this.flipThroughProjects('right')}
+                    />
+                    {/* <Weather open={this.state.weather} forecast={this.state.forecast}>
+                        <ReactWeather
+                            forecast="5days"
+                            apikey={weatherApiKey}
+                            type="auto"
+                            unit='imperial'
+                        >
+                        </ReactWeather>
+                        <CloseWeather
+                            onClick={this.toggleWeather}
+                            src={close} alt="" />
+                        <ForecastBtn onClick={this.toggleForecast} >5-Day Forecast</ForecastBtn>
+                    </Weather> */}
 
                 </DashboardContainer>
                 <Footer>
