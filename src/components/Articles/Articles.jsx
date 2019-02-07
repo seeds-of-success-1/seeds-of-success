@@ -10,9 +10,12 @@ min-width:350px;
 max-width:350px;
 height: 71vh;
 overflow-y:hidden;
-margin-top:200px;
+/* margin-top:240px; */
 padding:20px;
-position:relative;
+position:absolute;
+top:160px;
+left:${props => props.show ? "0" : "-400px"};
+transition:all 1s ease-in-out;
 bottom:100px;
 overflow-x:hidden;
 transform:translateY(0px);
@@ -41,6 +44,7 @@ height:auto;
 padding:10px;
 margin:10px 0;
 position:relative;
+background:#fff;
 right:1px;
 border:none;
 border-radius:5px;
@@ -83,18 +87,23 @@ export const SubTitle = styled.p`
 
 class Articles extends Component {
     render() {
-        return (
-           <ArticlesWrap>
-               <MainTitleWrap>
+        let articles = this.props.articlesLoading
+        ? <div style={{marginTop:'100px'}} >Loading</div>
+        :   <ArticlesWrap show={this.props.show} >
+                <MainTitleWrap>
                 <MainTitle>Gardening News</MainTitle>
-               </MainTitleWrap>
+                </MainTitleWrap>
 
-               <CardContainer>
-               {this.props.state.articles.map(article => (
-                   <Article key={article.id} article={article} />
+                <CardContainer>
+                {this.props.state.articles.map(article => (
+                    <Article key={article.id} article={article} />
                 ))}
-               </CardContainer>
-           </ArticlesWrap>
+                </CardContainer>
+             </ArticlesWrap>
+        return (
+            <>
+                {articles}
+            </>
 
         );
     }

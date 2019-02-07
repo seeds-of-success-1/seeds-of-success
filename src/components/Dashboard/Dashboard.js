@@ -43,6 +43,7 @@ justify-content:center;
 width:100%;
 align-items:center;
 color:#558B2F;
+z-index:500;
 `
 const GridContainer = styled.div`
 display:grid;
@@ -124,6 +125,10 @@ const OpenWeather = styled(ForecastBtn)`
 top: 131px;
 right: 0;
 `
+const NewsBtn = styled(ForecastBtn)`
+top:131px;
+left:0;
+`
 
 class Dashboard extends Component {
     state = {
@@ -131,7 +136,8 @@ class Dashboard extends Component {
         title: '',
         loading: true,
         weather: false,
-        forecast: false
+        forecast: false,
+        showNews:false
     }
     mapProject = () => {
         const preview = this.state.project.map((square, i) => {
@@ -167,7 +173,6 @@ class Dashboard extends Component {
 
     async componentDidMount() {
         try{
-            console.log('hi from dashboard')
             let res = await axios.get('/auth/user')
             this.props.updateRecent(res.data.recentProject)
             this.props.updateId(res.data.id)
@@ -175,7 +180,6 @@ class Dashboard extends Component {
             let projectRes = await axios.post('/api/project/get', { project_id: this.props.recentProject })
             this.setState({ project: JSON.parse(projectRes.data.project.plant_array), loading: false, loggedIn:true });
         }catch(err){
-            console.log('hi from dashboard error')
             if(err.response.header !== 200){
                 this.props.history.push('/')
                 setTimeout(() => {
@@ -218,9 +222,10 @@ class Dashboard extends Component {
         return (
 
             <MainContainer>
+                    <NewsBtn onClick={()=>this.setState({showNews:!this.state.showNews})} >News</NewsBtn>
+                    <Articles show={this.state.showNews} />
                 <DashboardContainer>
                     <OpenWeather onClick={this.toggleWeather}>Local Weather</OpenWeather>
-                    <Articles/>
                     <Arrows show={this.state.project.length} src={before}
                         onClick={() => this.flipThroughProjects('left')}
                     />
