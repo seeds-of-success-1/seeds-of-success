@@ -139,7 +139,7 @@ class Project extends Component {
             }
             setTimeout(() => {
                 this.props.history.push('/dashboard')
-            }, 2000)
+            }, 0)
         
         } else {
             alert('You must keep at least one project at a time')

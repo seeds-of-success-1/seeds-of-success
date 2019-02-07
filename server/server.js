@@ -2,8 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const massive = require('massive');
-const controller = require('./controller')
-const articleCtrl = require('./articles');
+const controller = require('./controllers/controller');
+const articleCtrl = require('./controllers/articles');
 
 const app = express();
 const { PORT, CONNECTION_STRING, SECRET } = process.env
