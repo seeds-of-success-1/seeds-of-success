@@ -173,8 +173,7 @@ class Login extends Component {
         this.props.updateUsername(res.data.username)
         this.props.updateId(res.data.id)
         if (res.data.loggedIn) {
-
-            this.props.history.push('/dashboard')
+            this.fetchProjects()
         }
     }
 
