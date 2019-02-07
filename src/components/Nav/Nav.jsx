@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { withRouter, Link,Redirect } from 'react-router-dom'
+import { withRouter, Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { updateUsername, updateId, updateProjects,cleanUpState,updateUser } from '../../ducks/reducer';
+import { updateUsername, updateId, updateProjects, cleanUpState, updateUser } from '../../ducks/reducer';
 import CreateModal from '../CreateModal/CreateModal'
 import axios from 'axios'
-import {DeleteBtn} from './../Toolbar/Toolbar';
+import { DeleteBtn } from './../Toolbar/Toolbar';
 
 const EditInput = styled.input`
 font: inherit;
@@ -120,36 +120,36 @@ class Nav extends Component {
     state = {
         projects: [{ name: 'Project 1', id: 1 }, { name: 'Project 2', id: 2 }, { name: 'Project 4', id: 4 }],
         projectsOpen: false,
-        modalOpen:false,
+        modalOpen: false,
         edit: false,
         name: ''
     }
 
-    async componentDidMount(){
-       try{
-           console.log('hi from nav')
-           let res = await axios.get('/auth/user')
-           if(res.data.id && !this.props.state.projects.length){
-           this.fetchProjects()
-           }
-           if(!this.props.id && res.data.id){
-               this.props.updateUser({id:res.data.id, username:res.data.username, recentProject:res.data.recentProject});
-           }
-       }catch(err){
-           console.log('err',err.response)
-            if(err.response.status !== 200){
+    async componentDidMount() {
+        try {
+            console.log('hi from nav')
+            let res = await axios.get('/auth/user')
+            if (res.data.id && !this.props.state.projects.length) {
+                this.fetchProjects()
+            }
+            if (!this.props.id && res.data.id) {
+                this.props.updateUser({ id: res.data.id, username: res.data.username, recentProject: res.data.recentProject });
+            }
+        } catch (err) {
+            console.log('err', err.response)
+            if (err.response.status !== 200) {
                 this.props.history.push('/')
             }
         }
     }
 
-    fetchProjects = async() => {
+    fetchProjects = async () => {
         let res = await axios.get('/api/project/projects');
         this.props.updateProjects(res.data.projects)
     }
 
     async componentDidUpdate(prevProps, prevState) {
-        if(prevProps.id !== this.props.id){
+        if (prevProps.id !== this.props.id) {
             this.fetchProjects()
         }
         if (this.props.location.pathname.includes('/project') && prevProps.location.pathname !== this.props.location.pathname && this.props.id) {
@@ -158,7 +158,7 @@ class Nav extends Component {
                 // console.log(project_id)
                 return project.id === project_id
             })
-            this.setState({name: currentProject[0].title})
+            this.setState({ name: currentProject[0].title })
         }
     }
 
@@ -173,7 +173,7 @@ class Nav extends Component {
 
 
     toggleEdit = () => {
-        this.setState({edit: !this.state.edit})
+        this.setState({ edit: !this.state.edit })
     }
 
     editName = async () => {
@@ -183,20 +183,20 @@ class Nav extends Component {
         })
         const name = this.state.name
         const project_id = currentProject[0].id
-        await axios.post('/api/project/name', {name, project_id})
+        await axios.post('/api/project/name', { name, project_id })
         const res = await axios.get('/api/project/projects');
         this.props.updateProjects(res.data.projects)
-        this.setState({edit: false})
+        this.setState({ edit: false })
     }
 
     handleInputChange = (event) => {
-        this.setState({name: event.target.value})
+        this.setState({ name: event.target.value })
     }
 
     getProjects() {
         const mapped = this.props.state.projects.map((project) => {
             return (
-                <Link style={{textDecoration:'none'}} key={project.id} to={`/project${project.id}`}>
+                <Link style={{ textDecoration: 'none' }} key={project.id} to={`/project${project.id}`}>
                     <DropdownItem
                         onClick={() => this.setState({ projectsOpen: !this.state.projectsOpen })}
                     >{project.title}</DropdownItem>
@@ -207,17 +207,17 @@ class Nav extends Component {
     }
 
     createProject = async (name) => {
-        this.setState({modalOpen:!this.state.modalOpen})
-        let res = await axios.post('/api/project/new',{project_name:name})
+        this.setState({ modalOpen: !this.state.modalOpen })
+        let res = await axios.post('/api/project/new', { project_name: name })
         let result = await axios.get('/api/project/projects');
         this.props.updateProjects(result.data.projects)
         if (res.data.project.id) {
             this.props.history.push(`/project${res.data.project.id}`)
         }
     }
-    toggleCreateModal = () =>{
+    toggleCreateModal = () => {
         console.log('TCM')
-        this.setState({modalOpen:!this.state.modalOpen})
+        this.setState({ modalOpen: !this.state.modalOpen })
     }
 
     render() {
@@ -231,9 +231,26 @@ class Nav extends Component {
             null
             : <NavWrap>
                 <SiteTitle>Seeds of Success</SiteTitle>
-                {this.props.state.projects[0] ? (this.props.location.pathname.includes('/project') ? <ProjectTitle>{this.state.edit ? <div style={{
-                    display:'flex',
-                }}><EditInput onChange={this.handleInputChange} value={this.state.name}/><DeleteBtn onClick={this.editName} >Save</DeleteBtn></div> : <div><DeleteBtn onClick={this.toggleEdit}>Edit</DeleteBtn>{' ' + currentProject[0].title}</div>}</ProjectTitle> : console.log(this.props.location.pathname)) : null
+                {
+                    this.props.state.projects[0] ? (
+                        this.props.location.pathname.includes('/project') ? (
+                            <ProjectTitle>{
+                                this.state.edit ? (
+                                    <div style={{
+                                        display: 'flex',
+                                    }}>
+                                        <EditInput onChange={this.handleInputChange} value={this.state.name} />
+                                        <DeleteBtn onClick={this.editName} >Save</DeleteBtn>
+                                    </div>
+                                ) : (
+                                        <div>
+                                            <DeleteBtn onClick={this.toggleEdit}>Edit</DeleteBtn>
+                                            {' ' + currentProject[0].title}
+                                        </div>
+                                    )
+                            }</ProjectTitle>
+                        ) : console.log(this.props.location.pathname)
+                    ) : null
                 }
                 <NavList>
                     <NavListItem id="logout-btn">
@@ -242,7 +259,7 @@ class Nav extends Component {
                         >Logout</NavButton>
                     </NavListItem>
                     <NavListItem>
-                        <NavButton onClick={ this.toggleCreateModal}> New Project</NavButton>
+                        <NavButton onClick={this.toggleCreateModal}> New Project</NavButton>
                     </NavListItem>
                     <NavListItem>
                         <Link to="/dashboard">
@@ -260,9 +277,9 @@ class Nav extends Component {
             <div>
                 {nav}
                 <CreateModal
-                show={this.state.modalOpen}
-                toggleModal={this.toggleCreateModal}
-                create={this.createProject}
+                    show={this.state.modalOpen}
+                    toggleModal={this.toggleCreateModal}
+                    create={this.createProject}
                 />
             </div>
         );
@@ -272,4 +289,4 @@ class Nav extends Component {
 function mapStateToProps(state) {
     return { state }
 }
-export default withRouter(connect(mapStateToProps, { updateId, updateUsername, updateProjects,cleanUpState,updateUser })(Nav));
+export default withRouter(connect(mapStateToProps, { updateId, updateUsername, updateProjects, cleanUpState, updateUser })(Nav));
