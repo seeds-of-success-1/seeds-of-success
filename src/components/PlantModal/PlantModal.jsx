@@ -50,6 +50,11 @@ width: 30px;
 position:absolute;
 right:5px;
 top:5px;
+cursor:pointer;
+:hover{
+    transition: all 0.4s ease 0s;
+    transform:scale(1.3)
+}
 `
 const Image = styled.img`
 height:40%;
@@ -83,6 +88,16 @@ width:100%;
 position:relative;
 cursor:pointer;
 border-bottom: solid 1px grey;
+:hover {
+    cursor: pointer;
+    background-color: #DCEDC8;
+    transition:0.3s;
+    border-radius:5px;
+    box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.4s ease 0s;
+}
 `
 const MoreIcon = styled.img`
 height:20px;
