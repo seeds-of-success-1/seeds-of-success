@@ -8,7 +8,7 @@ import asparagus from '../Toolbar/asparagus.png'
 const ModalOverlay = styled.div`
    z-index: 20;
    display:${props => props.show ? 'inline-block': 'none'};
-    background-color: rgba(220,220,220,0.8);
+    background-color: rgba(241,248,233,0.8);
     position: fixed;
     top: 0;
     left: 0;
@@ -29,7 +29,7 @@ const Modal = styled.div`
     justify-content:flex-start;
     position: fixed;
     top:10%;
-    left:25%;
+    left:30%;
     background-color: #fff;
     z-index: 30;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
@@ -37,11 +37,16 @@ const Modal = styled.div`
     left:20%;
   }
   @media(max-width:600px){
-      left:7%;
+      left:15%;
   }
   @media (max-height: 740px) {
     position:absolute;
-
+  }
+  @media(max-width:440px){
+      left:2%;
+  }
+  @media(min-width:1400px){
+      left:33%;
   }
 `
 const CloseBtn = styled.img`
@@ -150,7 +155,7 @@ class PlantModal extends Component {
                 <CloseBtn
                 onClick={this.props.toggleModal}
                 src={close} alt=""/>
-                
+
                 {plant.id === 5 ? <Image src={asparagus}  /> : <Image src={`https://res-4.cloudinary.com/do6bw42am/image/upload/c_scale,f_auto,h_300/v1/${plant.image_url}`}  />}
 
                 <Title>{plant.name}</Title>

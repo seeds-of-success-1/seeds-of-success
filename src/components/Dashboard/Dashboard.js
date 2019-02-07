@@ -13,7 +13,7 @@ import { weatherApiKey } from '../../config';
 //Optional include of the default css styles
 import 'react-open-weather/lib/css/ReactWeather.css';
 import { CloseBtn, SaveBtn } from '../Toolbar/Toolbar';
-import close from '../Toolbar/close-btn.svg';
+import close from '../Toolbar/close-btn.1.svg';
 import Articles from '../Articles/Articles'
 
 
@@ -264,7 +264,7 @@ class Dashboard extends Component {
                     <NewsBtn
                     open={this.state.weather}
                     onClick={this.toggleNews} >News</NewsBtn>
-                    <Articles show={this.state.showNews} />
+                    <Articles close={this.toggleNews} show={this.state.showNews} />
                     <Weather open={this.state.weather} forecast={this.state.forecast}>
                         <ReactWeather
                             forecast="5days"
