@@ -98,7 +98,7 @@ const SubText = styled.p`
 padding:0;
 margin:5px 10px;
 font-size:1em;
-overflow-y:scroll;
+overflow-y: auto;
 `
 
 class PlantModal extends Component {

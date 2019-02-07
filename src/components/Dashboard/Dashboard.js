@@ -148,7 +148,7 @@ background-color: transparent;
 `
 const NewsBtn = styled(ForecastBtn)`
 top:136px;
-left:100px;
+left:110px;
 background-color: ${props => props.open ? 'transparent' : '#4BC4F7'};
 `
 
