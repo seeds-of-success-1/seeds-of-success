@@ -22,12 +22,15 @@ const SideNav = styled.div`
   width: ${props => props.open ? '285px' : '0px'};
   position: fixed;
   padding-right:10px;
-  margin-top:90px;
+  margin-top:130px;
   z-index: 3;
   top: 0;
   left: 0;
   background-color: #C5E1A5;
   overflow-y: hidden;
+  @media (max-width: 500px){
+    margin-top:90px;
+ }
 `
 const NavToolbox = styled.div`
 height:100px;
@@ -184,7 +187,7 @@ right:2px;
 const Hamburger = styled.div`
  width: 30px;
  position: fixed;
- top: 90px;
+ top: 130px;
  transition:all .5s;
  height:30px;
  margin:16px;
@@ -204,6 +207,9 @@ justify-content:space-between;
 :hover{
     transform:scale(1.3)
 }
+@media (max-width: 500px){
+    top:90px
+ }
 `
 const Bar = styled.span`
  display: block;

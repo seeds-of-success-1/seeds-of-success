@@ -32,7 +32,9 @@ width:100%;
 justify-content:center;
 align-items:center;
 max-height:100vh;
-
+@media (max-width: 500px){
+   margin-top:90px
+ }
 `
 const Footer = styled.div`
 height:11vh;

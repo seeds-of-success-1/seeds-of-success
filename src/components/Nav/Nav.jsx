@@ -156,7 +156,7 @@ right: 5px;
     position:absolute;
     left:0px;
     margin-top:1px;
-    width:65%;
+    width:60%;
     text-overflow:none;
     white-space:none;
 
