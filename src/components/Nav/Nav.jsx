@@ -238,8 +238,8 @@ class Nav extends Component {
         if (currentProject.length < 1) {
             currentProject = [{title: 'Project'}];
         }
-        
-        
+
+
         // console.log(this.props.state.projects)
         const nav = this.props.location.pathname === "/" ?
             null
