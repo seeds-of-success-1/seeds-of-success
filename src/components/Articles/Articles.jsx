@@ -22,12 +22,12 @@ z-index:100;
 transform:translateY(0px);
 `
 const CardContainer = styled.div`
-height:65vh;
+height:64vh;
 width:97%;
 display:flex;
 flex-direction:column;
 background:#F1F8E9;
-margin-top:50px;
+margin-top:60px;
 padding:0 10px;
 overflow-y:auto;
 overflow-x:hidden;
