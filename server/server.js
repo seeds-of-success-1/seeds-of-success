@@ -9,6 +9,8 @@ const app = express();
 const { PORT, CONNECTION_STRING, SECRET } = process.env
 app.use(express.json());
 
+app.use(express.static(`${__dirname}/../build`));
+
 app.use(session({
     secret: SECRET,
     resave: true,
