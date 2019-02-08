@@ -116,8 +116,12 @@ z-index: 1;
 const NavListItem = styled.li`
 margin:0 5px;
 list-style-type:none;
-@media (max-width: 500px){
- }
+:nth-child(4){
+    @media(max-width:700px){
+        display:none;
+    }};
+
+};
 `
 const DropDownMenu = styled.div`
 background-color: #DCEDC8;

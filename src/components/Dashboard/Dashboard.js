@@ -10,6 +10,7 @@ import next from './next.svg';
 import before from './before.svg';
 import ReactWeather from 'react-open-weather';
 import { weatherApiKey } from '../../config';
+import Projects from './Projects';
 //Optional include of the default css styles
 import 'react-open-weather/lib/css/ReactWeather.css';
 import { CloseBtn, SaveBtn } from '../Toolbar/Toolbar';
@@ -41,6 +42,9 @@ position:relative;
     left:${props => props.slide ? "400px" : 0};
     transition: all 1s ease-in-out;
 
+}
+@media(max-width:700px){
+    display:none;
 }
 `
 const Footer = styled.div`
@@ -160,7 +164,15 @@ background-color: ${props => props.open ? 'transparent' : '#4BC4F7'};
 opacity:1;
 transition:none;
 `
-
+const ProjContainer = styled.div`
+    height:50vh;
+    width:100%;
+    margin-top:200px;
+    padding:5px;
+    @media(min-width:700px){
+    display:none;
+}
+`
 class Dashboard extends Component {
     state = {
         project: [],
@@ -297,21 +309,14 @@ class Dashboard extends Component {
                     <Arrows show={this.state.project.length} src={next}
                         onClick={() => this.flipThroughProjects('right')}
                     />
-                    {/* <Weather open={this.state.weather} forecast={this.state.forecast}>
-                        <ReactWeather
-                            forecast="5days"
-                            apikey={weatherApiKey}
-                            type="auto"
-                            unit='imperial'
-                        >
-                        </ReactWeather>
-                        <CloseWeather
-                            onClick={this.toggleWeather}
-                            src={close} alt="" />
-                        <ForecastBtn onClick={this.toggleForecast} >5-Day Forecast</ForecastBtn>
-                    </Weather> */}
-
                 </DashboardContainer>
+                <ProjContainer>
+                    <Projects
+                    id={this.props.recentProject}
+                    current={this.state.title}
+                    projects={this.props.projects}
+                    />
+                </ProjContainer>
                 <Footer>
                     <ProjectTitle>{this.state.title}</ProjectTitle>
                 </Footer>
