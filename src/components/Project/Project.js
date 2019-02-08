@@ -19,7 +19,7 @@ transition:all .5s;
 `
 
 const ProjectWrap = styled.div`
-margin:${props => props.gridExpand ? '130px 0 0 0px' : '130px 0 0 290px'};
+margin:${props => props.gridExpand ? '90px 0 0 0px' : '90px 0 0 290px'};
 transition:all .5s;
 width: 100%;
 position:${props => props.modalOpen ? "fixed" :"inline"};
@@ -39,6 +39,9 @@ padding:2px;
 scroll-behavior: smooth;
 min-width:80vw;
 width:100%;
+@media (max-width: 500px){
+    grid-template-columns:minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%);
+}
 `
 export const GridItem = styled.div`
 background-image: url(${props => props.image ? dirt : grass});
@@ -55,6 +58,12 @@ justify-content: center;
 position: relative;
 :hover {
     background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${props => props.image ? dirt : grass});
+}
+@media (max-width: 500px){
+    min-height:60px;
+    height:60px;
+    min-width:60px;
+    width:60px;
 }
 `
 export const Image = styled.img`

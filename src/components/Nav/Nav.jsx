@@ -35,6 +35,12 @@ caret-color: green;
         font-weight:450;
     }
   }
+  @media (max-width: 500px){
+    font-size:1rem;
+    height:10px;
+    margin-left:10px;
+    width:25%;
+ }
 `
 const NavWrap = styled.div`
 height:130px;
@@ -42,11 +48,22 @@ width:100%;
 background-color:#DCEDC8;
 position:fixed;
 top:0;
+
+@media (max-width: 500px){
+   max-width:100vw;
+   height:90px
+}
 `
 const SiteTitle = styled.h1`
 font-size:2em;
 color:#558B2F;
 text-align: center;
+@media (max-width: 500px){
+    font-size:1.25rem;
+    width:50%;
+    position:fixed;
+    right:100px
+ }
 `
 const NavButton = styled.button`
 margin:0;
@@ -66,6 +83,10 @@ outline: none;
     transition: all 0.4s ease 0s;
     color:#558B2F;
 }
+@media (max-width: 500px){
+    font-size:1rem;
+    
+ }
 `
 const NavList = styled.ul`
 padding:0;
@@ -78,11 +99,24 @@ z-index: 1;
 #logout-btn{
     margin-right:auto;
 }
+@media (max-width: 500px){
+    font-size:1rem;
+    display:flex;
+    flex-direction:column;
+    position:fixed;
+    top:0px;
+    right:1px;
+    width:28%;
+    
+    
+ }
+
 `
 const NavListItem = styled.li`
 margin:0 5px;
 list-style-type:none;
-
+@media (max-width: 500px){
+ }
 `
 const DropDownMenu = styled.div`
 background-color: #DCEDC8;
@@ -113,12 +147,23 @@ font-weight:500;
     -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
     transition: all 0.4s ease 0s;
 }
+
 `
 
 const ProjectTitle = styled.h2`
 position: absolute;
 top: 5px;
 right: 5px;
+@media (max-width: 500px){
+    font-size:1rem;
+    position:absolute;
+    left:5px;
+    margin-top:1px;
+    width:60%;
+    text-overflow:none;
+    white-space:none;
+
+ }
 `
 class Nav extends Component {
     state = {
@@ -131,7 +176,7 @@ class Nav extends Component {
 
     async componentDidMount() {
         try {
-            console.log('hi from nav')
+            // console.log('hi from nav')
             let res = await axios.get('/auth/user')
             if (res.data.id && !this.props.state.projects.length) {
                 this.fetchProjects()
@@ -140,7 +185,7 @@ class Nav extends Component {
                 this.props.updateUser({ id: res.data.id, username: res.data.username, recentProject: res.data.recentProject });
             }
         } catch (err) {
-            console.log('err', err.response)
+            // console.log('err', err.response)
             if (err.response.status !== 200) {
                 this.props.history.push('/')
             }
@@ -215,7 +260,7 @@ class Nav extends Component {
         let res = await axios.post('/api/project/new', { project_name: name })
         let result = await axios.get('/api/project/projects');
         this.props.updateProjects(result.data.projects)
-        console.log('nav create', result.data.projects)
+        // console.log('nav create', result.data.projects)
         if (res.data.project.id) {
             this.props.history.push(`/project${res.data.project.id}`)
         }
@@ -226,7 +271,7 @@ class Nav extends Component {
         }
     }
     toggleCreateModal = () =>{
-        console.log('TCM')
+        // console.log('TCM')
         this.setState({ modalOpen: !this.state.modalOpen })
     }
 
@@ -262,8 +307,9 @@ class Nav extends Component {
                                     </div>
                                 ) : (
                                         <div>
-                                            <DeleteBtn onClick={this.toggleEdit}>Edit</DeleteBtn>
                                             {' ' + currentProject[0].title}
+                                            <br/>
+                                            <DeleteBtn onClick={this.toggleEdit}>Edit</DeleteBtn>
                                         </div>
                                     )
                             }</ProjectTitle>
@@ -282,7 +328,7 @@ class Nav extends Component {
                         >Logout</NavButton>
                     </NavListItem>
                     <NavListItem>
-                        <NavButton onClick={this.toggleCreateModal}> New Project</NavButton>
+                        <NavButton onClick={this.toggleCreateModal}> New</NavButton>
                     </NavListItem>
                     <NavListItem>
                         <Link to="/dashboard">
