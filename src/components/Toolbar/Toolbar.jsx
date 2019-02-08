@@ -29,7 +29,7 @@ const SideNav = styled.div`
   background-color: #C5E1A5;
   overflow-y: hidden;
   @media (max-width: 500px){
-    margin-top:90px;
+    /* margin-top:90px; */
  }
 `
 const NavToolbox = styled.div`
@@ -219,9 +219,9 @@ justify-content:space-between;
     transform:scale(1.3)
 }
 @media (max-width: 500px){
-    top:90px;
-    height:20px;
-    width:20px;
+    top:120px;
+    height:30px;
+    width:30px;
  }
 `
 const Bar = styled.span`
