@@ -13,7 +13,7 @@ background-size:cover;
 height:100vh;
 display:flex;
 justify-content:center;
-
+max-width:100vw;
 `
 const LoginContainer = styled.div`
 padding-top: 12px;
@@ -44,9 +44,9 @@ margin-top:25%;
       width:60vw
   }
   @media(max-width:600px){
-    margin-top:25%;
+    margin-top:50%;
     height:60vh;
-    width:75vw;
+    width:80vw;
   }
 `
 const RLogin = styled.div`
@@ -88,6 +88,11 @@ caret-color: green;
         font-weight:450;
     }
   }
+  @media(max-width:500px){
+      width:80%;
+      height:25px;
+      font-size:1rem;
+  }
 `
 
 const LoginButton = styled.button`
@@ -115,6 +120,11 @@ outline: none;
     -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
     transition: all 0.4s ease 0s;
     transform:scale(1.1);
+}
+@media (max-width:500px){
+    height:30px;
+    min-width:55px;
+    font-size:1.25rem;
 }
 `
 const LError = styled.p`
