@@ -31,6 +31,9 @@ overflow-x:auto;
     overflow:hidden;
 
 }
+@media(max-width:500){
+    margin:${props => props.gridExpand ? '90px 0 0 0px' : '90px 0 0 290px'};
+}
 `
 
 export const GridContainer = styled.div`
