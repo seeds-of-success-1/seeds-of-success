@@ -4,8 +4,8 @@ import {DeleteBtn} from '../Toolbar/Toolbar';
 
 const Display = (props) => {
     let display = props.editting ? (
-        <div style={{display: 'flex'}}>
-            <EditInput onChange={(e)=>props.handleInput(e)} value={props.name} />
+        <div style={{display: 'flex',justifyContent:'flex-end'}}>
+            <EditInput style={{width:'auto'}} onChange={(e)=>props.handleInput(e)} value={props.name} />
             <DeleteBtn onClick={props.save} style={{
                 height:'5px',
                 fontSize:'.5rem',
@@ -26,8 +26,8 @@ const Display = (props) => {
     );
     return(
         <>
-        {display}
         {!props.editting ? props.children : null}
+        {display}
         </>
     )
 }
