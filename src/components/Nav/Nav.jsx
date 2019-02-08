@@ -44,25 +44,29 @@ caret-color: green;
 `
 const NavWrap = styled.div`
 height:130px;
+max-width:100vw;
 width:100%;
 background-color:#DCEDC8;
 position:fixed;
 top:0;
-
-@media (max-width: 500px){
+/* @media (max-width: 500px){
    max-width:100vw;
    height:90px
-}
+} */
 `
 const SiteTitle = styled.h1`
 font-size:2em;
 color:#558B2F;
 text-align: center;
 @media (max-width: 500px){
-    font-size:1.25rem;
-    width:50%;
+    font-size:1.75rem;
+    width:100vw;
     position:fixed;
-    right:100px
+    top:50px;
+
+ }
+ @media(max-width:800px){
+     margin-top:0;
  }
 `
 const NavButton = styled.button`
@@ -84,7 +88,7 @@ outline: none;
     color:#558B2F;
 }
 @media (max-width: 500px){
-    font-size:1rem;
+    font-size:1.4rem;
 
  }
 `
@@ -96,21 +100,21 @@ top:10px;
 display:flex;
 justify-content:flex-end;
 z-index: 1;
-#logout-btn{
-    margin-right:auto;
+
+@media(max-width:800px){
+    top:30px;
 }
 @media (max-width: 500px){
-    font-size:1rem;
-    display:flex;
-    flex-direction:column;
-    position:fixed;
-    top:0px;
+    top:100px;
     right:1px;
-    width:28%;
-
-
+    justify-content:space-evenly;
  }
-
+ #logout-btn{
+    margin-right:auto;
+    @media (max-width: 500px){
+        margin-right:0;
+    }
+}
 `
 const NavListItem = styled.li`
 margin:0 5px;
@@ -118,8 +122,9 @@ list-style-type:none;
 :nth-child(4){
     @media(max-width:700px){
         display:none;
-    }};
+    };
 }
+
 `
 const DropDownMenu = styled.div`
 background-color: #DCEDC8;
@@ -160,12 +165,15 @@ right: 5px;
 @media (max-width: 500px){
     font-size:1rem;
     position:absolute;
-    left:5px;
+    right:5px;
     margin-top:1px;
-    width:60%;
+    text-align:right;
+    width:auto;
     text-overflow:none;
     white-space:none;
-
+ }
+ @media(max-width:800px){
+    top:20px;
  }
 `
 class Nav extends Component {

@@ -19,7 +19,7 @@ transition:all .5s;
 `
 
 const ProjectWrap = styled.div`
-margin:${props => props.gridExpand ? '130px 0 0 0px' : '130px 0 0 290px'};
+margin:${props => props.gridExpand ? '118px 0 0 0px' : '118px 0 0 290px'};
 transition:all .5s;
 width: 100%;
 position:${props => props.modalOpen ? "fixed" :"inline"};
@@ -29,6 +29,7 @@ background:green;
 overflow-x:auto;
 @media(min-width:1490){
     overflow:hidden;
+
 }
 `
 
@@ -149,7 +150,7 @@ class Project extends Component {
             setTimeout(() => {
                 this.props.history.push('/dashboard')
             }, 0)
-        
+
         } else {
             alert('You must keep at least one project at a time')
         }

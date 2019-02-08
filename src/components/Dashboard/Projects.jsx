@@ -60,8 +60,8 @@ const Projects = (props) =>{
         <ProjList>
             {props.projects.length ? (
                 props.projects.map(project => (
-                    <Link to={`/project${project.id}`}>
-                        <ProjItem key={project.id} >{project.title}</ProjItem>
+                    <Link key={project.id} to={`/project${project.id}`}>
+                        <ProjItem  >{project.title}</ProjItem>
                     </Link>
                 ))
             ):(

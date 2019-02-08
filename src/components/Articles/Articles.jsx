@@ -20,6 +20,9 @@ bottom:100px;
 overflow-x:hidden;
 z-index:100;
 transform:translateY(0px);
+@media(max-width:500px){
+
+}
 `
 const CardContainer = styled.div`
 height:64vh;
@@ -107,7 +110,7 @@ class Articles extends Component {
             <CardContainer>
 
             {this.props.state.articles.map(article => (
-                <Article key={article.id} article={article} />
+                <Article key={article.guid} article={article} />
             ))}
             </CardContainer>
             </>

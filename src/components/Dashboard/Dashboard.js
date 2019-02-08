@@ -22,6 +22,12 @@ const MainContainer = styled.div`
 display:flex;
 flex-direction:column;
 justify-content:center;
+/* position:relative; */
+@media(max-width:500px){
+    margin-top:60px;
+    max-height:100vh;
+    overflow:auto;
+}
 
 `
 const DashboardContainer = styled.div`
@@ -53,9 +59,12 @@ display:flex;
 background:#DCEDC8;
 justify-content:center;
 width:100%;
+max-width:100vw;
 align-items:center;
 color:#558B2F;
 z-index:500;
+position:fixed;
+bottom:0;
 `
 const GridContainer = styled.div`
 position: relative;
@@ -112,7 +121,7 @@ const Weather = styled.div`
  transition: all 1s;
  overflow: ${props => props.open ? 'inherit' : 'hidden'};
  height: ${props => props.open ? '350px' : '0'};
- width: ${props => props.open ? '400px' : '0'};
+ width: ${props => props.open ? '350px' : '0'};
  z-index: 110;
  .rw-box-days {
      transition: all 1s;
@@ -130,14 +139,16 @@ const CloseWeather = styled(CloseBtn)`
 `
 const ForecastBtn = styled(SaveBtn)`
 background: #4BC4F7;
-right: 0;
-top: 315px;
+right: 3px;
+top: 310px;
 height: 35px;
 z-index:112;
 transition:all 1s 1s;
 opacity: ${props => props.open ? 1 : 0};
+
 `
 const OpenWeather = styled(ForecastBtn)`
+position:fixed;
 top: 136px;
 left: 5px;
 opacity:1;
@@ -158,20 +169,35 @@ background-color: transparent;
 }
 `
 const NewsBtn = styled(ForecastBtn)`
+position:fixed;
 top:136px;
 left:110px;
 background-color: ${props => props.open ? 'transparent' : '#4BC4F7'};
 opacity:1;
 transition:none;
+@media (max-width: 500px){
+    margin-left:20px;
+ }
 `
 const ProjContainer = styled.div`
-    height:50vh;
+    height:100%;
     width:100%;
-    margin-top:200px;
+    /* position:relative; */
+    position:${props => props.slide ? 'absolute' :'relative'};
+    top:200px;
+    left:${props => props.slide ? "400px" : 0};
+    transition:all 1s ease-in-out;
     padding:5px;
+    overflow:hidden;
     @media(min-width:700px){
     display:none;
+
 }
+@media(max-height:800px){
+        overflow-y:scroll;
+        height:80vh;
+    }
+
 `
 class Dashboard extends Component {
     state = {
@@ -310,7 +336,7 @@ class Dashboard extends Component {
                         onClick={() => this.flipThroughProjects('right')}
                     />
                 </DashboardContainer>
-                <ProjContainer>
+                <ProjContainer slide={this.state.showNews || this.state.weather}>
                     <Projects
                     id={this.props.recentProject}
                     current={this.state.title}
