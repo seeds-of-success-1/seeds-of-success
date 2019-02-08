@@ -126,7 +126,10 @@ transition:all .4s;
 overflow: hidden;
 position:relative;
 left:4px;
-bottom:4px;
+bottom:0px;
+display: flex;
+flex-direction: column;
+justify-content: space-around;
 margin-top: 2px;
 & a{
     text-decoration:none;
@@ -135,7 +138,7 @@ margin-top: 2px;
 `
 const DropdownItem = styled.h3`
 padding: 0 6px;
-margin: 6px 0;
+margin: 0;
 font-weight:500;
 :hover {
     cursor: pointer;
@@ -154,7 +157,7 @@ right: 5px;
 @media (max-width: 500px){
     font-size:1rem;
     position:absolute;
-    left:0px;
+    left:5px;
     margin-top:1px;
     width:60%;
     text-overflow:none;
@@ -280,8 +283,8 @@ class Nav extends Component {
         if (currentProject.length < 1) {
             currentProject = [{title: 'Project'}];
         }
-        
-        
+
+
         // console.log(this.props.state.projects)
         const nav = this.props.location.pathname === "/" ?
             null
@@ -325,7 +328,7 @@ class Nav extends Component {
                         >Logout</NavButton>
                     </NavListItem>
                     <NavListItem>
-                        <NavButton onClick={this.toggleCreateModal}> New Project</NavButton>
+                        <NavButton onClick={this.toggleCreateModal}> New</NavButton>
                     </NavListItem>
                     <NavListItem>
                         <Link to="/dashboard">

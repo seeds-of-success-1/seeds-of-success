@@ -8,7 +8,7 @@ import asparagus from '../Toolbar/asparagus.png'
 const ModalOverlay = styled.div`
    z-index: 20;
    display:${props => props.show ? 'inline-block': 'none'};
-    background-color: rgba(220,220,220,0.8);
+    background-color: rgba(241,248,233,0.8);
     position: fixed;
     top: 0;
     left: 0;
@@ -29,7 +29,7 @@ const Modal = styled.div`
     justify-content:flex-start;
     position: fixed;
     top:10%;
-    left:25%;
+    left:30%;
     background-color: #fff;
     z-index: 30;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
@@ -37,11 +37,16 @@ const Modal = styled.div`
     left:20%;
   }
   @media(max-width:600px){
-      left:7%;
+      left:15%;
   }
   @media (max-height: 740px) {
     position:absolute;
-
+  }
+  @media(max-width:440px){
+      left:2%;
+  }
+  @media(min-width:1400px){
+      left:33%;
   }
 `
 const CloseBtn = styled.img`
@@ -50,6 +55,11 @@ width: 30px;
 position:absolute;
 right:5px;
 top:5px;
+cursor:pointer;
+:hover{
+    transition: all 0.4s ease 0s;
+    transform:scale(1.3)
+}
 `
 const Image = styled.img`
 height:40%;
@@ -83,6 +93,16 @@ width:100%;
 position:relative;
 cursor:pointer;
 border-bottom: solid 1px grey;
+:hover {
+    cursor: pointer;
+    background-color: #DCEDC8;
+    transition:0.3s;
+    border-radius:5px;
+    box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.4s ease 0s;
+}
 `
 const MoreIcon = styled.img`
 height:20px;
@@ -98,7 +118,7 @@ const SubText = styled.p`
 padding:0;
 margin:5px 10px;
 font-size:1em;
-overflow-y:scroll;
+overflow-y: auto;
 `
 
 class PlantModal extends Component {
@@ -135,7 +155,7 @@ class PlantModal extends Component {
                 <CloseBtn
                 onClick={this.props.toggleModal}
                 src={close} alt=""/>
-                
+
                 {plant.id === 5 ? <Image src={asparagus}  /> : <Image src={`https://res-4.cloudinary.com/do6bw42am/image/upload/c_scale,f_auto,h_300/v1/${plant.image_url}`}  />}
 
                 <Title>{plant.name}</Title>

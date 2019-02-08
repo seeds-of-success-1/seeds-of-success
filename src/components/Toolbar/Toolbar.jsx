@@ -43,7 +43,9 @@ padding-right:10px;
 position:sticky;
 z-index:2;
 background-color:#C5E1A5;
-
+@media (max-width: 500px){
+    font-size:1rem;
+ }
 `
 const ToolboxItem = styled.h6`
 padding:0;
@@ -63,6 +65,9 @@ border-radius:50px;
     color:#7CB342;
 
 }
+@media (max-width: 500px){
+    font-size:1rem;
+ }
 `
 export const SaveBtn = styled.button`
  position:absolute;
@@ -119,14 +124,15 @@ right: 50px;
 `
 const NavList = styled.ul`
 padding:0;
-padding-bottom:260px;
 margin:0;
 position:relative;
 top:10px;
 z-index:0;
-height:72%;
+height:74.5vh;
 overflow:scroll;
-
+@media (max-width: 500px){
+    font-size:1rem;
+ }
 `
 const NavListItem = styled.li`
 padding:5px;
@@ -135,7 +141,9 @@ list-style-type:none;
 width:90%;
 display:flex;
 align-items:center;
-
+@media (max-width: 500px){
+    font-size:1rem;
+ }
 
 `
 const ListItemTitle = styled.p`
@@ -145,7 +153,9 @@ const ListItemTitle = styled.p`
     position:relative;
     bottom:0px;
     width:100%;
-
+    @media (max-width: 500px){
+    font-size:1rem;
+ }
 `
 const ListItemImg = styled.img`
 width:35px;
@@ -160,13 +170,14 @@ width:90%;
 padding:3px;
 :hover {
     cursor: pointer;
-    background-color: #8BC34A;
+    background-color: #C5E1A5;
     transition:0.3s;
     border-radius:5px;
     box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
     -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
     -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
     transition: all 0.4s ease 0s;
+    
 }
 `
 
@@ -208,7 +219,9 @@ justify-content:space-between;
     transform:scale(1.3)
 }
 @media (max-width: 500px){
-    top:90px
+    top:90px;
+    height:20px;
+    width:20px;
  }
 `
 const Bar = styled.span`
@@ -219,7 +232,9 @@ const Bar = styled.span`
   border-radius: 9px;
   opacity: 1;
   left: 7px;
-
+  @media (max-width: 500px){
+    height:3px;
+ }
 `
 export const CloseBtn = styled.img`
 height:22px;
