@@ -6,11 +6,21 @@ const Display = (props) => {
     let display = props.editting ? (
         <div style={{display: 'flex'}}>
             <EditInput onChange={(e)=>props.handleInput(e)} value={props.name} />
-            <DeleteBtn onClick={props.save} >Save</DeleteBtn>
+            <DeleteBtn onClick={props.save} style={{
+                height:'5px',
+                fontSize:'.5rem',
+                minWith:'4px',
+                width:'4px'
+            }} >Save</DeleteBtn>
         </div>
     ):(
 
-            <DeleteBtn onClick={props.edit}>Edit</DeleteBtn>
+            <DeleteBtn style={{
+                height:'5px',
+                fontSize:'.5rem',
+                minWith:'4px',
+                width:'4px'
+            }} onClick={props.edit}>Edit</DeleteBtn>
 
 
     );
