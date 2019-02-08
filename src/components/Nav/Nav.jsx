@@ -39,7 +39,7 @@ caret-color: green;
     font-size:1rem;
     height:10px;
     margin-left:10px;
-    width:40%;
+    width:25%;
  }
 `
 const NavWrap = styled.div`
@@ -59,14 +59,10 @@ font-size:2em;
 color:#558B2F;
 text-align: center;
 @media (max-width: 500px){
-    font-size:1rem;
-    width:30%;
+    font-size:1.25rem;
+    width:50%;
     position:fixed;
-    left:0px;
-    margin-left:0px;
-    margin-top:0px;
-    top:0px;
-    height:15px;
+    right:100px
  }
 `
 const NavButton = styled.button`
@@ -104,12 +100,12 @@ z-index: 1;
     margin-right:auto;
 }
 @media (max-width: 500px){
-    
+    font-size:1rem;
     display:flex;
     flex-direction:column;
     position:fixed;
     top:0px;
-    right:0px;
+    right:1px;
     width:28%;
 
 
@@ -119,11 +115,11 @@ z-index: 1;
 const NavListItem = styled.li`
 margin:0 5px;
 list-style-type:none;
-@media (max-width: 500px){
-    margin-right:0px;
-    font-size:.75rem;
-    
- }
+:nth-child(4){
+    @media(max-width:700px){
+        display:none;
+    }};
+}
 `
 const DropDownMenu = styled.div`
 background-color: #DCEDC8;
@@ -164,8 +160,8 @@ right: 5px;
 @media (max-width: 500px){
     font-size:1rem;
     position:absolute;
-    left:80px;
-    margin-top:60px;
+    left:5px;
+    margin-top:1px;
     width:60%;
     text-overflow:none;
     white-space:none;
@@ -234,9 +230,9 @@ class Nav extends Component {
 
     editName = async () => {
         let currentProject = this.props.state.projects.filter((project, i) => {
-            let project_id = +this.props.location.pathname.slice(8)
-            return project.id === project_id
-        })
+                let project_id = +this.props.location.pathname.slice(8)
+                return project.id === project_id
+            })
         const name = this.state.name || currentProject[0].title
         const project_id = currentProject[0].id
         await axios.post('/api/project/name', { name, project_id })
@@ -272,12 +268,12 @@ class Nav extends Component {
             this.props.history.push(`/project${res.data.project.id}`)
         }
     }
-    onKeyPress = (e) => {
-        if (e.key === "Enter") {
+    onKeyPress=(e)=>{
+        if(e.key==="Enter"){
             this.createProject()
         }
     }
-    toggleCreateModal = () => {
+    toggleCreateModal = () =>{
         // console.log('TCM')
         this.setState({ modalOpen: !this.state.modalOpen })
     }
@@ -288,7 +284,7 @@ class Nav extends Component {
             return project.id === project_id
         })
         if (currentProject.length < 1) {
-            currentProject = [{ title: 'Project' }];
+            currentProject = [{title: 'Project'}];
         }
 
 
@@ -298,19 +294,19 @@ class Nav extends Component {
             : <NavWrap>
                 <SiteTitle>Seeds of Success</SiteTitle>
                 {
-                    this.props.state.projects[0] && this.props.location.pathname.includes('/project') ?
+                    this.props.state.projects[0] &&  this.props.location.pathname.includes('/project') ?
                         (
                             <ProjectTitle>
                                 <Display
-                                    save={this.editName}
-                                    handleInput={this.handleInputChange}
-                                    editting={this.state.edit}
-                                    edit={this.toggleEdit}
-                                    name={this.state.name || currentProject[0].title}
-                                >{' ' + ' ' + currentProject[0].title}</Display>
+                                save={this.editName}
+                                handleInput={this.handleInputChange}
+                                editting={this.state.edit}
+                                edit={this.toggleEdit}
+                                name={this.state.name || currentProject[0].title}
+                                >{''+ currentProject[0].title}</Display>
                             </ProjectTitle>
                         )
-                        : null
+                     : null
                 }
                 <NavList>
                     <NavListItem id="logout-btn">
@@ -337,10 +333,10 @@ class Nav extends Component {
             <div>
                 {nav}
                 <CreateModal
-                    show={this.state.modalOpen}
-                    toggleModal={this.toggleCreateModal}
-                    create={this.createProject}
-                    onKeyPress={this.onKeyPress}
+                show={this.state.modalOpen}
+                toggleModal={this.toggleCreateModal}
+                create={this.createProject}
+                onKeyPress={this.onKeyPress}
                 />
             </div>
         );
