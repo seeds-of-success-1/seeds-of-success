@@ -4,10 +4,14 @@ const session = require('express-session');
 const massive = require('massive');
 const controller = require('./controllers/controller');
 const articleCtrl = require('./controllers/articles');
+const path = require('path');
+
 
 const app = express();
 const { PORT, CONNECTION_STRING, SECRET } = process.env
 app.use(express.json());
+
+app.use(express.static(`${__dirname}/../build`));
 
 app.use(session({
     secret: SECRET,
@@ -37,3 +41,6 @@ massive(CONNECTION_STRING).then(db => {
     })
 })
 
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build/index.html'));
+});

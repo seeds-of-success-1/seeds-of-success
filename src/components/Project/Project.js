@@ -186,6 +186,16 @@ class Project extends Component {
         this.setState({ hoverPlantId: -1 })
     }
 
+    mouseEnter = (box) => {
+        const width = window.screen.availWidth
+        console.log(width)
+        if (width < 1025) {
+            return null
+        } else {
+            return this.state.details(box)
+        }
+    }
+
     getBoxes = () => {
         const boxes = this.state.plants.map((box, i) => {
 
@@ -196,7 +206,7 @@ class Project extends Component {
                 )
             } else if (box.id === this.state.hoverPlantId) {
                 return (
-                    <GridItem key={i} image={this.state.plants[i].id} onClick={() => this.imageUpdater(i)} onMouseLeave={() => { this.cancelHover() }} onMouseEnter={() => { this.state.details(box) }}>
+                    <GridItem key={i} image={this.state.plants[i].id} onClick={() => this.imageUpdater(i)} onMouseLeave={() => { this.cancelHover() }} onMouseEnter={() => this.mouseEnter(box)}>
 
                         <Image src={`./assets/40x40/${box.id}.png`} alt='' />
 
@@ -205,9 +215,9 @@ class Project extends Component {
                 )
             } else {
                 return (
-                    <GridItem key={i} image={this.state.plants[i].id} onClick={() => this.imageUpdater(i)} onMouseLeave={() => { this.cancelHover() }} onMouseEnter={() => { this.state.details(box) }}>
+                    <GridItem key={i} image={this.state.plants[i].id} onClick={() => this.imageUpdater(i)} onMouseLeave={() => { this.cancelHover() }} onMouseEnter={() => this.mouseEnter(box)}>
 
-                        <Image src={`./assets/40x40/${box.id}.png`} alt='' onMouseEnter={() => { this.state.details(box) }} />
+                        <Image src={`./assets/40x40/${box.id}.png`} alt='' onMouseEnter={() => this.mouseEnter(box)} />
                     </GridItem>
                 )
             }
