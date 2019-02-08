@@ -19,7 +19,7 @@ transition:all .5s;
 `
 
 const ProjectWrap = styled.div`
-margin:${props => props.gridExpand ? '118px 0 0 0px' : '118px 0 0 290px'};
+margin:${props => props.gridExpand ? '130px 0 0 0px' : '130px 0 0 290px'};
 transition:all .5s;
 width: 100%;
 position:${props => props.modalOpen ? "fixed" :"inline"};
@@ -30,9 +30,6 @@ overflow-x:auto;
 @media(min-width:1490){
     overflow:hidden;
 
-}
-@media(max-width:500){
-    margin:${props => props.gridExpand ? '90px 0 0 0px' : '90px 0 0 290px'};
 }
 `
 
