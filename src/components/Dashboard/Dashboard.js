@@ -127,10 +127,14 @@ right: 0;
 top: 315px;
 height: 35px;
 z-index:112;
+transition:all 1s 1s;
+opacity: ${props => props.open ? 1 : 0};
 `
 const OpenWeather = styled(ForecastBtn)`
 top: 136px;
 left: 5px;
+opacity:1;
+transition:none;
 background-color: ${props => props.open ? 'transparent' : '#4BC4F7'};
 :hover{
     box-shadow: ${props => props.open ? 'none' : '0px 5px 40px -10px rgba(0,0,0,0.57)'};
@@ -150,6 +154,8 @@ const NewsBtn = styled(ForecastBtn)`
 top:136px;
 left:110px;
 background-color: ${props => props.open ? 'transparent' : '#4BC4F7'};
+opacity:1;
+transition:none;
 `
 
 class Dashboard extends Component {
@@ -219,7 +225,6 @@ class Dashboard extends Component {
                 setTimeout(() => {
                     alert(err.response.data.message)
                 }, 500)
-
             }
         }
 
@@ -241,8 +246,7 @@ class Dashboard extends Component {
 
     setProject = (index) => {
         let project = JSON.parse(this.props.projects[index].plant_array)
-        let id = this.props.projects[index].id
-        let { title } = this.props.projects[index]
+        let {id, title } = this.props.projects[index]
         this.props.updateRecent(id)
         this.setState({ project, title })
     }
@@ -276,7 +280,7 @@ class Dashboard extends Component {
                         <CloseWeather
                             onClick={this.toggleWeather}
                             src={close} alt="" />
-                        <ForecastBtn onClick={this.toggleForecast} >5-Day Forecast</ForecastBtn>
+                        <ForecastBtn open={this.state.weather} onClick={this.toggleForecast} >5-Day Forecast</ForecastBtn>
                     </Weather>
                 <DashboardContainer
                 slide={this.state.showNews || this.state.weather} >

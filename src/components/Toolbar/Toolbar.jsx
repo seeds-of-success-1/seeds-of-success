@@ -114,7 +114,7 @@ position:relative;
 top:10px;
 z-index:0;
 height:74.5vh;
-overflow:scroll;
+overflow-y:scroll;
 
 `
 const NavListItem = styled.li`
