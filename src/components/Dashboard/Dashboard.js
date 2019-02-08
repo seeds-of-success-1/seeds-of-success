@@ -33,6 +33,9 @@ width:100%;
 justify-content:center;
 align-items:center;
 max-height:100vh;
+@media (max-width: 500px){
+   margin-top:90px
+ }
 position:relative;
 @media(max-width:1200px){
     left:${props => props.slide ? "400px" : 0};

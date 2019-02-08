@@ -28,6 +28,9 @@ const SideNav = styled.div`
   left: 0;
   background-color: #C5E1A5;
   overflow-y: hidden;
+  @media (max-width: 500px){
+    margin-top:90px;
+ }
 `
 const NavToolbox = styled.div`
 height:100px;
@@ -40,7 +43,9 @@ padding-right:10px;
 position:sticky;
 z-index:2;
 background-color:#C5E1A5;
-
+@media (max-width: 500px){
+    font-size:1rem;
+ }
 `
 const ToolboxItem = styled.h6`
 padding:0;
@@ -60,6 +65,9 @@ border-radius:50px;
     color:#7CB342;
 
 }
+@media (max-width: 500px){
+    font-size:1rem;
+ }
 `
 export const SaveBtn = styled.button`
  position:absolute;
@@ -67,7 +75,7 @@ export const SaveBtn = styled.button`
  border-radius:50px;
 font-weight:650;
 margin-bottom:1px;
-min-height:35px;
+min-height:20px;
 min-width:55px;
 cursor:pointer;
 font-weight:650;
@@ -82,13 +90,16 @@ background: #8BC34A;
 -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
 transition: all 0.4s ease 0s;
 }
+@media (max-width: 500px){
+    font-size:1rem;
+ }
 `
 export const DeleteBtn = styled.button`
  border-radius:50px;
  margin-top:3px;
 font-weight:650;
-min-height:35px;
-min-width:55px;
+min-height:20px;
+min-width:45px;
 cursor:pointer;
 border: none;
 outline: none;
@@ -101,6 +112,10 @@ background: #8BC34A;
 -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
 transition: all 0.4s ease 0s;
 }
+@media (max-width: 500px){
+    font-size:1rem;
+    height:10px
+ }
 `
 const DeleteBtnContainer = styled.div`
 position: absolute;
@@ -115,7 +130,9 @@ top:10px;
 z-index:0;
 height:74.5vh;
 overflow-y:scroll;
-
+@media (max-width: 500px){
+    font-size:1rem;
+ }
 `
 const NavListItem = styled.li`
 padding:5px;
@@ -124,7 +141,9 @@ list-style-type:none;
 width:90%;
 display:flex;
 align-items:center;
-
+@media (max-width: 500px){
+    font-size:1rem;
+ }
 
 `
 const ListItemTitle = styled.p`
@@ -134,7 +153,9 @@ const ListItemTitle = styled.p`
     position:relative;
     bottom:0px;
     width:100%;
-
+    @media (max-width: 500px){
+    font-size:1rem;
+ }
 `
 const ListItemImg = styled.img`
 width:35px;
@@ -156,6 +177,7 @@ padding:3px;
     -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
     -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
     transition: all 0.4s ease 0s;
+
 }
 `
 
@@ -196,16 +218,23 @@ justify-content:space-between;
 :hover{
     transform:scale(1.3)
 }
+@media (max-width: 500px){
+    top:90px;
+    height:20px;
+    width:20px;
+ }
 `
 const Bar = styled.span`
  display: block;
   height: 5px;
   width: 100%;
-  background: #333;
+  background:#DCEDC8;
   border-radius: 9px;
   opacity: 1;
   left: 7px;
-
+  @media (max-width: 500px){
+    height:3px;
+ }
 `
 export const CloseBtn = styled.img`
 height:22px;
