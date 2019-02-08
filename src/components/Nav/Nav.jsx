@@ -6,8 +6,9 @@ import { updateUsername, updateId, updateProjects, cleanUpState, updateUser } fr
 import CreateModal from '../CreateModal/CreateModal'
 import axios from 'axios'
 import { DeleteBtn } from './../Toolbar/Toolbar';
+import Display from './Display'
 
-const EditInput = styled.input`
+export const EditInput = styled.input`
 font: inherit;
 font-weight:350;
 width: 58%;
@@ -85,7 +86,7 @@ outline: none;
 }
 @media (max-width: 500px){
     font-size:1rem;
-    
+
  }
 `
 const NavList = styled.ul`
@@ -107,8 +108,8 @@ z-index: 1;
     top:0px;
     right:1px;
     width:28%;
-    
-    
+
+
  }
 
 `
@@ -230,7 +231,7 @@ class Nav extends Component {
                 let project_id = +this.props.location.pathname.slice(8)
                 return project.id === project_id
             })
-        const name = this.state.name
+        const name = this.state.name || currentProject[0].title
         const project_id = currentProject[0].id
         await axios.post('/api/project/name', { name, project_id })
         const res = await axios.get('/api/project/projects');
@@ -291,35 +292,19 @@ class Nav extends Component {
             : <NavWrap>
                 <SiteTitle>Seeds of Success</SiteTitle>
                 {
-                    //Check if there is a project in redux state
-                    this.props.state.projects[0] ? (
-                        //If so, check if we are on the project page
-                        this.props.location.pathname.includes('/project') ? (
-                            //If that is also true, then we will render the project name
-                            <ProjectTitle>{
-                                this.state.edit ? (
-                                    //And we will render what goes here based on whether the edit is true or false
-                                    <div style={{
-                                        display: 'flex',
-                                    }}>
-                                        <EditInput onChange={this.handleInputChange} value={this.state.name} />
-                                        <DeleteBtn onClick={this.editName} >Save</DeleteBtn>
-                                    </div>
-                                ) : (
-                                        <div>
-                                            {' ' + currentProject[0].title}
-                                            <br/>
-                                            <DeleteBtn onClick={this.toggleEdit}>Edit</DeleteBtn>
-                                        </div>
-                                    )
-                            }</ProjectTitle>
-                        ) : (
-                            //then if either there are no projects or we are not on the project page, don't render anything here
-                                null
-                            )
-                    ) : (
-                            null
+                    this.props.state.projects[0] &&  this.props.location.pathname.includes('/project') ?
+                        (
+                            <ProjectTitle>
+                                <Display
+                                save={this.editName}
+                                handleInput={this.handleInputChange}
+                                editting={this.state.edit}
+                                edit={this.toggleEdit}
+                                name={this.state.name || currentProject[0].title}
+                                >{''+ currentProject[0].title}</Display>
+                            </ProjectTitle>
                         )
+                     : null
                 }
                 <NavList>
                     <NavListItem id="logout-btn">

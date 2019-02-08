@@ -129,7 +129,7 @@ position:relative;
 top:10px;
 z-index:0;
 height:74.5vh;
-overflow:scroll;
+overflow-y:scroll;
 @media (max-width: 500px){
     font-size:1rem;
  }
@@ -177,7 +177,7 @@ padding:3px;
     -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
     -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
     transition: all 0.4s ease 0s;
-    
+
 }
 `
 
