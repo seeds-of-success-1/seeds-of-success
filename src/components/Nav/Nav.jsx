@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { withRouter, Link, Redirect } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { updateUsername, updateId, updateProjects, cleanUpState, updateUser } from '../../ducks/reducer';
 import CreateModal from '../CreateModal/CreateModal'
 import axios from 'axios'
-import { DeleteBtn } from './../Toolbar/Toolbar';
 import Display from './Display'
 
 export const EditInput = styled.input`
@@ -120,8 +119,7 @@ list-style-type:none;
     @media(max-width:700px){
         display:none;
     }};
-
-};
+}
 `
 const DropDownMenu = styled.div`
 background-color: #DCEDC8;

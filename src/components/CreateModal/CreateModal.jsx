@@ -4,7 +4,7 @@ import close from '../Toolbar/close-btn.svg'
 
 const ModalOverlay = styled.div`
    z-index: 20;
-   display:${props => props.show ? 'inline-block': 'none'};
+   display:${props => props.show ? 'inline-block' : 'none'};
     background-color: rgba(220,220,220,0.8);
     position: fixed;
     top: 0;
@@ -20,7 +20,7 @@ const Modal = styled.div`
     max-height:900px;
     min-width:300px;
     padding:10px;
-    display:${props => props.show ? 'flex': 'none'};
+    display:${props => props.show ? 'flex' : 'none'};
     flex-direction:column;
     align-items: center;
     justify-content:center;
@@ -35,6 +35,7 @@ const Modal = styled.div`
   }
   @media(max-width:600px){
       left:7%;
+      margin-top:25%;
   }
   @media (max-height: 740px) {
     position:absolute;
@@ -71,6 +72,10 @@ caret-color: green;
         color:#424242;
         font-weight:450;
     }
+  }
+  @media (max-width:500px){
+      width:80%;
+      height:35px;
   }
 `
 const CloseBtn = styled.img`
@@ -115,16 +120,23 @@ outline: none;
     transition: all 0.4s ease 0s;
     transform:scale(1.1);
 }
+@media (max-width:500px){
+    height:25px;
+    width:60px;
+    min-height:25px;
+    min-width:60px;
+    font-size:.75rem;
+}
 `
 const ButtonBar = styled.div`
 
 `
 class CreateModal extends Component {
     state = {
-        projectName:''
+        projectName: ''
     }
     cancel = () => {
-        this.setState({projectName:''});
+        this.setState({ projectName: '' });
         this.props.toggleModal()
     }
     render() {
@@ -132,16 +144,16 @@ class CreateModal extends Component {
             <ModalOverlay show={this.props.show}>
                 <Modal show={this.props.show}>
                     <CloseBtn
-                    onClick={this.props.toggleModal}
-                    src={close} />
+                        onClick={this.props.toggleModal}
+                        src={close} />
                     <Title>Project Name</Title>
-                    <Input placeholder='Project Name' onChange={(e) => this.setState({projectName:e.target.value})}/>
+                    <Input placeholder='Project Name' onChange={(e) => this.setState({ projectName: e.target.value })} />
                     <ButtonBar>
                         <OptionsBtn
-                        onClick={()=> this.props.create(this.state.projectName)}
+                            onClick={() => this.props.create(this.state.projectName)}
                         >CREATE</OptionsBtn>
                         <OptionsBtn
-                        onClick={this.cancel}
+                            onClick={this.cancel}
                         >CANCEL</OptionsBtn>
                     </ButtonBar>
                 </Modal>
