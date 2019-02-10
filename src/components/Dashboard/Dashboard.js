@@ -26,7 +26,7 @@ justify-content:center;
 @media(max-width:500px){
     margin-top:60px;
     max-height:100vh;
-    overflow:auto;
+    overflow:hidden;
 }
 
 `
@@ -182,9 +182,9 @@ transition:none;
 const ProjContainer = styled.div`
     height:100%;
     width:100%;
-    /* position:relative; */
-    position:${props => props.slide ? 'absolute' :'relative'};
-    top:200px;
+    position:relative;
+    /* position:${props => props.slide ? 'absolute' :'relative'}; */
+    top:120px;
     left:${props => props.slide ? "400px" : 0};
     transition:all 1s ease-in-out;
     padding:5px;
