@@ -43,7 +43,7 @@ const Modal = styled.div`
     position:absolute;
   }
   @media(max-width:440px){
-      left:2%;
+      left:7%;
   }
   @media(min-width:1400px){
       left:33%;

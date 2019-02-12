@@ -22,11 +22,13 @@ const MainContainer = styled.div`
 display:flex;
 flex-direction:column;
 justify-content:center;
-/* position:relative; */
-@media(max-width:500px){
+position:relative;
+@media(max-width:700px){
     margin-top:60px;
+    height:100vh;
     max-height:100vh;
-    overflow:hidden;
+    overflow-x:hidden;
+    overflow-y:show;
 }
 
 `
@@ -40,18 +42,15 @@ width:100%;
 justify-content:center;
 align-items:center;
 max-height:100vh;
-@media (max-width: 500px){
-   margin-top:90px
- }
 position:relative;
 @media(max-width:1200px){
     left:${props => props.slide ? "400px" : 0};
-    transition: all 1s ease-in-out;
-
+    transition: left 1s ease-in-out;
 }
 @media(max-width:700px){
     display:none;
 }
+
 `
 const Footer = styled.div`
 height:11vh;
@@ -65,6 +64,10 @@ color:#558B2F;
 z-index:500;
 position:fixed;
 bottom:0;
+@media(max-width:700px){
+    bottom:${props => props.slide ?'-11vh' :0};
+    transition:bottom 1s ease-in-out;
+}
 `
 const GridContainer = styled.div`
 position: relative;
@@ -119,7 +122,7 @@ const Weather = styled.div`
  top: 136px;
  left:1px;
  transition: all 1s;
- overflow: ${props => props.open ? 'inherit' : 'hidden'};
+ overflow: ${props => props.open ? 'show' : 'hidden'};
  height: ${props => props.open ? '350px' : '0'};
  width: ${props => props.open ? '350px' : '0'};
  z-index: 110;
@@ -129,6 +132,9 @@ const Weather = styled.div`
      position:absolute;
      opacity: ${props => props.forecast ? 1 : 0};
      top: ${props => props.forecast ? '346px' : '10px'};
+ }
+ @media(max-width:700px){
+     top:72px;
  }
 `
 const CloseWeather = styled(CloseBtn)`
@@ -183,7 +189,6 @@ const ProjContainer = styled.div`
     height:100%;
     width:100%;
     position:relative;
-    /* position:${props => props.slide ? 'absolute' :'relative'}; */
     top:120px;
     left:${props => props.slide ? "400px" : 0};
     transition:all 1s ease-in-out;
@@ -193,11 +198,6 @@ const ProjContainer = styled.div`
     display:none;
 
 }
-@media(max-height:800px){
-        overflow-y:scroll;
-        height:80vh;
-    }
-
 `
 class Dashboard extends Component {
     state = {
@@ -223,6 +223,7 @@ class Dashboard extends Component {
         this.setState({ weather: !this.state.weather, forecast: false ,showNews:false})
     }
     toggleForecast = () => {
+        console.log('hi')
         this.setState({forecast: !this.state.forecast})
     }
     toggleNews = () => {
@@ -343,7 +344,7 @@ class Dashboard extends Component {
                     projects={this.props.projects}
                     />
                 </ProjContainer>
-                <Footer>
+                <Footer slide={this.state.showNews}  >
                     <ProjectTitle>{this.state.title}</ProjectTitle>
                 </Footer>
             </MainContainer>
