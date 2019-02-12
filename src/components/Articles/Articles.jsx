@@ -9,7 +9,7 @@ const ArticlesWrap = styled.div`
 width:350px;
 min-width:350px;
 max-width:350px;
-height: 72vh;
+height: 74vh;
 overflow-y:hidden;
 padding:0 10px;
 position:absolute;
@@ -21,7 +21,7 @@ overflow-x:hidden;
 z-index:100;
 transform:translateY(0px);
 @media(max-width:500px){
-
+position:fixed;
 }
 `
 const CardContainer = styled.div`

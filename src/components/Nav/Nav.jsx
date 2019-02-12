@@ -6,6 +6,7 @@ import { updateUsername, updateId, updateProjects, cleanUpState, updateUser } fr
 import CreateModal from '../CreateModal/CreateModal'
 import axios from 'axios'
 import Display from './Display'
+import logo from './gardenLogo.svg';
 
 export const EditInput = styled.input`
 font: inherit;
@@ -157,7 +158,20 @@ font-weight:500;
 }
 
 `
-
+const Logo = styled.img`
+position:absolute;
+width:40px;
+right:50%;
+z-index:-1;
+display: block;
+@media(max-width:800px){
+   display:none;
+}
+@media(max-width:500px){
+    top:30px;
+    display: block;
+}
+`
 const ProjectTitle = styled.h2`
 position: absolute;
 top: 5px;
@@ -300,7 +314,8 @@ class Nav extends Component {
         const nav = this.props.location.pathname === "/" ?
             null
             : <NavWrap>
-                <SiteTitle>Seeds of Success</SiteTitle>
+                <Logo src={logo}/>
+                <SiteTitle> Seeds of Success</SiteTitle>
                 {
                     this.props.state.projects[0] &&  this.props.location.pathname.includes('/project') ?
                         (
