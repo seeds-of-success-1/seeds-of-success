@@ -35,13 +35,13 @@ overflow-x:auto;
 
 export const GridContainer = styled.div`
 display:grid;
-grid-template-columns:minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%) minmax(80px, 6.66%);
+grid-template-columns: repeat(15,minmax(80px, 6.66%)) ;
 padding:2px;
 scroll-behavior: smooth;
 min-width:80vw;
 width:100%;
 @media (max-width: 500px){
-    grid-template-columns:minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%) minmax(60px, 6.66%);
+    grid-template-columns: repeat(15,minmax(60px, 6.66%));
 }
 `
 export const GridItem = styled.div`
